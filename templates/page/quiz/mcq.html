@@ -1,0 +1,257 @@
+{% extends "page/base/base.html" %}
+
+{% block title %}
+Quiz - 4Uclass
+{% endblock %}
+
+{% block content %}
+<section class="py-5" style="background-color: white;">
+    <div class="container">
+        <!-- Quiz Header -->
+        <div class="col-md-7 mx-auto text-center">
+            <h3 class="fw-bold mb-4" style="color: #0d6efd; font-size: 2rem;">{{quiz_title}}</h3>
+        </div>
+
+        <!-- MCQ Section -->
+        <form id="quiz-form" method="POST" action="{{ url_for('quiz_page', doc_id=doc_id) }}"
+              class="col-md-7 mx-auto">
+            <input type="hidden" name="user_id" value="{{ user_id }}">
+            <input type="hidden" name="doc_id" value="{{ doc_id }}">
+            <input type="hidden" name="assessment_id" value="{{ assessment_id }}">
+            {% for index, question_data in mcq_questions %}
+            <div class="card mb-4" style="border: none;">
+                <!-- Card Header -->
+                <div class="card-header" style="background-color: #EAF6FF; border: none;">
+                    <span class="fw-bold">Question {{ index + 1 }}</span>
+                    <br>
+                    <span>{{ question_data['question'] }}</span>
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body" style="background-color: white;">
+                    <div class="mt-3">
+                        {% for choice in question_data['choices'] %}
+                        <div class="form-check mb-2">
+                            <input
+                                type="radio"
+                                id="choice-{{ index }}-{{ loop.index }}"
+                                name="question-{{ index }}"
+                                value="{{ loop.index0 }}"
+                                class="form-check-input" required
+                            >
+                            <label for="choice-{{ index }}-{{ loop.index }}" class="form-check-label">
+                                {{ choice }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Card Footer -->
+                <div class="card-footer text-end" style="background-color: white; border: none;">
+                    <!-- Hidden Inputs for interactive icons -->
+                    <input type="hidden" id="thumbs-up-{{ index }}" name="thumbs_up_{{ index }}" value="0">
+                    <input type="hidden" id="dont-know-{{ index }}" name="dont_know_{{ index }}" value="0">
+                    <input type="hidden" id="flagged-{{ index }}" name="flagged_{{ index }}" value="0">
+                    <input type="hidden" id="qid" name="qid" value = {{question_data['qid']}}>
+
+                    <!-- Thumbs Up Icon -->
+                    <button
+                        type="button"
+                        class="btn btn-link p-0 me-2"
+                        data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="Thumbs up this question if it is helpful"
+                        data-input-id="thumbs-up-{{ index }}"
+                        data-icon-id="thumbs-icon-{{ index }}"
+                    >
+                        <i
+                            id="thumbs-icon-{{ index }}"
+                            class="bi bi-hand-thumbs-up-fill icon-gray thumbs-up"
+                            style="font-size: 1.2rem;"
+                        ></i>
+                    </button>
+
+                    <!-- I Don't Know Icon -->
+                    <button
+                        type="button"
+                        class="btn btn-link p-0 me-2"
+                        data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="Mark this question if you do not know the answer"
+                        data-input-id="dont-know-{{ index }}"
+                        data-icon-id="dont-know-icon-{{ index }}"
+                    >
+                        <i
+                            id="dont-know-icon-{{ index }}"
+                            class="bi bi-exclamation-circle-fill icon-gray dont-know"
+                            style="font-size: 1.2rem;"
+                        ></i>
+                    </button>
+
+                    <!-- Flag Icon -->
+                    <button
+                        type="button"
+                        class="btn btn-link p-0"
+                        data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="Flag this question if it is inappropriate, irrelevant or repetitive"
+                        data-input-id="flagged-{{ index }}"
+                        data-icon-id="flagged-icon-{{ index }}"
+                    >
+                        <i
+                            id="flagged-icon-{{ index }}"
+                            class="bi bi-flag-fill icon-gray flagged"
+                            style="font-size: 1.2rem;"
+                        ></i>
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- Rating Card -->
+            <div class="card mb-3" style="border: none;">
+                <div class="card-header py-2 px-3" style="background-color: #EAF6FF; border: none;">
+                    <span class="fw-bold">Rate this quiz (optional)</span>
+                </div>
+                <div class="card-body py-2 px-3" style="background-color: white;">
+                    <!-- Overall Rating -->
+                    <div class="mb-2 row align-items-center">
+                        <label
+                            class="col-sm-8 col-form-label"
+                            data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Does the quiz help you with your study?"
+                            style="margin-bottom: 0;"
+                        >
+                            Helpful for Study?
+                        </label>
+                        <div class="col-sm-4 d-flex justify-content-between">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="overall_rating" id="overall-yes" value="yes">
+                                <label class="form-check-label" for="overall-yes">Yes</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="overall_rating" id="overall-no" value="no">
+                                <label class="form-check-label" for="overall-no">No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Relevance Rating -->
+                    <div class="mb-2 row align-items-center">
+                        <label
+                            class="col-sm-8 col-form-label"
+                            data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Was this quiz relevant to the topic?"
+                            style="margin-bottom: 0;"
+                        >
+                            Relevant to Topic?
+                        </label>
+                        <div class="col-sm-4 d-flex justify-content-between">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="relevance_rating" id="relevance-yes" value="yes">
+                                <label class="form-check-label" for="relevance-yes">Yes</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="relevance_rating" id="relevance-no" value="no">
+                                <label class="form-check-label" for="relevance-no">No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Difficulty Rating -->
+                    <div class="row align-items-center">
+                        <label
+                            class="col-sm-8 col-form-label"
+                            data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Was the difficulty level appropriate?"
+                            style="margin-bottom: 0;"
+                        >
+                            Difficulty Appropriate?
+                        </label>
+                        <div class="col-sm-4 d-flex justify-content-between">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="difficulty_rating" id="difficulty-yes" value="yes">
+                                <label class="form-check-label" for="difficulty-yes">Yes</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="difficulty_rating" id="difficulty-no" value="no">
+                                <label class="form-check-label" for="difficulty-no">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg mt-4">
+                    Submit Quiz
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Optional CSS for responsiveness and aesthetics -->
+<style>
+    .card {
+        border-radius: 8px;
+    }
+    .card-header {
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+    .card-body, .card-footer {
+        background-color: white;
+    }
+    .icon-gray {
+        color: gray;
+    }
+    /* When an icon is active, color it appropriately */
+    .icon-gray.active.thumbs-up {
+        color: green;
+    }
+    .icon-gray.active.dont-know {
+        color: gold;
+    }
+    .icon-gray.active.flagged {
+        color: red;
+    }
+    .btn-link {
+        text-decoration: none;
+    }
+    .btn-link:hover {
+        opacity: 0.8;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Bootstrap tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.forEach(tooltipTriggerEl => {
+        new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+    // Function to toggle interactive icons and update hidden inputs
+    function toggleInteraction(inputId, iconId) {
+        const inputField = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+
+        if (inputField.value === '0') {
+            inputField.value = '1';
+            icon.classList.add('active');
+        } else {
+            inputField.value = '0';
+            icon.classList.remove('active');
+        }
+    }
+
+    // Attach click listeners to all buttons with data attributes
+    document.querySelectorAll('.btn-link').forEach(button => {
+        button.addEventListener('click', () => {
+            const inputId = button.getAttribute('data-input-id');
+            const iconId = button.getAttribute('data-icon-id');
+            if (inputId && iconId) {
+                toggleInteraction(inputId, iconId);
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

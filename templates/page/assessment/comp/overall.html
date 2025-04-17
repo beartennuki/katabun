@@ -1,0 +1,162 @@
+<section class="flex-center text-center" style="min-height: 50vh; position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center;">
+    <div class="content-container">
+        <h3 class="fw-bold mb-4" style="color: #0d6efd; font-size: 2rem;">{{ overall_dict.title }}</h3>
+
+        <!-- Circular Progress Bar with Score -->
+        <div class="progress-container">
+            <svg width="200" height="200">
+                <circle cx="100" cy="100" r="80" stroke="#ddd" stroke-width="15" fill="none"/>
+                <circle id="progress-circle" cx="100" cy="100" r="80" stroke="red" stroke-width="15" fill="none"
+                        stroke-dasharray="502" stroke-dashoffset="502" stroke-linecap="round"
+                        transform="rotate(-90 100 100)"/>
+            </svg>
+            <div id="score-percentage" class="score-text">{{ overall_dict.accuracy }}%</div> <!-- Ensure accuracy appears -->
+        </div>
+
+        <!-- Quiz Summary (Table) -->
+        <div class="quiz-summary">
+            <table>
+                <tr>
+                    <td class="label correct-label"><strong>Correct</strong></td>
+                    <td class="value correct-value" id="correct_count">{{ overall_dict.right_count }}</td>
+                    <td class="label wrong-label"><strong>Wrong</strong></td>
+                    <td class="value wrong-value" id="wrong_count">{{ overall_dict.wrong_count }}</td>
+                    <td class="label unsure-label"><strong>Unsure</strong></td>
+                    <td class="value unsure-value" id="unsure_count">{{ overall_dict.unsure_count }}</td>
+                </tr>
+                <tr>
+                    <td class="label total-label"><strong>Total Questions</strong></td>
+                    <td class="value total-value" id="total_count">{{ overall_dict.total }}</td>
+                    <td class="label accuracy-label"><strong>Accuracy</strong></td>
+                    <td colspan="3" class="value accuracy-value" id="accuracy">{{ overall_dict.accuracy }}%</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Image BELOW the Table -->
+        <div class="image-container">
+            {% if overall_dict.accuracy > 90 %}
+                <img src="{{ url_for('static', filename='images/assessment/Leader-pana.svg') }}" class="left-image">
+            {% else %}
+                <img src="{{ url_for('static', filename='images/assessment/Studying-rafiki.svg') }}" class="left-image">
+            {% endif %}
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Main content container */
+    .content-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 60%;
+        max-width: 800px;
+        padding: 20px;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Image container */
+    .image-container {
+        max-width: 250px;
+        text-align: center;
+        margin-top: 20px; /* Ensures space between table and image */
+    }
+
+    /* Image styling */
+    .left-image {
+        width: 100%;
+        height: auto;
+        max-height: 250px;
+        object-fit: contain;
+        border-radius: 10px;
+    }
+
+    /* Progress bar */
+    .progress-container {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        margin-bottom: 20px;
+    }
+
+    /* Score text in the center of the circle */
+    .score-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 28px;
+        font-weight: bold;
+        color: red;
+    }
+
+    /* Quiz summary table */
+    .quiz-summary {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .quiz-summary table {
+        width: 100%;
+        max-width: 600px;
+        border-collapse: collapse;
+        margin: 0 auto;
+    }
+
+    .quiz-summary td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+
+    /* Color Styling */
+    .correct-label, .correct-value { background-color: #E8F5E9; } /* Light green */
+    .wrong-label, .wrong-value { background-color: #FFEBEE; } /* Light red */
+    .unsure-label, .unsure-value { background-color: #FFF8E1; } /* Light yellow */
+    .total-label, .total-value, .accuracy-label, .accuracy-value { background-color: white; }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+        .content-container {
+            width: 80%;
+        }
+
+        .image-container {
+            max-width: 180px;
+        }
+
+        .left-image {
+            max-height: 180px;
+        }
+    }
+</style>
+
+<script>
+    let userScore = parseFloat("{{ overall_dict.accuracy }}");
+    let correctAnswers = parseInt("{{ overall_dict.right_count }}");
+    let wrongAnswers = parseInt("{{ overall_dict.wrong_count }}");
+    let unsureAnswers = parseInt("{{ overall_dict.unsure_count }}");
+    let totalQuestions = correctAnswers + wrongAnswers + unsureAnswers;
+
+    document.getElementById("score-percentage").innerText = userScore + "%"; // Ensures the score is shown inside the circle
+    document.getElementById("correct_count").innerText = correctAnswers;
+    document.getElementById("wrong_count").innerText = wrongAnswers;
+    document.getElementById("unsure_count").innerText = unsureAnswers;
+    document.getElementById("total_count").innerText = totalQuestions;
+    document.getElementById("accuracy").innerText = userScore + "%";
+
+    let color = `hsl(${(userScore / 100) * 120}, 100%, 40%)`;
+    document.getElementById("score-percentage").style.color = color;
+
+    let progressCircle = document.getElementById("progress-circle");
+    let strokeOffset = 502 - (userScore / 100) * 502;
+    progressCircle.style.strokeDashoffset = strokeOffset;
+    progressCircle.style.stroke = color;
+</script>

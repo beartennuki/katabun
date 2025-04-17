@@ -1,0 +1,17 @@
+{
+    "load_info": {
+        "flag": true,
+        "message": "Processing your request",
+        "type": "autoquiz",
+        "doc_id": "QIZ-UJTP5171"
+    },
+    "quiz_info": {
+        "quiz_id": "QIZ-UJTP5171",
+        "submission_id": "SUB-KGJN6395",
+        "user_id": "USR-XCAD8981",
+        "topic": "sasas",
+        "description": "",
+        "num_questions": "5",
+        "level": "Beginner"
+    }
+}

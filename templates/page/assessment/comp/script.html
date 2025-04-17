@@ -1,0 +1,85 @@
+<hr class="section-divider">
+
+<section class="flex-center text-center" style="min-height: 80vh; position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center;">
+    <div class="content-container">
+        <h2 class="fw-bold" style="color: #0d6efd; margin-bottom: 30px;">Your Answer Script</h2>
+        <!-- Answer Script Container -->
+        <div class="answer-script-container">
+            {% for answer in answer_script %}
+                <div class="question-box">
+                    <div class="question-header">
+                        <h5>
+                            {% if answer.is_correct %}
+                            ✅
+                            {% else %}
+                            ❌
+                            {% endif %}
+                            Question {{ answer.question_index + 1 }}
+                        </h5>
+                    </div>
+                    <div class="question-body">
+                        <p><strong>Question:</strong> {{ answer.question }}</p>
+
+                        {% if answer.dont_know %}
+                        <p class="text-warning"><strong>You marked this question as unsure.</strong></p>
+                        {% endif %}
+
+                        {% if not answer.is_correct %}
+                        <p><strong>Your Answer:</strong> {{ answer.user_answer }}</p>
+                        <p><strong>Correct Answer:</strong> {{ answer.correct_answer }}</p>
+                        {% endif %}
+
+                        <p><strong>Explanation:</strong> {{ answer.explanation }}</p>
+
+                        {% if answer.flagged %}
+                        <p class="text-muted"><strong>This question was flagged for review.</strong></p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Short Gray Line Separator */
+    .section-divider {
+        width: 50%;
+        border: none;
+        border-top: 2px solid #ddd;
+        margin: 40px auto 20px; /* Adjust spacing as needed */
+    }
+    .content-container {
+        display: flex;
+        flex-direction: column;
+        width: 60%;
+        max-width: 1000px;
+        padding: 20px;
+        align-items: center;
+        text-align: center;
+        position: relative;
+    }
+    /* Answer Script Container with white background and a box border */
+    .answer-script-container {
+        width: 100%;
+        background: white;
+        padding: 20px;
+    }
+    /* Individual question box styling */
+    .question-box {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 15px;
+        margin-bottom: 15px;
+        text-align: left;
+    }
+    .question-header h5 {
+        margin: 0 0 10px;
+        color: #0d6efd;
+    }
+    @media (max-width: 992px) {
+        .content-container {
+            width: 80%;
+        }
+    }
+</style>

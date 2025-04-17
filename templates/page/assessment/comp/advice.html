@@ -1,0 +1,162 @@
+<hr class="section-divider">
+
+<section class="flex-center text-center" style="min-height: 80vh; background-color: #EAF6FF; position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center;">
+
+    <!-- SVG Curve for the upward wave effect at the top -->
+    <svg class="curve" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#fff" fill-opacity="1" d="M0,320L80,293.3C160,267,320,213,480,197.3C640,181,800,203,960,213.3C1120,224,1280,224,1360,213.3L1440,203L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
+    </svg>
+
+    <div class="content-container">
+
+        <!-- Personalized Advice Box -->
+        <div class="advice-box shadow-sm">
+            <h3 class="fw-bold mb-4" style="color: #0d6efd; font-size: 2rem;">Personalized Advice</h3>
+            <p class="lead" style="font-size: 1.2rem; line-height: 1.6;">
+                {{ advice_dict.advice }}
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Strengths -->
+            <div class="col-md-6">
+                <div class="card border-success shadow-sm">
+                    <div class="card-header bg-success text-white text-center">
+                        <h5 class="mb-0">Strengths</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            {% for item in advice_dict.strong_points %}
+                            <li class="list-group-item">• {{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weaknesses -->
+            <div class="col-md-6">
+                <div class="card border-danger shadow-sm">
+                    <div class="card-header bg-danger text-white text-center">
+                        <h5 class="mb-0">Weaknesses</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            {% for item in advice_dict.weak_points %}
+                            <li class="list-group-item">• {{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Revision Quiz Topics -->
+            <div class="col-md-6">
+                <div class="card border-warning shadow-sm">
+                    <div class="card-header bg-warning text-dark text-center">
+                        <h5 class="mb-0">Revision Quiz Topics</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            {% for topic in advice_dict.new_topics if topic.recommendation == 'revision' %}
+                            <li class="list-group-item">
+                                <strong>{{ topic.topic }}</strong><br>
+                                <span class="small text-muted">{{ topic.description }}</span><br>
+                                <strong class="small">Level: </strong><span class="small text-muted">{{ topic.level }}</span>
+
+                                <!-- Form for submitting to autoquiz -->
+                                <form action="{{ url_for('autoquiz_page') }}" method="post" class="mt-3">
+                                    <input type="hidden" name="topic" value="{{ topic.topic }}">
+                                    <input type="hidden" name="description" value="{{ topic.description }}">
+                                    <input type="hidden" name="level" value="{{ topic.level }}">
+                                    <input type="hidden" name="numQuestions" value={{overall_dict.question_count}}>
+                                    <input type="hidden" name="agreeTnC" value="on">
+                                    <button type="submit" class="btn btn-primary">Try Now</button>
+                                </form>
+
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Topics to Explore -->
+            <div class="col-md-6">
+                <div class="card border-info shadow-sm">
+                    <div class="card-header bg-info text-white text-center">
+                        <h5 class="mb-0">New Topics to Explore</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            {% for topic in advice_dict.new_topics if topic.recommendation == 'new' %}
+                            <li class="list-group-item">
+                                <strong>{{ topic.topic }}</strong><br>
+                                <span class="small text-muted">{{ topic.description }}</span><br>
+                                <strong class="small">Level: </strong><span class="small text-muted">{{ topic.level }}</span>
+
+                                <!-- Form for submitting to autoquiz -->
+                                <form action="{{ url_for('autoquiz_page') }}" method="post" class="mt-3">
+                                    <input type="hidden" name="topic" value="{{ topic.topic }}">
+                                    <input type="hidden" name="description" value="{{ topic.description }}">
+                                    <input type="hidden" name="level" value="{{ topic.level }}">
+                                    <input type="hidden" name="numQuestions" value={{overall_dict.question_count}}>
+                                    <input type="hidden" name="agreeTnC" value="on">
+                                    <button type="submit" class="btn btn-primary">Try Now</button>
+                                </form>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section-divider {
+        width: 50%;
+        border: none;
+        border-top: 2px solid #ddd;
+        margin: 40px auto 20px; /* Adjust spacing as needed */
+    }
+
+    .content-container {
+        display: flex;
+        flex-direction: column;
+        width: 60%;
+        max-width: 1000px;
+        padding: 20px;
+        align-items: center;
+        text-align: center;
+        position: relative;
+    }
+
+    /* Personalized Advice Box */
+    .advice-box {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        max-width: 800px;
+        width: 100%;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+
+    /* SVG Curve styling */
+    .curve {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+        .content-container {
+            width: 80%;
+        }
+    }
+</style>

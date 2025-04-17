@@ -1,0 +1,61 @@
+{% extends "page/base/base.html" %}
+{% block title %}Contact Us - 4Uclass{% endblock %}
+{% block content %}
+<section class="py-5" style="background-color: #EAF6FF;">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <!-- Image Section -->
+            <div class="col-md-5 text-center">
+                <img src="{{ url_for('static', filename='images/contact/Feedback-cuate.png') }}" alt="Contact Us" class="img-fluid" style="max-width: 100%; height: auto;">
+            </div>
+
+            <!-- Form Section -->
+            <div class="col-md-7">
+                <h3 class="fw-bold mb-4 text-center" style="color: #0d6efd; font-size: 2rem;">Feedback</h3>
+                <p class="mb-4 text-center" style="color: black; font-size: 1rem;">
+                    We appreciate your feedback! Let us know how we can improve your experience.
+                </p>
+                <form method="POST" action="/feedback" style="max-width: 450px; margin: 0 auto;">
+                    <div class="mb-3">
+                        <label for="relevance" class="form-label">1. How relevant are the quiz questions?</label>
+                        <input type="range" class="form-range" id="relevance" name="relevance" min="0" max="5" step="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="easeOfUse" class="form-label">2. Is the interface easy to use or understand?</label>
+                        <input type="range" class="form-range" id="easeOfUse" name="easeOfUse" min="0" max="5" step="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recommend" class="form-label">3. How likely are you to recommend this app to a friend or colleague?</label>
+                        <input type="range" class="form-range" id="recommend" name="recommend" min="0" max="5" step="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="suggestions" class="form-label">4. Is there any feature or new function you want to suggest?</label>
+                        <textarea class="form-control" id="suggestions" name="suggestions" rows="3" placeholder="Write your suggestions here"></textarea>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="newsletter" name="newsletter">
+                        <label class="form-check-label" for="newsletter">
+                            5. Would you like to sign up for the newsletter and receive updates about Fourclass.app?
+                        </label>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Submit Feedback</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Optional CSS for responsiveness -->
+<style>
+    @media (max-width: 768px) {
+        .col-md-5 img {
+            margin-bottom: 20px;
+        }
+        form {
+            max-width: 100%; /* Ensure form adjusts to smaller screens */
+        }
+    }
+</style>
+{% endblock %}

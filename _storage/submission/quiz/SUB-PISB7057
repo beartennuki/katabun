@@ -1,0 +1,17 @@
+{
+    "load_info": {
+        "flag": true,
+        "message": "Processing your request",
+        "doc_type": "autoquiz",
+        "doc_id": "QIZ-IVJN7948"
+    },
+    "quiz_info": {
+        "quiz_id": "QIZ-IVJN7948",
+        "submission_id": "SUB-PISB7057",
+        "user_id": "USR-OYFC0730",
+        "topic": "hsasa",
+        "description": "dsadsad",
+        "num_questions": "15",
+        "level": "Intermediate"
+    }
+}

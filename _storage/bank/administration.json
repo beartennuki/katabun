@@ -1,0 +1,125 @@
+{
+  "category": "administration",
+  "quizzes": [
+    {
+      "title": "Administration Fundamentals",
+      "description": "Basics of administrative procedures.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Office Management",
+      "description": "Efficient management of office operations.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Record Keeping Essentials",
+      "description": "Maintaining accurate records and data.",
+      "num_questions": 5,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Communication in Administration",
+      "description": "Effective communication within administrative roles.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Time Management Strategies",
+      "description": "Improving productivity through time management.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Event Coordination",
+      "description": "Planning and executing successful events.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Budgeting for Administrators",
+      "description": "Managing budgets and financial records.",
+      "num_questions": 20,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Customer Service Excellence",
+      "description": "Providing top-notch service in administrative roles.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Data Management",
+      "description": "Handling and analyzing data effectively.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Document Preparation",
+      "description": "Creating and managing official documents.",
+      "num_questions": 5,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Team Coordination",
+      "description": "Coordinating teams and delegating tasks.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Conflict Resolution",
+      "description": "Strategies for resolving workplace conflicts.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Digital Administration Tools",
+      "description": "Using software to streamline administrative tasks.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Administrative Ethics",
+      "description": "Understanding ethical practices in administration.",
+      "num_questions": 5,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Public Relations Basics",
+      "description": "Managing the public image of an organization.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Meeting Coordination",
+      "description": "Efficiently organizing and conducting meetings.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Information Management",
+      "description": "Organizing and securing information in an office.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Facility Management",
+      "description": "Overseeing the maintenance and operations of facilities.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Staff Scheduling",
+      "description": "Effective scheduling and workforce management.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Administrative Leadership",
+      "description": "Developing leadership skills for administrators.",
+      "num_questions": 20,
+      "difficulty": "expert"
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+{% extends "page/base/base.html" %}
+{% block title %}Quiz Bank - 4Uclass{% endblock %}
+
+{% block content %}
+<section class="py-5" style="background-color: #EAF6FF;">
+
+  <div class="container">
+    <!-- Page Heading -->
+    <h2 class=" text-center mb-4 fw-bold" style="color: #0d6efd; font-size: 2.5rem;">Quiz Bank Gallery</h2>
+
+    <!-- Cards Grid with tighter spacing -->
+    <div class="row g-2">
+      <!-- Business Card -->
+      <div class="col-md-4 animated-card">
+        <div class="card h-100 shadow-sm border-0 rounded">
+          <div class="card-body text-center">
+            <i class="bi bi-briefcase-fill icon" style="font-size: 3rem; color: var(--color-blue);"></i>
+            <h5 class="card-title fw-bold mt-3" style="color: var(--color-navy);">Business</h5>
+            <p class="card-text">
+              Dive into business insights and trends with our engaging quizzes.
+            </p>
+            <a href="{{ url_for('quiz_page', category='business') }}" class="btn btn-primary"
+               style="background-color: var(--color-blue); border-color: var(--color-blue);">
+              Take Quiz
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Administration Card -->
+      <div class="col-md-4 animated-card">
+        <div class="card h-100 shadow-sm border-0 rounded">
+          <div class="card-body text-center">
+            <i class="bi bi-person-workspace icon" style="font-size: 3rem; color: var(--color-blue);"></i>
+            <h5 class="card-title fw-bold mt-3" style="color: var(--color-navy);">Administration</h5>
+            <p class="card-text">
+              Test your administrative skills in a fun and interactive way.
+            </p>
+            <a href="{{ url_for('bank_page', category='administration') }}" class="btn btn-primary"
+               style="background-color: var(--color-blue); border-color: var(--color-blue);">
+              Take Quiz
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Finance Card -->
+      <div class="col-md-4 animated-card">
+        <div class="card h-100 shadow-sm border-0 rounded">
+          <div class="card-body text-center">
+            <i class="bi bi-cash-coin icon" style="font-size: 3rem; color: var(--color-blue);"></i>
+            <h5 class="card-title fw-bold mt-3" style="color: var(--color-navy);">Finance</h5>
+            <p class="card-text">
+              Sharpen your financial acumen with our exciting quizzes.
+            </p>
+            <a href="{{ url_for('bank_page', category='finance') }}" class="btn btn-primary"
+               style="background-color: var(--color-blue); border-color: var(--color-blue);">
+              Take Quiz
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Science Card -->
+      <div class="col-md-4 animated-card">
+        <div class="card h-100 shadow-sm border-0 rounded">
+          <div class="card-body text-center">
+            <i class="bi bi-globe-asia-australia icon" style="font-size: 3rem; color: var(--color-green);"></i>
+            <h5 class="card-title fw-bold mt-3" style="color: var(--color-navy);">Science</h5>
+            <p class="card-text">
+              Explore the wonders of science with interactive quizzes.
+            </p>
+            <a href="{{ url_for('bank_page', category='science') }}" class="btn btn-primary"
+               style="background-color: var(--color-green); border-color: var(--color-green);">
+              Take Quiz
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Medical Card -->
+      <div class="col-md-4 animated-card">
+        <div class="card h-100 shadow-sm border-0 rounded">
+          <div class="card-body text-center">
+            <i class="bi bi-heart-pulse-fill icon" style="font-size: 3rem; color: var(--color-green);"></i>
+            <h5 class="card-title fw-bold mt-3" style="color: var(--color-navy);">Medical</h5>
+            <p class="card-text">
+              Challenge your medical knowledge with engaging, fun quizzes.
+            </p>
+            <a href="{{ url_for('bank_page', category='medical') }}" class="btn btn-primary"
+               style="background-color: var(--color-green); border-color: var(--color-green);">
+              Take Quiz
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Technology Card -->
+      <div class="col-md-4 animated-card">
+        <div class="card h-100 shadow-sm border-0 rounded">
+          <div class="card-body text-center">
+            <i class="bi bi-cpu-fill icon" style="font-size: 3rem; color: var(--color-green);"></i>
+            <h5 class="card-title fw-bold mt-3" style="color: var(--color-navy);">Technology</h5>
+            <p class="card-text">
+              Test your tech savvy with our modern, interactive quizzes.
+            </p>
+            <a href="{{ url_for('bank_page', category='technology') }}" class="btn btn-primary"
+               style="background-color: var(--color-green); border-color: var(--color-green);">
+              Take Quiz
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Creativity Card -->
+      <div class="col-md-4 animated-card">
+        <div class="card h-100 shadow-sm border-0 rounded">
+          <div class="card-body text-center">
+            <i class="bi bi-palette-fill icon" style="font-size: 3rem; color: var(--color-yellow);"></i>
+            <h5 class="card-title fw-bold mt-3" style="color: var(--color-navy);">Creativity</h5>
+            <p class="card-text">
+              Unleash your creative side with fun and inspiring quizzes.
+            </p>
+            <a href="{{ url_for('bank_page', category='creativity') }}" class="btn btn-primary"
+               style="background-color: var(--color-yellow); border-color: var(--color-yellow);">
+              Take Quiz
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Law Card -->
+      <div class="col-md-4 animated-card">
+        <div class="card h-100 shadow-sm border-0 rounded">
+          <div class="card-body text-center">
+            <i class="bi bi-book-fill icon" style="font-size: 3rem; color: var(--color-yellow);"></i>
+            <h5 class="card-title fw-bold mt-3" style="color: var(--color-navy);">Law</h5>
+            <p class="card-text">
+              Test your understanding of legal concepts in a friendly way.
+            </p>
+            <a href="{{ url_for('bank_page', category='law') }}" class="btn btn-primary"
+               style="background-color: var(--color-yellow); border-color: var(--color-yellow);">
+              Take Quiz
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Culture Card -->
+      <div class="col-md-4 animated-card">
+        <div class="card h-100 shadow-sm border-0 rounded">
+          <div class="card-body text-center">
+            <i class="bi bi-music-note-beamed icon" style="font-size: 3rem; color: var(--color-yellow);"></i>
+            <h5 class="card-title fw-bold mt-3" style="color: var(--color-navy);">Culture</h5>
+            <p class="card-text">
+              Explore global cultures with quizzes that celebrate diversity.
+            </p>
+            <a href="{{ url_for('bank_page', category='culture') }}" class="btn btn-primary"
+               style="background-color: var(--color-yellow); border-color: var(--color-yellow);">
+              Take Quiz
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- End row -->
+  </div><!-- End container -->
+</section>
+
+<!-- CSS Animations, Icon Hover Effects, and Card Expansion -->
+<style>
+  /* Fade-in animation for headers and text */
+  .animated {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  /* Card entrance animation */
+  .animated-card {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  /* Card hover: expand and lift */
+  .card:hover {
+    transform: translateY(-5px) scale(1.05);
+    transition: transform 0.3s ease;
+  }
+  /* Icon hover effect: enlarge and brighten */
+  .icon {
+    transition: transform 0.3s ease, filter 0.3s ease;
+  }
+  .card:hover .icon {
+    transform: scale(1.2);
+    filter: brightness(1.2);
+  }
+</style>
+{% endblock %}

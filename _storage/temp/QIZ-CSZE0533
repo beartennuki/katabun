@@ -1,0 +1,153 @@
+{
+    "assessment_info": {
+        "user_id": "USR-CRRB9688",
+        "eval_id": "QIZ-CSZE0533",
+        "assessment_id": "AST-TNMO6969",
+        "question_count": 10,
+        "correct_count": 3,
+        "wrong_count": 7,
+        "accuracy": 30.0,
+        "correct_ls": [
+            {
+                "question_index": 0,
+                "question": "Which medication is commonly used as initial treatment for pulmonary embolism?",
+                "correct_answer": "Heparin",
+                "explanation": "Heparin is used for immediate anticoagulation in the treatment of pulmonary embolism. Warfarin is also an anticoagulant but takes time to reach therapeutic levels; aspirin and antibiotics are not appropriate in this setting."
+            },
+            {
+                "question_index": 0,
+                "question": "A patient presents with sudden onset of shortness of breath and chest pain after a long flight. What is the most likely diagnosis?",
+                "correct_answer": "Pulmonary embolism",
+                "explanation": "The clinical scenario following prolonged immobility (long flight) most strongly suggests pulmonary embolism. While myocardial infarction can also cause chest pain, the history of a long flight points more toward PE."
+            },
+            {
+                "question_index": 0,
+                "question": "Which of the following is a common complication of untreated pulmonary embolism?",
+                "correct_answer": "Pulmonary hypertension",
+                "explanation": "Untreated pulmonary embolism can lead to pulmonary hypertension due to increased pressure in the pulmonary arteries. The other options are not typical complications of an untreated PE."
+            }
+        ],
+        "wrong_ls": [
+            {
+                "question_index": 0,
+                "question": "Which of the following is a typical symptom of pulmonary embolism?",
+                "correct_answer": "Sudden shortness of breath",
+                "explanation": "Pulmonary embolism often presents with sudden onset of shortness of breath. The other options either present a slower onset or symptoms not primarily associated with PE.",
+                "user_answer": "Headache"
+            },
+            {
+                "question_index": 0,
+                "question": "Which one of the following risk factors is most strongly associated with pulmonary embolism?",
+                "correct_answer": "Prolonged immobilization (bed rest)",
+                "explanation": "Prolonged immobilization increases the risk of deep vein thrombosis, which can lead to pulmonary embolism. The other choices do not have a direct link as strong as immobilization.",
+                "user_answer": "Sweet diet"
+            },
+            {
+                "question_index": 0,
+                "question": "In a patient suspected of pulmonary embolism, which diagnostic test is commonly used to confirm the diagnosis?",
+                "correct_answer": "CT pulmonary angiography",
+                "explanation": "CT pulmonary angiography is the gold standard for diagnosing pulmonary embolism. While chest X-rays are often performed, they are not confirmatory, and the other tests are not used as definitive diagnostic tools for PE.",
+                "user_answer": "Lung ultrasound"
+            },
+            {
+                "question_index": 0,
+                "question": "Which part of the circulatory system is the source of most pulmonary emboli?",
+                "correct_answer": "Deep veins in the legs",
+                "explanation": "Most pulmonary emboli originate from blood clots in the deep veins of the legs. Superficial veins are less commonly involved, and the pulmonary artery and coronary arteries are not the typical sources.",
+                "user_answer": "Pulmonary artery"
+            },
+            {
+                "question_index": 0,
+                "question": "Which of the following lifestyle modifications can help reduce the risk of pulmonary embolism?",
+                "correct_answer": "Regular physical activity and avoiding prolonged sitting",
+                "explanation": "Regular physical activity and avoiding prolonged periods of immobility can reduce the risk of blood clot formation, which is important in preventing pulmonary embolism. The other options do not contribute to lowering the risk of PE.",
+                "user_answer": "Smoking a cigar instead of a cigarette"
+            },
+            {
+                "question_index": 0,
+                "question": "What does a normal D-dimer test result suggest in the context of suspected pulmonary embolism?",
+                "correct_answer": "It makes pulmonary embolism less likely.",
+                "explanation": "A normal D-dimer level lowers the suspicion for pulmonary embolism; however, it does not completely rule it out in all clinical circumstances. The other options misinterpret the significance of a normal D-dimer.",
+                "user_answer": "It indicates significant lung damage."
+            },
+            {
+                "question_index": 0,
+                "question": "When evaluating a patient with suspected pulmonary embolism, which of the following clinical tools is often used to assess the probability before imaging?",
+                "correct_answer": "Wells score",
+                "explanation": "The Wells score is a clinical prediction tool used to assess the probability of pulmonary embolism. The other scores are used for conditions such as stroke risk in atrial fibrillation, pneumonia severity, and general critical illness, respectively.",
+                "user_answer": "CURB-65 score"
+            }
+        ]
+    },
+    "feedback_data": {
+        "quiz_id": "USR-CRRB9688",
+        "user_id": "USR-CRRB9688",
+        "ratings": {
+            "overall": null,
+            "relevance": null,
+            "difficulty": null
+        },
+        "questions": [
+            {
+                "question_id": "0",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "1",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "2",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "3",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "4",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "5",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "6",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "7",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "8",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "9",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            }
+        ]
+    }
+}

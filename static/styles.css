@@ -1,0 +1,256 @@
+/* ========== Utility Classes ========== */
+
+/* Add padding for consistent spacing */
+.padding-sm {
+  padding: 0.5rem !important;
+}
+
+.padding-md {
+  padding: 1rem !important;
+}
+
+.padding-lg {
+  padding: 2rem !important;
+}
+
+/* Add margin for consistent spacing */
+.margin-sm {
+  margin: 0.5rem !important;
+}
+
+.margin-md {
+  margin: 1rem !important;
+}
+
+.margin-lg {
+  margin: 2rem !important;
+}
+
+/* Flexbox utility for center alignment */
+.flex-center {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* ========== General Color Styles ========== */
+
+/* Primary Colors */
+:root {
+  --color-red: #EF476F;
+  --color-yellow: #FFD166;
+  --color-green: #06D6A0;
+  --color-blue: #118AB2;
+  --color-navy: #073B4C;
+}
+
+/* Background Colors */
+.bg-red {
+  background-color: var(--color-red) !important;
+}
+
+.bg-yellow {
+  background-color: var(--color-yellow) !important;
+}
+
+.bg-green {
+  background-color: var(--color-green) !important;
+}
+
+.bg-blue {
+  background-color: var(--color-blue) !important;
+}
+
+.bg-navy {
+  background-color: var(--color-navy) !important;
+}
+
+/* Text Colors */
+.text-red {
+  color: var(--color-red) !important;
+}
+
+.text-yellow {
+  color: var(--color-yellow) !important;
+}
+
+.text-green {
+  color: var(--color-green) !important;
+}
+
+.text-blue {
+  color: var(--color-blue) !important;
+}
+
+.text-navy {
+  color: var(--color-navy) !important;
+}
+
+/* Border Colors */
+.border-red {
+  border-color: var(--color-red) !important;
+}
+
+.border-yellow {
+  border-color: var(--color-yellow) !important;
+}
+
+.border-green {
+  border-color: var(--color-green) !important;
+}
+
+.border-blue {
+  border-color: var(--color-blue) !important;
+}
+
+.border-navy {
+  border-color: var(--color-navy) !important;
+}
+
+/* Buttons */
+.btn-red {
+  background-color: var(--color-red) !important;
+  color: #ffffff !important;
+  border: none;
+}
+
+.btn-red:hover {
+  background-color: darken(var(--color-red), 10%) !important;
+}
+
+.btn-yellow {
+  background-color: var(--color-yellow) !important;
+  color: #ffffff !important;
+  border: none;
+}
+
+.btn-yellow:hover {
+  background-color: darken(var(--color-yellow), 10%) !important;
+}
+
+.btn-green {
+  background-color: var(--color-green) !important;
+  color: #ffffff !important;
+  border: none;
+}
+
+.btn-green:hover {
+  background-color: darken(var(--color-green), 10%) !important;
+}
+
+.btn-blue {
+  background-color: var(--color-blue) !important;
+  color: #ffffff !important;
+  border: none;
+}
+
+.btn-blue:hover {
+  background-color: darken(var(--color-blue), 10%) !important;
+}
+
+.btn-navy {
+  background-color: var(--color-navy) !important;
+  color: #ffffff !important;
+  border: none;
+}
+
+.btn-navy:hover {
+  background-color: darken(var(--color-navy), 10%) !important;
+}
+
+/* Alerts */
+.alert-red {
+  background-color: var(--color-red) !important;
+  color: #ffffff !important;
+  border-left: 4px solid darken(var(--color-red), 20%);
+}
+
+.alert-yellow {
+  background-color: var(--color-yellow) !important;
+  color: #000000 !important;
+  border-left: 4px solid darken(var(--color-yellow), 20%);
+}
+
+.alert-green {
+  background-color: var(--color-green) !important;
+  color: #ffffff !important;
+  border-left: 4px solid darken(var(--color-green), 20%);
+}
+
+.alert-blue {
+  background-color: var(--color-blue) !important;
+  color: #ffffff !important;
+  border-left: 4px solid darken(var(--color-blue), 20%);
+}
+
+.alert-navy {
+  background-color: var(--color-navy) !important;
+  color: #ffffff !important;
+  border-left: 4px solid lighten(var(--color-navy), 20%);
+}
+
+/* ========== Universal Button Style Adjustments ========== */
+
+/* Universal Button Style */
+.btn-custom {
+  background-color: var(--color-blue); /* Button background color */
+  color: #ffffff;                     /* White text */
+  border: 2px solid var(--color-blue); /* Blue border for contrast */
+  padding: 0.5rem 1rem;               /* Adjust padding for a compact look */
+  font-size: 1rem;                    /* Standard font size */
+  font-weight: 600;                   /* Semi-bold text */
+  border-radius: 6px;                 /* Slightly rounded corners */
+  text-transform: none;               /* Normal text case */
+  transition: all 0.3s ease;          /* Smooth hover effects */
+  width: auto;                        /* Width adjusts to content */
+}
+
+/* Hover State */
+.btn-custom:hover {
+  background-color: var(--color-green); /* Green background on hover */
+  color: #ffffff;                      /* Ensure text stays white */
+  border-color: var(--color-green);    /* Match border with hover background */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for effect */
+}
+
+/* Disabled State */
+.btn-custom:disabled {
+  background-color: #e0e0e0; /* Grey background for disabled button */
+  color: #9e9e9e;           /* Light grey text */
+  border-color: #e0e0e0;    /* Match border with disabled background */
+  cursor: not-allowed;      /* Show disabled cursor */
+}
+
+/* ========== Responsive Adjustments ========== */
+
+/* Reduce padding on smaller devices and stack footer links vertically */
+@media (max-width: 576px) {
+  /* Header: decrease horizontal padding on mobile */
+  header .navbar {
+    padding: 0.5rem 1rem;
+  }
+
+@media (max-width: 576px) {
+  .dropdown-menu {
+    position: relative; /* Ensure dropdown is properly positioned */
+    width: 100%;        /* Full width for better usability */
+    border-radius: 0;   /* Remove rounded corners for a seamless look */
+  }
+}
+
+  /* Shrink button padding for tight mobile screens */
+  header .navbar .btn-login {
+    padding: 0.5rem 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Footer: stack links vertically when there's less space */
+  footer ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* smaller gap on mobile */
+    align-items: center; /* center them nicely */
+  }
+}
+

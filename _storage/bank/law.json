@@ -1,0 +1,125 @@
+{
+  "category": "law",
+  "quizzes": [
+    {
+      "title": "Law Fundamentals",
+      "description": "Introduction to legal systems and principles.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Constitutional Law",
+      "description": "Basics of constitutional principles.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Criminal Law Essentials",
+      "description": "Fundamental concepts in criminal law.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Contract Law",
+      "description": "Understanding contracts and legal obligations.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Civil Rights Law",
+      "description": "Overview of civil rights protections.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Tort Law",
+      "description": "Basics of tort law and liability.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Intellectual Property",
+      "description": "Understanding copyrights, patents, and trademarks.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Family Law",
+      "description": "Legal aspects of family relationships.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Environmental Law",
+      "description": "Overview of laws protecting the environment.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "International Law",
+      "description": "Basics of legal relations between countries.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Labor Law",
+      "description": "Understanding employee rights and employer obligations.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Corporate Law",
+      "description": "Legal aspects of business organizations.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Real Estate Law",
+      "description": "Basics of property and real estate transactions.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Tax Law",
+      "description": "Understanding legal aspects of taxation.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Health Law",
+      "description": "Overview of legal issues in healthcare.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Administrative Law",
+      "description": "Basics of regulation and government agencies.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Legal Writing and Research",
+      "description": "Techniques for effective legal writing.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Jurisprudence",
+      "description": "Philosophical foundations of law.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Dispute Resolution",
+      "description": "Methods for resolving legal disputes.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Ethics in Law",
+      "description": "Ethical responsibilities in the legal profession.",
+      "num_questions": 5,
+      "difficulty": "beginner"
+    }
+  ]
+}
