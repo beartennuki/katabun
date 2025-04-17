@@ -1,0 +1,125 @@
+{
+  "category": "creativity",
+  "quizzes": [
+    {
+      "title": "Creativity Fundamentals",
+      "description": "Introduction to creative thinking.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Artistic Expression",
+      "description": "Exploring different forms of artistic creativity.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Design Principles",
+      "description": "Understanding the basics of design.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Creative Problem Solving",
+      "description": "Techniques to solve problems creatively.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Innovation in Art",
+      "description": "Exploring innovative approaches in art.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Storytelling Techniques",
+      "description": "Methods for effective storytelling.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Photography Basics",
+      "description": "Introduction to photography techniques.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Graphic Design Essentials",
+      "description": "Fundamentals of graphic design.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Creative Writing",
+      "description": "Techniques to enhance your writing skills.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Music Composition",
+      "description": "Basics of composing music.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Innovative Thinking",
+      "description": "Exercises to boost innovative ideas.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Visual Storytelling",
+      "description": "Communicating stories through visuals.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Digital Art Techniques",
+      "description": "Creating art using digital tools.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Color Theory",
+      "description": "Understanding color dynamics in design.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Creative Brainstorming",
+      "description": "Methods to generate creative ideas.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Design Thinking",
+      "description": "Applying design thinking to solve problems.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "User Experience Basics",
+      "description": "Fundamentals of creating engaging user experiences.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Fashion Design",
+      "description": "Introduction to designing clothing and accessories.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Creative Collaboration",
+      "description": "Working effectively in creative teams.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Innovation in Media",
+      "description": "Exploring creativity in modern media.",
+      "num_questions": 10,
+      "difficulty": "expert"
+    }
+  ]
+}

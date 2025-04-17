@@ -1,0 +1,26 @@
+{% extends "page/base/base.html" %}
+{% block title %}Error{% endblock %}
+{% block content %}
+<section class="py-5" style="background-color: #F8D7DA;">
+    <div class="container text-center">
+        <!-- Title -->
+        <h1 class="fw-bold" style="color: #842029; font-size: 3rem;">Service Unavailable</h1>
+
+        <!-- Apology Message -->
+        <p class="mt-4 mb-4" style="color: #842029; font-size: 1.25rem;">
+            We’re sorry for the inconvenience. It seems something went wrong on our end. Please try refreshing the page, or come back later.
+        </p>
+
+        <!-- Image Section -->
+        <div class="text-center mb-4">
+            <img src="{{ url_for('static', filename='images/error/503 Error Service Unavailable-cuate.png') }}" alt="Error Image" class="img-fluid" style="max-width: 50%; height: auto;">
+        </div>
+
+        <!-- Optional Buttons -->
+        <div>
+            <a href="/" class="btn btn-primary btn-lg">Go to Homepage</a>
+            <a href="{{ url_for('contact_page') }}" class="btn btn-outline-danger btn-lg">Contact Support</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

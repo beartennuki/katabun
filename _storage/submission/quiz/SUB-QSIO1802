@@ -1,0 +1,17 @@
+{
+    "load_info": {
+        "flag": true,
+        "message": "Processing your request",
+        "doc_type": "autoquiz",
+        "doc_id": "QIZ-ZUGO7386"
+    },
+    "quiz_info": {
+        "quiz_id": "QIZ-ZUGO7386",
+        "submission_id": "SUB-QSIO1802",
+        "user_id": "USR-OYFC0730",
+        "topic": "kitabun",
+        "description": "sasas",
+        "num_questions": "10",
+        "level": "Intermediate"
+    }
+}

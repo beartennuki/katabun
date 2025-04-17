@@ -1,0 +1,17 @@
+{
+    "load_info": {
+        "flag": true,
+        "message": "Processing your request",
+        "doc_type": "autoquiz",
+        "doc_id": "QIZ-IRLH8970"
+    },
+    "quiz_info": {
+        "quiz_id": "QIZ-IRLH8970",
+        "submission_id": "SUB-HKAO4187",
+        "user_id": "USR-LYFU4714",
+        "topic": "sasas",
+        "description": "",
+        "num_questions": "5",
+        "level": "Beginner"
+    }
+}

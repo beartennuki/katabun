@@ -1,0 +1,125 @@
+{
+  "category": "finance",
+  "quizzes": [
+    {
+      "title": "Finance Fundamentals",
+      "description": "Introduction to basic financial principles.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Accounting Basics",
+      "description": "Essential accounting concepts and practices.",
+      "num_questions": 15,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Investment Strategies",
+      "description": "Understanding different investment options.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Financial Analysis",
+      "description": "Techniques for analyzing financial statements.",
+      "num_questions": 20,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Budgeting and Forecasting",
+      "description": "Creating and managing budgets effectively.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Corporate Finance",
+      "description": "Financial decision-making in corporations.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Risk Management",
+      "description": "Identifying and mitigating financial risks.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Personal Finance",
+      "description": "Managing personal budgets and investments.",
+      "num_questions": 5,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Financial Markets",
+      "description": "Overview of global financial markets.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Taxation Basics",
+      "description": "Understanding the fundamentals of taxation.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Advanced Accounting",
+      "description": "Complex accounting topics and practices.",
+      "num_questions": 20,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Financial Modeling",
+      "description": "Building financial models for decision-making.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Credit Management",
+      "description": "Managing credit and debt effectively.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Portfolio Management",
+      "description": "Strategies for managing investment portfolios.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Economics for Finance",
+      "description": "How economic factors affect financial decisions.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Valuation Techniques",
+      "description": "Methods for valuing companies and assets.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Financial Reporting",
+      "description": "Understanding and preparing financial reports.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Derivatives and Hedging",
+      "description": "Using derivatives to manage risk.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Banking Fundamentals",
+      "description": "An overview of banking operations and principles.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Ethics in Finance",
+      "description": "Ethical considerations in financial decision-making.",
+      "num_questions": 5,
+      "difficulty": "beginner"
+    }
+  ]
+}

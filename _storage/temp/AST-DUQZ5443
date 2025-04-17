@@ -1,0 +1,247 @@
+{
+    "assessment_info": {
+        "user_id": "USR-XCAD8981",
+        "quiz_id": "QIZ-KSNY2631",
+        "question_count": 15,
+        "correct_count": 5,
+        "wrong_count": 10,
+        "accuracy": 33.33333333333333,
+        "correct_ls": [
+            {
+                "question_index": "1",
+                "question_number": 2,
+                "correct_answer": "(B) - A blockage in a pulmonary artery usually caused by blood clots that travel to the lungs from the legs or other parts of the body",
+                "explanation": "Option (A) is correct as a pulmonary embolism is indeed a blockage in a pulmonary artery due to blood clots, which can originate from the deep veins of the legs or other sites. Option (B) is incorrect because it describes pneumonia, an infection of the lungs, not a blockage. Option (C) is also incorrect as it refers to a pneumothorax, where air leaks into the pleural space, causing lung collapse, rather than a blockage by an embolism. Option (D) is misleading because, while tumors may affect lung function, they are not the same as pulmonary embolism, which specifically involves a blockage of blood vessels."
+            },
+            {
+                "question_index": "5",
+                "question_number": 6,
+                "correct_answer": "(B) - Sudden shortness of breath",
+                "explanation": "(A) is correct because sudden shortness of breath is a classic symptom of pulmonary embolism due to the blockage in the pulmonary artery. (B) is incorrect as a persistent cough with sputum is more indicative of an infection like pneumonia rather than a pulmonary embolism. (C) is almost correct but wrong because gradual onset of fatigue is not a specific symptom of pulmonary embolism; it can occur in many other conditions and does not indicate an acute event. (D) is incorrect because mild chest discomfort when lying down is suggestive of conditions like pericarditis, not pulmonary embolism."
+            },
+            {
+                "question_index": "6",
+                "question_number": 7,
+                "correct_answer": "(A) Prolonged immobility",
+                "explanation": "Prolonged immobility, such as sitting for long periods during travel or being bedridden, can lead to the formation of blood clots in the legs (deep vein thrombosis), which can then break off and travel to the lungs, causing pulmonary embolism. Eating a high-fiber diet (B) and regular exercise (C) are generally associated with better vascular health and lower risk for thrombotic events. Although frequent swimming (D) is beneficial for circulation, it does not contribute to pulmonary embolism risk and can actually help reduce it."
+            },
+            {
+                "question_index": "8",
+                "question_number": 9,
+                "correct_answer": "(B) Prolonged bed rest after surgery",
+                "explanation": "Prolonged bed rest after surgery is a significant risk factor for developing pulmonary embolism because it can lead to stasis of blood flow, increasing the likelihood of clot formation. Regular physical exercise (B) generally reduces the risk of thrombus formation, while high water intake (C) has no direct correlation with pulmonary embolism, and frequent air travel without moving (D) can increase risk but is less significant compared to prolonged bed rest."
+            },
+            {
+                "question_index": "10",
+                "question_number": 11,
+                "correct_answer": "(D) - Computed Tomography Pulmonary Angiography (CTPA)",
+                "explanation": "Computed Tomography Pulmonary Angiography (CTPA) is considered the gold standard for diagnosing pulmonary embolism because it provides detailed images of the blood vessels in the lungs and can directly visualize clots. The D-dimer test (B) is sensitive for ruling out PE but is not definitive, as elevated levels can indicate other conditions. A Chest X-ray (C) often appears normal in PE patients, making it insufficient for diagnosis, and an Electrocardiogram (ECG) (D) can show indirect signs of PE but cannot confirm the presence of a clot."
+            }
+        ],
+        "wrong_ls": [
+            {
+                "question_index": "0",
+                "question_number": 1,
+                "correct_answer": "(D) - A blockage in the pulmonary artery usually caused by blood clots that travel to the lungs from the legs or other parts of the body",
+                "explanation": "The correct answer is (A) because pulmonary embolism specifically refers to a blockage in the pulmonary artery, often due to blood clots originating from deep vein thrombosis in the legs. Answer (B) is incorrect as pulmonary embolism is not a form of lung cancer; it is a vascular blockage. Answer (C) is also incorrect because while infections can cause fluid accumulation in the lungs, this is classified differently and not as a pulmonary embolism. Answer (D) describes a lung collapse, known as pneumothorax, which is unrelated to pulmonary embolism.",
+                "user_answer": "(A) - An infection in the lungs that causes fluid accumulation"
+            },
+            {
+                "question_index": "2",
+                "question_number": 3,
+                "correct_answer": "(A) - A blockage in one of the pulmonary arteries in the lungs, typically due to blood clots that travel from the legs or other parts of the body.",
+                "explanation": "(A) is correct because pulmonary embolism is defined as a blockage in the pulmonary arteries, often due to clots that originate from the veins, especially following factors like immobility. \n(B) is incorrect because it describes a complete restriction of blood flow, which is not accurate; rather, pulmonary embolism is a partial blockage. \n(C) is incorrect as it refers to pneumonia or lung infections and not to blood clots. \n(D) is incorrect since it describes emphysema, which involves air sac deterioration, not blockage due to clots.",
+                "user_answer": "(C) - A condition characterized by weakened air sacs in the lungs that can cause breathing difficulties."
+            },
+            {
+                "question_index": "3",
+                "question_number": 4,
+                "correct_answer": "(A) Sudden shortness of breath",
+                "explanation": "(A) Sudden shortness of breath is a classic symptom of pulmonary embolism due to obstruction of blood flow in the lungs, causing a rapid onset of breathing difficulties. (B) Persistent cough with green mucus is more indicative of a respiratory infection rather than a pulmonary embolism. (C) Severe chest pain that worsens with deep breaths may occur, but it is not as definitive as sudden shortness of breath and often relates to pleurisy or other conditions. (D) Chronic fatigue is a vague symptom and can result from various health issues, making it not specific to pulmonary embolism.",
+                "user_answer": "(D) Persistent cough with green mucus"
+            },
+            {
+                "question_index": "4",
+                "question_number": 5,
+                "correct_answer": "(D) - Sudden shortness of breath",
+                "explanation": "(A) is correct because sudden shortness of breath is a hallmark symptom of pulmonary embolism due to the obstruction of blood flow in the lungs, which causes immediate respiratory distress. (B) is incorrect because a persistent cough with green sputum is more indicative of a respiratory infection rather than a pulmonary embolism. (C) is almost correct, as chest pain can occur with pulmonary embolism; however, it is more often characterized as sharp or pleuritic, not dull. (D) is incorrect because continuous fever is not a common symptom of pulmonary embolism and may suggest an infection instead.",
+                "user_answer": "(C) - Continuous fever for several days"
+            },
+            {
+                "question_index": "7",
+                "question_number": 8,
+                "correct_answer": "(C) Prolonged immobility",
+                "explanation": "Prolonged immobility is a well-known risk factor for pulmonary embolism because it can lead to blood clots forming in the legs (deep vein thrombosis) which can travel to the lungs. Regular exercise is actually beneficial as it promotes circulation, reducing the risk of clots. Asthma does not directly contribute to the risk of pulmonary embolism; it is a respiratory condition. High blood pressure, while serious, does not have a direct link to the formation of blood clots leading to pulmonary embolism.",
+                "user_answer": "(A) Regular exercise"
+            },
+            {
+                "question_index": "9",
+                "question_number": 10,
+                "correct_answer": "(D) - CT Pulmonary Angiography",
+                "explanation": "CT Pulmonary Angiography is considered the gold standard for diagnosing pulmonary embolism due to its high sensitivity and specificity. Chest X-rays (B) are often used to rule out other conditions but cannot definitively diagnose a pulmonary embolism. An Electrocardiogram (ECG) (C) can indicate possible right heart strain but does not directly confirm the presence of a pulmonary embolism. A Complete Blood Count (CBC) (D) may help in assessing overall health but is not specific for diagnosing pulmonary embolism.",
+                "user_answer": "(C) - Chest X-ray"
+            },
+            {
+                "question_index": "11",
+                "question_number": 12,
+                "correct_answer": "(A) - CT pulmonary angiography",
+                "explanation": "CT pulmonary angiography is the gold standard for diagnosing pulmonary embolism due to its high sensitivity and specificity in visualizing the pulmonary arteries. Chest X-ray (B) is typically not conclusive for PE as it may appear normal even in cases of embolism. An Electrocardiogram (C) may show changes associated with PE but does not diagnose it. A Complete blood count (D) can help rule out other conditions but is not definitive for detecting PE.",
+                "user_answer": "(D) - Complete blood count"
+            },
+            {
+                "question_index": "12",
+                "question_number": 13,
+                "correct_answer": "(A) - Anticoagulation therapy",
+                "explanation": "The correct answer is (A) - Anticoagulation therapy, as it helps to prevent further clot formation and allows the body to gradually dissolve the existing clots. Option (B) - Antibiotics are not effective in treating pulmonary embolism since it is not caused by an infection. Option (C) - Corticosteroids are not first-line treatments for pulmonary embolism; they may reduce inflammation but do not treat the clot itself. Option (D) - Surgical insertion of a pacemaker is unrelated to pulmonary embolism; pacemakers are used to manage heart rhythm issues, not clots.",
+                "user_answer": "(C) - Surgical insertion of a pacemaker"
+            },
+            {
+                "question_index": "13",
+                "question_number": 14,
+                "correct_answer": "(D) - Administer anticoagulants immediately",
+                "explanation": "(A) is correct because the immediate initial treatment for pulmonary embolism is the administration of anticoagulants, which help prevent further clot formation and allow the body to gradually dissolve the existing clots. (B) is almost correct as thrombolysis can be considered in severe cases, but it is typically reserved for those with life-threatening PE and requires careful evaluation by a specialist. (C) is incorrect because antibiotics are not indicated for pulmonary embolism, which is primarily a vascular issue rather than an infection. (D) is also incorrect as bed rest is not a treatment for pulmonary embolism; it does not address the underlying problem and may even lead to further complications.",
+                "user_answer": "(B) - Recommend bed rest until symptoms improve"
+            },
+            {
+                "question_index": "14",
+                "question_number": 15,
+                "correct_answer": "(D) - Anticoagulation therapy",
+                "explanation": "(A) Anticoagulation therapy is the correct answer as it helps to prevent further clot formation and allows the body to dissolve the existing clot over time. (B) Antibiotics are not effective for treating pulmonary embolism as this condition is not caused by an infection. (C) Inhaled bronchodilators are used for other respiratory issues but do not address the underlying cause of a pulmonary embolism. (D) Corticosteroids may reduce inflammation but are not a primary treatment for pulmonary embolism.",
+                "user_answer": "(A) - Corticosteroids"
+            }
+        ],
+        "subtopic": {
+            "Definition and Overview of Pulmonary Embolism": {
+                "correct_count": 1,
+                "wrong_count": 2,
+                "total_question": 3,
+                "accuracy": 33.33333333333333
+            },
+            "Symptoms and Signs of Pulmonary Embolism": {
+                "correct_count": 1,
+                "wrong_count": 2,
+                "total_question": 3,
+                "accuracy": 33.33333333333333
+            },
+            "Causes and Risk Factors of Pulmonary Embolism": {
+                "correct_count": 2,
+                "wrong_count": 1,
+                "total_question": 3,
+                "accuracy": 66.66666666666666
+            },
+            "Diagnosis and Testing for Pulmonary Embolism": {
+                "correct_count": 1,
+                "wrong_count": 2,
+                "total_question": 3,
+                "accuracy": 33.33333333333333
+            },
+            "Treatment Options for Pulmonary Embolism": {
+                "correct_count": 0,
+                "wrong_count": 3,
+                "total_question": 3,
+                "accuracy": 0.0
+            }
+        }
+    },
+    "feedback_data": {
+        "quiz_id": "USR-XCAD8981",
+        "user_id": "USR-XCAD8981",
+        "ratings": {
+            "overall": null,
+            "relevance": null,
+            "difficulty": null
+        },
+        "questions": [
+            {
+                "question_id": "0",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "1",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "2",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "3",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "4",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "5",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "6",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "7",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "8",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "9",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "10",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "11",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "12",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "13",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            },
+            {
+                "question_id": "14",
+                "thumbs_up": false,
+                "dont_know": false,
+                "flagged": false
+            }
+        ]
+    }
+}

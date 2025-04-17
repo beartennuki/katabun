@@ -1,0 +1,125 @@
+{
+  "category": "technology",
+  "quizzes": [
+    {
+      "title": "Technology Fundamentals",
+      "description": "Introduction to modern technology concepts.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Computer Hardware Basics",
+      "description": "Understanding the components of computers.",
+      "num_questions": 15,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Software Development",
+      "description": "Fundamentals of writing and managing code.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Networking Essentials",
+      "description": "Basics of computer networks and protocols.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Cybersecurity Basics",
+      "description": "Introduction to protecting digital information.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Data Structures and Algorithms",
+      "description": "Fundamental concepts in programming and problem solving.",
+      "num_questions": 20,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Web Development Essentials",
+      "description": "Basics of building and designing websites.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Mobile App Development",
+      "description": "Introduction to creating applications for mobile devices.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Cloud Computing",
+      "description": "Overview of cloud services and infrastructure.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Artificial Intelligence Basics",
+      "description": "Introduction to AI concepts and applications.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Machine Learning Fundamentals",
+      "description": "Understanding algorithms and data-driven decision making.",
+      "num_questions": 20,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Blockchain Technology",
+      "description": "Basics of blockchain and its applications.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Internet of Things",
+      "description": "Overview of connected devices and smart systems.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Robotics Essentials",
+      "description": "Introduction to robotics and automation.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Augmented Reality",
+      "description": "Basics of AR and its technological impact.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Virtual Reality",
+      "description": "Understanding VR and immersive technologies.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Big Data Analytics",
+      "description": "Techniques for analyzing large datasets.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Tech Innovations",
+      "description": "Exploring the latest trends in technology.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Digital Transformation",
+      "description": "How technology is changing business operations.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Software Testing",
+      "description": "Basics of ensuring quality in software development.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    }
+  ]
+}

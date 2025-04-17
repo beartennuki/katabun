@@ -1,0 +1,17 @@
+{
+    "load_info": {
+        "flag": true,
+        "message": "Processing your request",
+        "type": "autoquiz",
+        "doc_id": "QIZ-BSCT9364"
+    },
+    "quiz_info": {
+        "quiz_id": "QIZ-BSCT9364",
+        "submission_id": "SUB-QXNQ4279",
+        "user_id": "USR-XCAD8981",
+        "topic": "sasads",
+        "description": "",
+        "num_questions": "5",
+        "level": "Beginner"
+    }
+}

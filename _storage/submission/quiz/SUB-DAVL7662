@@ -1,0 +1,17 @@
+{
+    "load_info": {
+        "flag": true,
+        "message": "Processing your request",
+        "doc_type": "autoquiz",
+        "doc_id": "QIZ-EUKU8507"
+    },
+    "quiz_info": {
+        "quiz_id": "QIZ-EUKU8507",
+        "submission_id": "SUB-DAVL7662",
+        "user_id": "USR-DHBW8080",
+        "topic": "sasas",
+        "description": "dsadasd",
+        "num_questions": "5",
+        "level": "Beginner"
+    }
+}

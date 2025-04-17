@@ -1,0 +1,39 @@
+{% extends "page/base/base.html" %}
+{% block title %}Request Failed - 4Uclass{% endblock %}
+{% block content %}
+<section class="py-5" style="background-color: white;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <!-- Image Section -->
+                <img src="{{ url_for('static', filename='images/loading/warning.gif') }}" alt="Error"
+                     class="img-fluid mb-4" style="max-width: 50%; height: auto;">
+
+                <!-- Message Section -->
+                <h3 class="fw-bold mb-4" style="color: #0d6efd; font-size: 2rem;">Request Failed</h3>
+                <p class="mb-4" style="color: black; font-size: 1rem;">
+                    <strong>{{ message }}</strong>
+                </p>
+
+                <!-- Back Buttons -->
+                <div>
+                    <a href="{{ url_for('autoquiz_page') }}" class="btn btn-primary me-2">Back to Auto-Quiz</a>
+                    <a href="{{ url_for('guidedquiz_page') }}" class="btn btn-primary me-2">Back to Guided-Quiz</a>
+                    <a href="{{ url_for('landing_page') }}" class="btn btn-secondary">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @media (max-width: 768px) {
+        img {
+            max-width: 70%; /* Adjust image size for smaller screens */
+        }
+        h3 {
+            font-size: 1.5rem; /* Reduce title size on smaller screens */
+        }
+    }
+</style>
+{% endblock %}

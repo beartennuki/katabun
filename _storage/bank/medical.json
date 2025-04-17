@@ -1,0 +1,125 @@
+{
+  "category": "medical",
+  "quizzes": [
+    {
+      "title": "Medical Fundamentals",
+      "description": "Introduction to medical science.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Human Anatomy",
+      "description": "Study of the human body's structure.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Physiology Basics",
+      "description": "Understanding body functions and processes.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Medical Terminology",
+      "description": "Common terms used in healthcare.",
+      "num_questions": 5,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Pathology Essentials",
+      "description": "Introduction to diseases and their causes.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Pharmacology Basics",
+      "description": "Understanding medications and their effects.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Diagnostic Techniques",
+      "description": "Techniques for diagnosing medical conditions.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Surgical Procedures Overview",
+      "description": "Introduction to surgical methods and procedures.",
+      "num_questions": 10,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Medical Ethics",
+      "description": "Ethical considerations in healthcare.",
+      "num_questions": 5,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Public Health Basics",
+      "description": "Understanding the principles of public health.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Epidemiology",
+      "description": "Study of disease spread and control.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Nutrition and Health",
+      "description": "Impact of nutrition on overall health.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Medical Imaging",
+      "description": "Techniques and applications of medical imaging.",
+      "num_questions": 15,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Pediatrics Basics",
+      "description": "Healthcare fundamentals for children.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Geriatrics",
+      "description": "Medical care for the elderly.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Emergency Medicine",
+      "description": "Basics of handling medical emergencies.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Cardiology Essentials",
+      "description": "Introduction to heart-related conditions.",
+      "num_questions": 10,
+      "difficulty": "intermediate"
+    },
+    {
+      "title": "Neurology Basics",
+      "description": "Understanding the nervous system.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    },
+    {
+      "title": "Dermatology Fundamentals",
+      "description": "Basics of skin care and diseases.",
+      "num_questions": 10,
+      "difficulty": "beginner"
+    },
+    {
+      "title": "Oncology Overview",
+      "description": "Introduction to cancer and its treatments.",
+      "num_questions": 15,
+      "difficulty": "expert"
+    }
+  ]
+}

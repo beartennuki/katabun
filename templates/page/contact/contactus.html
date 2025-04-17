@@ -1,0 +1,55 @@
+{% extends "page/base/base.html" %}
+{% block title %}Contact Us - 4Uclass{% endblock %}
+{% block content %}
+<section class="py-5" style="background-color: #EAF6FF;">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Image Section -->
+            <div class="col-md-5 text-center">
+                <img src="{{ url_for('static', filename='images/contact/Questions-rafiki.png') }}" alt="Contact Us" class="img-fluid" style="max-width: 100%; height: auto;">
+            </div>
+
+            <!-- Form Section -->
+            <div class="col-md-7">
+                <h3 class="fw-bold mb-4 text-center" style="color: #0d6efd; font-size: 2rem;">Contact Us</h3>
+                <p class="mb-4 text-center" style="color: black; font-size: 1rem;">
+                    Have any questions? Fill out the form below, and we’ll get back to you as soon as possible.
+                </p>
+                <form method="POST" action="/contact-us" style="max-width: 450px; margin: 0 auto;">
+                    <div class="mb-5">
+                        <label for="name" class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Your Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email address" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Subject</label>
+                        <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter the subject of your message" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Your Message</label>
+                        <textarea class="form-control" id="message" name="message" rows="5" placeholder="Write your message here" required></textarea>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Optional CSS for responsiveness -->
+<style>
+    @media (max-width: 768px) {
+        .col-md-5 img {
+            margin-bottom: 20px;
+        }
+        form {
+            max-width: 100%; /* Ensure form adjusts to smaller screens */
+        }
+    }
+</style>
+{% endblock %}

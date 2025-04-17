@@ -1,0 +1,50 @@
+{% extends "page/base/base.html" %}
+{% block title %}Account - Fourclass.app{% endblock %}
+{% block content %}
+<section class="py-5" style="background-color: #EAF6FF;">
+  <div class="container">
+    <h3 class="fw-bold mb-4 text-center" style="color: #0d6efd; font-size: 2rem;">User Information</h3>
+
+    <!-- Sign In Card in a centered, thinner column -->
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card mb-4">
+          <div class="card-header" style="color: #0d6efd; font-size: 1.25rem;">Account Information</div>
+          <div class="card-body">
+            <p class="card-text" style="color: black; font-size: 1rem;">
+              Sign in to access and manage your account details, track your credits, and explore our services.
+            </p>
+          </div>
+          <div class="card-footer">
+            <a class="btn btn-primary" href="#">Sign In</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Combined Credit Information & Buy Credits Card in a centered, thinner column -->
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card mb-4">
+          <div class="card-header" style="color: #0d6efd; font-size: 1.25rem;">Credit Information</div>
+          <div class="card-body">
+            <p class="card-text" style="color: black; font-size: 1rem;">
+              Current Credits: <strong>{{ current_credits or 0 }}</strong>
+            </p>
+            <p class="card-text" style="color: black; font-size: 1rem;">
+              Credits Expiry Date: <strong>{{ credit_expiry or 'N/A' }}</strong>
+            </p>
+            <p class="card-text" style="color: black; font-size: 1rem;">
+              Purchase additional credits to unlock more features and continue enjoying our services.
+            </p>
+          </div>
+          <div class="card-footer">
+            <a class="btn btn-success" href="#">Buy Credits</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

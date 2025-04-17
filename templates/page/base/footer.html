@@ -1,0 +1,53 @@
+<footer class="py-4">
+  <style>
+    /* ========== Footer Styles with New Color Palette ========== */
+
+    /* Footer base styles */
+    footer {
+      color: var(--color-navy);             /* Dark navy for text */
+      padding: 2rem 0;                      /* More generous vertical spacing */
+      border-top: 1px solid #d3d3d3; /* Green border for separation */
+      text-align: center;                   /* Center-align content for balance */
+    }
+
+    /* Footer link styles */
+    footer a {
+      color: var(--color-navy);             /* Dark navy for link text */
+      font-weight: 500;                     /* Medium weight for a sleeker look */
+      text-decoration: none;                /* Remove underline */
+      font-size: 1rem;                      /* Standard font size for links */
+      transition: color 0.3s ease;          /* Smooth color transition */
+    }
+
+    footer a:hover {
+      text-decoration: underline;           /* Minimal underline on hover */
+      color: var(--color-blue);             /* Deep blue hover color */
+    }
+
+    /* Footer link alignment */
+    footer ul {
+      margin: 0;                            /* Reset margin */
+      padding: 0;                           /* Reset padding */
+      list-style: none;                     /* Remove bullet points */
+      display: inline-flex;                 /* Horizontal list by default */
+      gap: 1.5rem;                          /* Space between links */
+    }
+
+    /* Footer text alignment */
+    footer p {
+      margin: 1rem 0 0;                     /* Add spacing above text */
+      font-weight: 600;                     /* Semi-bold text for clarity */
+      color: var(--color-navy);             /* Match text color */
+    }
+  </style>
+
+  <div class="container text-center">
+    <ul class="list-inline">
+      <li class="list-inline-item"><a href="{{ url_for('feedback_page') }}">Feedback</a></li>
+      <li class="list-inline-item"><a href="{{ url_for('contact_page') }}">Contact</a></li>
+      <li class="list-inline-item"><a href="{{ url_for('about_page') }}">About</a></li>
+      <li class="list-inline-item"><a href="{{ url_for('tnc_page') }}">Terms & Conditions</a></li>
+    </ul>
+    <p class="mt-3">© 2025 4|class. All rights reserved.</p>
+  </div>
+</footer>

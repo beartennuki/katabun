@@ -1,0 +1,72 @@
+<script>
+let retryInterval = 5000; // 1 second between retries
+let timeout = 60000; // 1 minute timeout
+let startTime = Date.now(); // Start time of the check
+
+function checkTaskStatus(taskUrl) {
+    // Send a GET request to check task status
+    fetch(taskUrl, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Network response was not ok (status: ${response.status})`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Check for an error key first
+        if (data.error) {
+            console.error('API Error:', data.error);
+            window.location.href = '/error/503';
+            return;
+        }
+
+        // Check the state of the task from the response
+        if (data.state === 'success') {
+            // Task is complete: show the ready section.
+            document.getElementById('loading-section').style.display = 'none';
+            document.getElementById('ready-section').style.display = 'block';
+        } else if (data.state === 'pending') {
+            // Task is still pending, so check again if within the timeout.
+            if (Date.now() - startTime < timeout) {
+                setTimeout(() => checkTaskStatus(taskUrl), retryInterval);
+            } else {
+                window.location.href = '/error/503';
+            }
+        } else if (data.state === 'fail') {
+            // Task failed: Optionally, show an alert or display the error message.
+            alert(data.msg || "Task failed.");
+            window.location.href = '/error/503';
+        } else {
+            // If the state is unknown, throw an error.
+            throw new Error(`Unknown state: ${data.state}`);
+        }
+    })
+    .catch(error => {
+        console.error('Error checking task status:', error);
+        window.location.href = '/error/503';
+    });
+}
+
+// Get task URL dynamically from the template
+const taskUrl = "{{ task_url }}";
+
+// Initial delay of 5 seconds before starting the status checks
+setTimeout(() => checkTaskStatus(taskUrl), 10000);
+</script>
+
+<!-- Optional CSS for responsiveness -->
+<style>
+    @media (max-width: 768px) {
+        .col-md-5 img {
+            margin-bottom: 20px;
+        }
+        form {
+            max-width: 100%; /* Ensure form adjusts to smaller screens */
+        }
+    }
+</style>
