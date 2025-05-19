@@ -48,7 +48,13 @@
             </label>
           </div>
           <div class="d-grid">
-            <button type="submit" class="btn btn-primary btn-lg">Generate Quiz</button>
+            {% if loggedin %}
+              <button type="submit" class="btn btn-primary btn-lg">Generate Quiz <small>(5 Credits)</small></button>
+            {% else %}
+              <!-- User is not logged in: disable the button and show message -->
+              <button type="submit" class="btn btn-primary btn-lg" disabled>Generate Quiz</button>
+              <p class="text-danger mt-2">Please <a href="{{ url_for('login') }}">log in</a> to generate a quiz.</p>
+            {% endif %}
           </div>
         </form>
       </div>

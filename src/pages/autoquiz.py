@@ -1,9 +1,9 @@
 #Bismillahhirahmannirahim
 from flask import redirect, url_for
 
-from src.util import util
+from src.util import Util
 from src.api import API
-from src.pages.loading import loading
+from src.pages.loading import Loading
 
 
 class autoquiz:
@@ -27,9 +27,9 @@ class autoquiz:
         submit_info = {}
         quiz_id = ''
         if flag is True:
-            quiz_id = util().generate_quiz_id()
-            submission_id = util().generate_submission_id()
-            user_id = util().get_user_id()
+            quiz_id = Util().generate_quiz_id()
+            submission_id = Util().generate_submission_id()
+            user_id = Util().get_user_id()
 
             submit_info = {
                 "submit_type": "autoquiz",
@@ -66,6 +66,6 @@ class autoquiz:
         else:
             raise ValueError('Unknown respond["status"] value')
 
-        encode_str = loading().encode_data(load_info)
+        encode_str = Loading().encode_data(load_info)
         return redirect(url_for('loading_page',loadstr=encode_str))
 

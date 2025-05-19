@@ -5,12 +5,12 @@ from datetime import timedelta
 from flask import Flask, render_template, request, session, jsonify, abort, redirect, url_for
 
 from src.pages.autoquiz import autoquiz
-from src.pages.loading import loading
-from src.pages.assessment import assessment
+from src.pages.loading import Loading
+from src.pages.assessment import Assessment
 from src.pages.quiz import Quiz
 from src.pages.bank import Bank
 from src.api import API
-from src.util import util
+from src.util import Util
 from src.mongoio import MongoIO
 from src.googleauth import GoogleAuth
 
@@ -48,7 +48,7 @@ def assign_user_id():
     session.permanent = True
 
     if 'user_id' not in session:
-        session['user_id'] = util().generate_user_id()
+        session['user_id'] = Util().generate_user_id()
         session['user_id_creation_time'] = time.time()
 
 @app.route('/login')
@@ -93,7 +93,7 @@ def guidedquiz_page():
 
 @app.route('/loading/<loadstr>')
 def loading_page(loadstr):
-    flag, message, doc_id, doc_type, task_url = loading().processing_request(loadstr)
+    flag, message, doc_id, doc_type, task_url = Loading().processing_request(loadstr)
 
     if flag is False:
         return render_template('page/loading/failed.html',
@@ -113,7 +113,7 @@ def quiz_page(doc_id):
         if not mongoio.document_exists(doc_id, doc_type='eval'):
             return abort(404, description=f"Unknown Doc-ID:{doc_id}")
         mcq_question_ls, info_dic = Quiz().give_mcq_question(doc_id)
-        util_obj = util()
+        util_obj = Util()
         user_id = util_obj.get_user_id()
         assessment_id = util_obj.generate_assessment_id()
         return render_template('page/quiz/mcq.html',
@@ -144,14 +144,14 @@ def assessment_page(assessment_id):
         if not user_id or not assessment_id:
             return abort(400, description="Missing user_id or assessment_id in the request.")
 
-        asst_obj = assessment()
+        asst_obj = Assessment()
         assessment_info = asst_obj.validate_answer(request)
         feedback_info = asst_obj.get_feedback(request)
         asst_obj.cache_assessment_data(assessment_id, assessment_info, feedback_info)
         return asst_obj.call_loading_page(assessment_id)
 
     if request.method == 'GET':
-        asst_obj = assessment()
+        asst_obj = Assessment()
         answer_script, advice_dict, overall_dict = asst_obj.load_assessment_data(assessment_id)
         print(advice_dict)
         return render_template('page/assessment/assessment.html',

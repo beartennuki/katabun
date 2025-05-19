@@ -3,3 +3,8 @@
 /storage/submission/
 /storage/temp/
 /storage/
+.idea/
+__pycache__/
+*.pyc
+/set_env.sh
+*.pyc

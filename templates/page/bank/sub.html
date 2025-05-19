@@ -7,6 +7,10 @@
     <!-- Page Heading -->
     <h2 class="text-center mb-4 fw-bold" style="color: #0d6efd; font-size: 2.5rem;">{{ category|title }}</h2>
 
+    {% if not loggedin %}
+    <p class="text-danger mt-1">Please <a href="{{ url_for('account_page') }}">log in</a> to generate a similar quiz.</p>
+    {% endif %}
+
     <style>
       .business, .administration, .finance { background-color: var(--color-yellow); color: white; }
       .science, .medical, .technology { background-color: var(--color-green); color: white; }
@@ -46,12 +50,18 @@
             <a href="{{ url_for('quiz_page', doc_id=doc.doc_id) }}" class="btn btn-light d-inline-block">Take Quiz</a>
 
             <form action="{{ url_for('autoquiz_page') }}" method="post" class="d-inline-block ms-2">
-                <input type="hidden" name="topic" value="{{ doc.title }}">
-                <input type="hidden" name="description" value="{{ doc.general_info }}">
-                <input type="hidden" name="level" value="{{ doc.level }}">
-                <input type="hidden" name="numQuestions" value="{{ doc.question_count }}">
-                <input type="hidden" name="agreeTnC" value="on">
-                <button type="submit" class="btn btn-light">Generate New</button>
+              <input type="hidden" name="topic" value="{{ doc.title }}">
+              <input type="hidden" name="description" value="{{ doc.general_info }}">
+              <input type="hidden" name="level" value="{{ doc.level }}">
+              <input type="hidden" name="numQuestions" value="{{ doc.question_count }}">
+              <input type="hidden" name="agreeTnC" value="on">
+
+              {% if loggedin %}
+                <button type="submit" class="btn btn-light">Generate Similar</button>
+              {% else %}
+                <!-- User not logged in: disable button and show login prompt -->
+                <button type="submit" class="btn btn-light" disabled>Generate Similar</button>
+              {% endif %}
             </form>
         </div>
         </div>
