@@ -4,7 +4,7 @@ import base64
 import hashlib
 from cryptography.fernet import Fernet
 
-class loading:
+class Loading:
 
     def __init__(self):
         self.salt = 'mkn103@'

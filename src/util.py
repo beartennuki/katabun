@@ -1,10 +1,11 @@
 from flask import session
+from uuid import uuid4
 import random
 import string
 import time
 
 
-class util:
+class Util:
 
     def __private_generate_id_string(self):
         alphabets = ''.join(random.choices(string.ascii_uppercase, k=4))
@@ -68,7 +69,7 @@ class util:
 
         :return: A unique feedback ID as a string.
         """
-        string_id = self.__private_generate_id_string()
+        string_id = uuid4()
         return f"USR-{string_id}"
 
 

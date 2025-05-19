@@ -1,16 +1,32 @@
+from src.api import API
 from src.mongoio import MongoIO
+from src.pages.loading import Loading
 
+from flask import session, url_for, redirect
 
-class assessment:
+class Assessment:
 
     def __init__(self):
         self.mongoio = MongoIO()
 
     def load_assessment_data(self, assessment_id):
-        assessmend_doc, _ = self.mongoio.load_assessment_document(assessment_id)
-        assessment_info = assessmend_doc['assessment_info']
-        advice_dict = assessmend_doc['advice_dict']
-        eval_id = assessmend_doc['meta']['eval_id']
+
+        assessment_doc, _ = self.mongoio.load_assessment_document(assessment_id)
+
+        # Check if session user_id == to the recorded user_id
+        recorded_user_id = assessment_doc['meta']['user_id']
+        if session.get('user_id') != recorded_user_id:
+            id_check = False
+            answer_script = {}
+            advice_dict = {}
+            overall_dict = {}
+            return id_check, answer_script, advice_dict, overall_dict
+        else:
+            id_check = True
+
+        assessment_info = assessment_doc['assessment_info']
+        advice_dict = assessment_doc['advice_dict']
+        eval_id = assessment_doc['meta']['eval_id']
         quiz_meta_dict = self.mongoio.load_eval_document(eval_id, section='meta')
         overall_dict = {
             'title': quiz_meta_dict[0]['title'],
@@ -20,7 +36,8 @@ class assessment:
             'question_count': len(assessment_info['correct_qids']) + len(assessment_info['wrong_qids']),
             'accuracy': assessment_info['accuracy'] * 100
         }
-
+        if 'requested' not in advice_dict.keys():
+            advice_dict['requested'] = True
         # Create answer script sorted by question index
         answer_script = []
 
@@ -53,4 +70,43 @@ class assessment:
         # Sort by question index
         answer_script = sorted(answer_script, key=lambda x: x["question_index"])
 
-        return answer_script, advice_dict, overall_dict
+        return id_check, answer_script, advice_dict, overall_dict
+
+    def resubmit_assessment(self, assessment_id):
+
+        user_id = session.get('user_id')
+
+        reassessment_dic = {
+            'user_id'       :user_id,
+            'assessment_id' :assessment_id,
+            'submit_type'   :'reassessment'
+        }
+
+        message = 'Reanalyzing your result'
+        load_info = {
+            'flag': True,
+            'message': message,
+            'doc_id': assessment_id,
+            'doc_type': 'assessment'
+        }
+
+        api = API()
+        respond = api.submit(reassessment_dic)
+
+        if respond['status'] is True:
+
+            load_info['task_url'] = url_for('check_submission_status',
+                                            task_id=respond['task_id'],
+                                            _external=True)
+            load_info['message'] = load_info['message'] + '\n' + respond['msg']
+
+        elif respond['status'] is False:
+            load_info['flag'] = False
+            load_info['message'] = load_info['message'] + '\n' + respond['msg']
+
+        else:
+            raise ValueError('Unknown respond["status"] value')
+
+        encode_str = Loading().encode_data(load_info)
+        return redirect(url_for('loading_page', loadstr=encode_str))
+

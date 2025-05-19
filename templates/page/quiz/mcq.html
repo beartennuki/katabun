@@ -7,27 +7,59 @@ Quiz - 4Uclass
 {% block content %}
 <section class="py-5" style="background-color: white;">
     <div class="container">
-        <!-- Quiz Header -->
         <div class="col-md-7 mx-auto text-center">
-            <h3 class="fw-bold mb-4" style="color: #0d6efd; font-size: 2rem;">{{quiz_title}}</h3>
+            <h3 class="fw-bold mb-4" style="color: #0d6efd; font-size: 2rem;">{{ quiz_title }}</h3>
         </div>
 
-        <!-- MCQ Section -->
+        <div class="col-md-7 mx-auto text-center mb-4">
+            {% if not toggle_info.login %}
+                <div class="alert alert-warning d-flex align-items-center" role="alert"
+                     style="background-color: #fff8e1; border-color: #ffecb3; color: #8a6d3b;">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    <div>
+                        To unlock personalized feedback please
+                        <a href="{{ url_for('account_page') }}" class="fw-bold text-decoration-underline">sign in</a>
+                        first. It only takes a moment!
+                    </div>
+                </div>
+
+            {% elif not toggle_info.enough_credit %}
+                <div class="alert alert-warning d-flex align-items-center" role="alert"
+                     style="background-color: #fff8e1; border-color: #ffecb3; color: #8a6d3b;">
+                    <i class="bi bi-patch-exclamation-fill me-2"></i>
+                    <div>
+                        You need at least <strong>{{ toggle_info.credit_info.min_credit }}</strong> credits
+                        to get personalized advice. Please
+                        <a href="{{ url_for('account_page') }}" class="fw-bold text-decoration-underline">top up your credits</a>.
+                    </div>
+                </div>
+
+            {% elif not toggle_info.active_credit %}
+                <div class="alert alert-warning d-flex align-items-center" role="alert"
+                     style="background-color: #fff8e1; border-color: #ffecb3; color: #8a6d3b;">
+                    <i class="bi bi-clock-history me-2"></i>
+                    <div>
+                        It looks like your credits have expired. To continue receiving personalized feedback,
+                        please
+                        <a href="{{ url_for('account_page') }}" class="fw-bold text-decoration-underline">purchase new credits</a>.
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
         <form id="quiz-form" method="POST" action="{{ url_for('quiz_page', doc_id=doc_id) }}"
               class="col-md-7 mx-auto">
             <input type="hidden" name="user_id" value="{{ user_id }}">
             <input type="hidden" name="doc_id" value="{{ doc_id }}">
             <input type="hidden" name="assessment_id" value="{{ assessment_id }}">
+
             {% for index, question_data in mcq_questions %}
-            <div class="card mb-4" style="border: none;">
-                <!-- Card Header -->
-                <div class="card-header" style="background-color: #EAF6FF; border: none;">
-                    <span class="fw-bold">Question {{ index + 1 }}</span>
-                    <br>
+            <div class="card mb-4 shadow-sm" style="border-radius: 8px;">
+                <div class="card-header"
+                     style="background-color: #EAF6FF; border: none; border-bottom: 1px solid #ced4da;">
+                    <span class="fw-bold">Question {{ index + 1 }}</span><br>
                     <span>{{ question_data['question'] }}</span>
                 </div>
-
-                <!-- Card Body -->
                 <div class="card-body" style="background-color: white;">
                     <div class="mt-3">
                         {% for choice in question_data['choices'] %}
@@ -37,7 +69,8 @@ Quiz - 4Uclass
                                 id="choice-{{ index }}-{{ loop.index }}"
                                 name="question-{{ index }}"
                                 value="{{ loop.index0 }}"
-                                class="form-check-input" required
+                                class="form-check-input"
+                                required
                             >
                             <label for="choice-{{ index }}-{{ loop.index }}" class="form-check-label">
                                 {{ choice }}
@@ -46,19 +79,15 @@ Quiz - 4Uclass
                         {% endfor %}
                     </div>
                 </div>
-
-                <!-- Card Footer -->
                 <div class="card-footer text-end" style="background-color: white; border: none;">
-                    <!-- Hidden Inputs for interactive icons -->
                     <input type="hidden" id="thumbs-up-{{ index }}" name="thumbs_up_{{ index }}" value="0">
                     <input type="hidden" id="dont-know-{{ index }}" name="dont_know_{{ index }}" value="0">
                     <input type="hidden" id="flagged-{{ index }}" name="flagged_{{ index }}" value="0">
-                    <input type="hidden" id="qid" name="qid" value = {{question_data['qid']}}>
+                    <input type="hidden" id="qid" name="qid" value="{{ question_data['qid'] }}">
 
-                    <!-- Thumbs Up Icon -->
                     <button
                         type="button"
-                        class="btn btn-link p-0 me-2"
+                        class="btn btn-link p-0 me-2 question-interaction-button"
                         data-bs-toggle="tooltip" data-bs-placement="top"
                         title="Thumbs up this question if it is helpful"
                         data-input-id="thumbs-up-{{ index }}"
@@ -71,10 +100,9 @@ Quiz - 4Uclass
                         ></i>
                     </button>
 
-                    <!-- I Don't Know Icon -->
                     <button
                         type="button"
-                        class="btn btn-link p-0 me-2"
+                        class="btn btn-link p-0 me-2 question-interaction-button"
                         data-bs-toggle="tooltip" data-bs-placement="top"
                         title="Mark this question if you do not know the answer"
                         data-input-id="dont-know-{{ index }}"
@@ -87,10 +115,9 @@ Quiz - 4Uclass
                         ></i>
                     </button>
 
-                    <!-- Flag Icon -->
                     <button
                         type="button"
-                        class="btn btn-link p-0"
+                        class="btn btn-link p-0 question-interaction-button"
                         data-bs-toggle="tooltip" data-bs-placement="top"
                         title="Flag this question if it is inappropriate, irrelevant or repetitive"
                         data-input-id="flagged-{{ index }}"
@@ -106,20 +133,17 @@ Quiz - 4Uclass
             </div>
             {% endfor %}
 
-            <!-- Rating Card -->
-            <div class="card mb-3" style="border: none;">
-                <div class="card-header py-2 px-3" style="background-color: #EAF6FF; border: none;">
+            <div class="card mb-4 shadow-sm" style="border-radius: 8px;">
+                <div class="card-header py-2 px-3"
+                     style="background-color: #EAF6FF; border: none; border-bottom: 1px solid #ced4da;">
                     <span class="fw-bold">Rate this quiz (optional)</span>
                 </div>
                 <div class="card-body py-2 px-3" style="background-color: white;">
-                    <!-- Overall Rating -->
                     <div class="mb-2 row align-items-center">
-                        <label
-                            class="col-sm-8 col-form-label"
-                            data-bs-toggle="tooltip" data-bs-placement="top"
-                            title="Does the quiz help you with your study?"
-                            style="margin-bottom: 0;"
-                        >
+                        <label class="col-sm-8 col-form-label"
+                               data-bs-toggle="tooltip" data-bs-placement="top"
+                               title="Does the quiz help you with your study?"
+                               style="margin-bottom: 0;">
                             Helpful for Study?
                         </label>
                         <div class="col-sm-4 d-flex justify-content-between">
@@ -133,14 +157,11 @@ Quiz - 4Uclass
                             </div>
                         </div>
                     </div>
-                    <!-- Relevance Rating -->
                     <div class="mb-2 row align-items-center">
-                        <label
-                            class="col-sm-8 col-form-label"
-                            data-bs-toggle="tooltip" data-bs-placement="top"
-                            title="Was this quiz relevant to the topic?"
-                            style="margin-bottom: 0;"
-                        >
+                        <label class="col-sm-8 col-form-label"
+                               data-bs-toggle="tooltip" data-bs-placement="top"
+                               title="Was this quiz relevant to the topic?"
+                               style="margin-bottom: 0;">
                             Relevant to Topic?
                         </label>
                         <div class="col-sm-4 d-flex justify-content-between">
@@ -154,14 +175,11 @@ Quiz - 4Uclass
                             </div>
                         </div>
                     </div>
-                    <!-- Difficulty Rating -->
                     <div class="row align-items-center">
-                        <label
-                            class="col-sm-8 col-form-label"
-                            data-bs-toggle="tooltip" data-bs-placement="top"
-                            title="Was the difficulty level appropriate?"
-                            style="margin-bottom: 0;"
-                        >
+                        <label class="col-sm-8 col-form-label"
+                               data-bs-toggle="tooltip" data-bs-placement="top"
+                               title="Was the difficulty level appropriate?"
+                               style="margin-bottom: 0;">
                             Difficulty Appropriate?
                         </label>
                         <div class="col-sm-4 d-flex justify-content-between">
@@ -177,9 +195,53 @@ Quiz - 4Uclass
                     </div>
                 </div>
             </div>
-            <!-- Submit Button -->
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">Choose your Summary</label>
+                <div class="d-grid gap-2">
+                    <div class="card shadow-sm summary-option-card" data-summary-type="quick">
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio"
+                                       name="summaryType" id="quickSummary" value="quick"
+                                       {% if not (toggle_info.login and toggle_info.enough_credit and toggle_info.active_credit) %}checked{% endif %}>
+                                <label class="form-check-label fw-bold" for="quickSummary">
+                                    Quick Summary (Free)
+                                </label>
+                                <p class="card-text text-muted small mt-1">A basic overview of your quiz results.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-sm summary-option-card" data-summary-type="personalized">
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio"
+                                       name="summaryType" id="personalizedSummary" value="personalized"
+                                       {% if not toggle_info.login or not toggle_info.enough_credit or not toggle_info.active_credit %}
+                                           disabled
+                                       {% else %}
+                                           checked
+                                       {% endif %}>
+                                <label class="form-check-label fw-bold" for="personalizedSummary">
+                                    Personalized Summary (Uses {{ toggle_info.credit_info.min_credit }} Credit)
+                                </label>
+                                <p class="card-text text-muted small mt-1">Detailed feedback and insights tailored to your answers.</p>
+                                {% if not toggle_info.login %}
+                                    <small class="text-warning"><a href="{{ url_for('account_page') }}">Sign in</a> to unlock.</small>
+                                {% elif not toggle_info.enough_credit %}
+                                    <small class="text-warning">Requires {{ toggle_info.credit_info.min_credit }} credits. <a href="{{ url_for('account_page') }}">Top up</a>.</small>
+                                {% elif not toggle_info.active_credit %}
+                                    <small class="text-warning">Your credits have expired. <a href="{{ url_for('account_page') }}">Purchase new credits</a>.</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-lg mt-4">
+                <button type="submit" class="btn btn-primary btn-lg mt-2">
                     Submit Quiz
                 </button>
             </div>
@@ -187,71 +249,67 @@ Quiz - 4Uclass
     </div>
 </section>
 
-<!-- Optional CSS for responsiveness and aesthetics -->
 <style>
-    .card {
-        border-radius: 8px;
-    }
-    .card-header {
-        font-size: 1.1rem;
-        font-weight: bold;
-    }
-    .card-body, .card-footer {
-        background-color: white;
-    }
-    .icon-gray {
-        color: gray;
-    }
-    /* When an icon is active, color it appropriately */
-    .icon-gray.active.thumbs-up {
-        color: green;
-    }
-    .icon-gray.active.dont-know {
-        color: gold;
-    }
-    .icon-gray.active.flagged {
-        color: red;
-    }
-    .btn-link {
-        text-decoration: none;
-    }
-    .btn-link:hover {
-        opacity: 0.8;
-    }
+    .card { border-radius: 8px; }
+    .card-header { font-size: 1.1rem; font-weight: bold; }
+    .card-body, .card-footer { background-color: white; }
+    .icon-gray { color: gray; }
+    .icon-gray.active.thumbs-up { color: green; }
+    .icon-gray.active.dont-know { color: gold; }
+    .icon-gray.active.flagged { color: red; }
+    .btn-link { text-decoration: none; }
+    .btn-link:hover { opacity: 0.8; }
+
+    .summary-option-card { cursor: pointer; border: 1px solid #ced4da; border-radius: 8px; transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out; }
+    .summary-option-card:hover { border-color: #0d6efd; }
+    .summary-option-card.active { border-color: #0d6efd; box-shadow: 0 0 0 .25rem rgba(13,110,253,.25); }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Bootstrap tooltips
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.forEach(tooltipTriggerEl => {
-        new bootstrap.Tooltip(tooltipTriggerEl);
+    // Bootstrap tooltips
+    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el =>
+        new bootstrap.Tooltip(el)
+    );
+
+    // Question interaction toggles
+    function toggleInteraction(inputId, iconId) {
+        const inp = document.getElementById(inputId);
+        const ic = document.getElementById(iconId);
+        if (inp.value === '0') {
+            inp.value = '1'; ic.classList.add('active');
+        } else {
+            inp.value = '0'; ic.classList.remove('active');
+        }
+    }
+    document.querySelectorAll('.question-interaction-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            toggleInteraction(btn.dataset.inputId, btn.dataset.iconId);
+        });
     });
 
-    // Function to toggle interactive icons and update hidden inputs
-    function toggleInteraction(inputId, iconId) {
-        const inputField = document.getElementById(inputId);
-        const icon = document.getElementById(iconId);
+    // Summary selection logic
+    const quickRadio = document.getElementById('quickSummary');
+    const persRadio = document.getElementById('personalizedSummary');
+    const quickCard = document.querySelector('[data-summary-type="quick"]');
+    const persCard = document.querySelector('[data-summary-type="personalized"]');
 
-        if (inputField.value === '0') {
-            inputField.value = '1';
-            icon.classList.add('active');
+    function updateSummaryCards() {
+        quickCard.classList.remove('active');
+        persCard.classList.remove('active');
+
+        if (persRadio && persRadio.checked && !persRadio.disabled) {
+            persCard.classList.add('active');
         } else {
-            inputField.value = '0';
-            icon.classList.remove('active');
+            quickCard.classList.add('active');
         }
     }
 
-    // Attach click listeners to all buttons with data attributes
-    document.querySelectorAll('.btn-link').forEach(button => {
-        button.addEventListener('click', () => {
-            const inputId = button.getAttribute('data-input-id');
-            const iconId = button.getAttribute('data-icon-id');
-            if (inputId && iconId) {
-                toggleInteraction(inputId, iconId);
-            }
-        });
-    });
+    quickCard.addEventListener('click', () => { quickRadio.checked = true; updateSummaryCards(); });
+    persCard.addEventListener('click', () => { if (!persRadio.disabled) persRadio.checked = true; updateSummaryCards(); });
+
+    // Initialize
+    updateSummaryCards();
 });
 </script>
 {% endblock %}

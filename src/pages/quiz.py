@@ -1,9 +1,12 @@
 #Bismillahirahmannirahim
+from datetime import datetime, timezone
+
 from src.api import API
 from src.mongoio import MongoIO
-from src.pages.loading import loading
+from src.pages.loading import Loading
+from src.googleauth import GoogleAuth
 
-from flask import redirect, url_for
+from flask import redirect, url_for, session, current_app
 class Quiz:
     def __init__(self):
         self.mongoio = MongoIO()
@@ -65,6 +68,8 @@ class Quiz:
             "relevance_rating": request.form.get("relevance_rating") == "yes",
             "difficulty_rating": request.form.get("difficulty_rating") == "yes"
         }
+        # Capture the summary type
+        responds_dic['summaryType'] = request.form.get('summaryType')
 
         usr_respond_dic = {
             'user_id': user_id,
@@ -104,8 +109,47 @@ class Quiz:
         else:
             raise ValueError('Unknown respond["status"] value')
 
-        encode_str = loading().encode_data(load_info)
+        encode_str = Loading().encode_data(load_info)
         return redirect(url_for('loading_page', loadstr=encode_str))
 
+    def toggle_status(self):
 
+        min_req = current_app.config['ASSESSMENT_GENERATION_COST']
 
+        toggle_info = {
+            'login':            False,
+            'enough_credit':    False,
+            'active_credit':    False,
+            'toggle':           False,
+            'credit_info':      {
+                'min_credit': min_req,
+                'remaining': 0
+            }
+        }
+        if not bool(session.get('user_login')):
+            return toggle_info
+
+        # user is logged in
+        toggle_info['login'] = True
+
+        ci = GoogleAuth(current_app).get_credit_info()
+        remaining = ci.get('remaining', 0) or 0
+        expiry = ci.get('expired_date')
+        toggle_info['credit_info']['remaining'] = remaining
+
+        # check credit amount
+        if remaining >= min_req:
+            toggle_info['enough_credit'] = True
+
+        # check expiry (normalize to aware UTC)
+        if isinstance(expiry, datetime):
+            if expiry.tzinfo is None:
+                expiry = expiry.replace(tzinfo=timezone.utc)
+            if datetime.now(timezone.utc) < expiry:
+                toggle_info['active_credit'] = True
+
+        # final toggle decision
+        if toggle_info['login'] and toggle_info['enough_credit'] and toggle_info['active_credit']:
+            toggle_info['toggle'] = True
+
+        return toggle_info

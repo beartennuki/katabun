@@ -1,5 +1,4 @@
 from pymongo import MongoClient, errors
-from uuid import uuid4
 import time
 
 from src.api import API
