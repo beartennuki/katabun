@@ -2,7 +2,6 @@ annotated-types==0.7.0
 anyio==4.8.0
 Authlib==1.5.2
 blinker==1.9.0
-bson==0.5.10
 certifi==2024.12.14
 cffi==1.17.1
 charset-normalizer==3.4.1
