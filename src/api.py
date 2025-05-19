@@ -1,12 +1,20 @@
+import os
 import json
 import requests
 from flask import jsonify
 
 class API:
     def __init__(self):
-        # Get API base URL from environment variable or set default
         api_port = 5500
-        self.api_base_url = f"http://localhost:{api_port}"
+        flask_env = os.getenv("FLASK_ENV", "production").lower()
+        if flask_env == "development":
+            self.api_base_url = f"http://localhost:{api_port}"
+        else:
+            rehal_uri = os.getenv("REHAL_URI")
+            if not rehal_uri:
+                raise EnvironmentError("REHAL_URI must be set in production environment")
+
+        self.api_base_url = rehal_uri
 
     def submit(self, submit_info):
         try:
