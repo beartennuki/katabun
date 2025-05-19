@@ -28,10 +28,10 @@ def create_app():
     app.permanent_session_lifetime = timedelta(days=30)
 
     # ─── Cookie Jar Safety ──────────────────────────────────────
-    flask_env = os.getenv('FLASK_ENV')
-    if flask_env not in ["development", "production"]:
+    katabun_env = os.getenv('KATABUN_ENV_TYPE')
+    if katabun_env not in ["PROD", "DEV"]:
         raise ValueError('Unknown flask_env setting')
-    elif flask_env == "production":
+    elif katabun_env == "PROD":
         app.config['SESSION_COOKIE_SECURE']     = True  # Only over HTTPS
         app.config['SESSION_COOKIE_HTTPONLY']   = True  # JS can’t access
         app.config['SESSION_COOKIE_SAMESITE']   = 'Lax'  # Prevent CSRF
