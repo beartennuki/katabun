@@ -6,5 +6,5 @@
 .idea/
 __pycache__/
 *.pyc
-/set_env.sh
+/set_dev_env.sh
 *.pyc

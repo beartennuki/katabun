@@ -6,15 +6,19 @@ from flask import jsonify
 class API:
     def __init__(self):
         api_port = 5500
-        flask_env = os.getenv("FLASK_ENV", "production").lower()
-        if flask_env == "development":
+        katabun_env = os.getenv('KATABUN_ENV_TYPE')
+        if katabun_env not in ["PROD", "DEV"]:
+            raise ValueError('Unknown flask_env setting')
+
+        katabun_env = os.getenv("KATABUN_ENV_TYPE", "PROD")
+        if katabun_env == "DEV":
             self.api_base_url = f"http://localhost:{api_port}"
         else:
             rehal_uri = os.getenv("REHAL_URI")
             if not rehal_uri:
                 raise EnvironmentError("REHAL_URI must be set in production environment")
 
-        self.api_base_url = rehal_uri
+            self.api_base_url = rehal_uri
 
     def submit(self, submit_info):
         try:
@@ -35,68 +39,56 @@ class API:
 
     def check_status(self, task_id):
         """
-        Check quiz submission status by making a GET request.
+        Query FastAPI `/job/status/<task_id>` and translate every Celery state
+        into a single, consistent JSON contract **without importing celery.states**.
 
-        :param task_id: Task ID to check the status.
-        :return: JSON response with the status of the quiz processing.
+        HTTP codes returned
+        -------------------
+        202  → task not finished yet (PENDING, STARTED, PROGRESS, RETRY)
+        200  → task finished successfully (SUCCESS)
+        410  → task was cancelled (REVOKED)
+        500  → task ended in FAILURE or network error
+        400  → anything we can’t interpret
         """
         try:
             endpoint = f"{self.api_base_url}/job/status/{task_id}"
-            response = requests.get(endpoint)
+            resp = requests.get(endpoint, timeout=5)
+            resp.raise_for_status()  # raises on 4xx / 5xx
 
-            # Check for HTTP errors before processing
-            if response.status_code != 200:
-                return jsonify({
-                    "error": f"Failed to fetch status, received {response.status_code}",
-                    "details": response.text
-                }), response.status_code
+            payload = resp.json()  # may raise ValueError
+            state = payload.get("state")  # Celery’s task.state
+            status = payload.get("status")  # your own status key
+            msg = payload.get("msg")
 
-            # Correct way to parse JSON
-            response_dict = response.json()
+            # -------- map Celery states (as plain strings) to API responses ------
+            if state == "PENDING":
+                return jsonify({"state": "pending", "msg": msg}), 202
 
-            # Extract values safely
-            res_state = response_dict.get('state')
-            res_status = response_dict.get('status')
-            res_msg = response_dict.get('msg', None)
+            if state in {"STARTED", "RETRY", "PROGRESS"}:
+                return jsonify({"state": "processing", "msg": msg}), 202
 
-            # Default message
-            msg = None
+            if state == "SUCCESS":
+                return jsonify({"state": status or "success", "msg": msg}), 200
 
-            # Handling different statuses
-            if res_state == 'FAILURE' or res_status == 'FAILURE':
-                msg = res_msg if res_msg is not None else "Failed to retrieve quiz status"
-                return jsonify({
-                    'state': 'fail',
-                    'msg': msg
-                }), 500  # Internal Server Error
+            if state == "FAILURE":
+                return jsonify({"state": "fail",
+                                "msg": msg or "Task failed"}), 500
 
-            elif res_state == 'PENDING':
-                return jsonify({
-                    'state': 'pending',
-                    'msg': None
-                }), 200  # OK
+            if state == "REVOKED":
+                return jsonify({"state": "revoked",
+                                "msg": msg or "Task was cancelled"}), 410
 
-            elif res_state == 'SUCCESS' and res_status == 'SUCCESS':
-                return jsonify({
-                    'state': 'success',
-                    'msg': None
-                }), 200  # OK
+            # anything else we don’t recognise
+            return jsonify({"state": "unknown",
+                            "msg": f"Unrecognised Celery state: {state}"}), 400
 
-            else:
-                return jsonify({
-                    "error": f"Unknown res_state={res_state} and res_status={res_status} value"
-                }), 400  # Bad Request
-
+        # -------- network / server / decoding problems ---------------------------
         except requests.exceptions.RequestException as e:
-            return jsonify({
-                "error": "Request failed",
-                "details": str(e)
-            }), 500  # Internal Server Error
+            return jsonify({"error": "Request to status endpoint failed",
+                            "details": str(e)}), 502  # Bad gateway / upstream
 
-        except json.JSONDecodeError:
-            return jsonify({
-                "error": "Invalid JSON response from server"
-            }), 500  # Internal Server Error
+        except (ValueError, json.JSONDecodeError):
+            return jsonify({"error": "Invalid JSON from status endpoint"}), 502
 
     def fetch_mcq_doc(self, doc_id, section=None):
         url = self.api_base_url + '/job/load'
