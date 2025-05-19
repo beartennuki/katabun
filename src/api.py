@@ -8,7 +8,7 @@ class API:
         api_port = 5500
         katabun_env = os.getenv('KATABUN_ENV_TYPE')
         if katabun_env not in ["PROD", "DEV"]:
-            raise ValueError('Unknown flask_env setting')
+            raise ValueError('Unknown KATABUN_ENV_TYPE setting')
 
         katabun_env = os.getenv("KATABUN_ENV_TYPE", "PROD")
         if katabun_env == "DEV":

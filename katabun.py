@@ -30,7 +30,7 @@ def create_app():
     # ─── Cookie Jar Safety ──────────────────────────────────────
     katabun_env = os.getenv('KATABUN_ENV_TYPE')
     if katabun_env not in ["PROD", "DEV"]:
-        raise ValueError('Unknown flask_env setting')
+        raise ValueError('Unknown KATABUN_ENV_TYPE setting')
     elif katabun_env == "PROD":
         app.config['SESSION_COOKIE_SECURE']     = True  # Only over HTTPS
         app.config['SESSION_COOKIE_HTTPONLY']   = True  # JS can’t access
