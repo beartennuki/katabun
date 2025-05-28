@@ -2,6 +2,7 @@
 
 import os
 import time
+from dotenv import load_dotenv
 from datetime import timedelta, datetime, timezone
 
 from flask import (
@@ -22,6 +23,7 @@ from src.googleauth        import GoogleAuth
 
 
 def create_app():
+    load_dotenv()
     app = Flask(__name__, static_folder='static')
     # ─── Configuration ────────────────────────────────────────────────
     app.secret_key = os.getenv('KATABUN_KEY', 'dev-secret')

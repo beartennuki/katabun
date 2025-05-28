@@ -8,3 +8,4 @@ __pycache__/
 *.pyc
 /set_dev_env.sh
 *.pyc
+.env
