@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-from flask import jsonify
+# from flask import jsonify # This import is removed as jsonify is no longer used
 
 class API:
     def __init__(self):
@@ -62,33 +62,29 @@ class API:
 
             # -------- map Celery states (as plain strings) to API responses ------
             if state == "PENDING":
-                return jsonify({"state": "pending", "msg": msg}), 202
+                return {"state": "pending", "msg": msg}, 202
 
             if state in {"STARTED", "RETRY", "PROGRESS"}:
-                return jsonify({"state": "processing", "msg": msg}), 202
+                return {"state": "processing", "msg": msg}, 202
 
             if state == "SUCCESS":
-                return jsonify({"state": status or "success", "msg": msg}), 200
+                return {"state": status or "success", "msg": msg}, 200
 
             if state == "FAILURE":
-                return jsonify({"state": "fail",
-                                "msg": msg or "Task failed"}), 500
+                return {"state": "fail", "msg": msg or "Task failed"}, 500
 
             if state == "REVOKED":
-                return jsonify({"state": "revoked",
-                                "msg": msg or "Task was cancelled"}), 410
+                return {"state": "revoked", "msg": msg or "Task was cancelled"}, 410
 
             # anything else we don’t recognise
-            return jsonify({"state": "unknown",
-                            "msg": f"Unrecognised Celery state: {state}"}), 400
+            return {"state": "unknown", "msg": f"Unrecognised Celery state: {state}"}, 400
 
         # -------- network / server / decoding problems ---------------------------
         except requests.exceptions.RequestException as e:
-            return jsonify({"error": "Request to status endpoint failed",
-                            "details": str(e)}), 502  # Bad gateway / upstream
+            return {"error": "Request to status endpoint failed", "details": str(e)}, 502  # Bad gateway / upstream
 
         except (ValueError, json.JSONDecodeError):
-            return jsonify({"error": "Invalid JSON from status endpoint"}), 502
+            return {"error": "Invalid JSON from status endpoint"}, 502
 
     def fetch_mcq_doc(self, doc_id, section=None):
         url = self.api_base_url + '/job/load'
@@ -110,7 +106,6 @@ class API:
         return None
 
     def fetch_db_config(self):
-
         url = self.api_base_url + "/db-config"
         response = requests.get(url, headers={"Accept": "application/json"})
         if response.status_code == 200:
