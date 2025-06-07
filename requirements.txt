@@ -2,7 +2,6 @@ annotated-types==0.7.0
 anyio==4.8.0
 Authlib==1.5.2
 blinker==1.9.0
-bson==0.5.10
 certifi==2024.12.14
 cffi==1.17.1
 charset-normalizer==3.4.1
@@ -25,7 +24,7 @@ packaging==25.0
 pycparser==2.22
 pydantic==2.10.4
 pydantic_core==2.27.2
-pymongo==4.11.1
+pymongo==4.13.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.1.0
 redis==5.2.1

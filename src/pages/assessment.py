@@ -1,13 +1,16 @@
+# src/pages/assessment.py
 from src.api import API
 from src.mongoio import MongoIO
 from src.pages.loading import Loading
+from src.credit_checker import CreditChecker # Import the new CreditChecker
 
-from flask import session, url_for, redirect
+from flask import session, url_for, redirect, current_app # Import current_app for config
 
 class Assessment:
 
     def __init__(self):
         self.mongoio = MongoIO()
+        self.credit_checker = CreditChecker() # Initialize CreditChecker
 
     def load_assessment_data(self, assessment_id):
 
@@ -73,8 +76,26 @@ class Assessment:
         return id_check, answer_script, advice_dict, overall_dict
 
     def resubmit_assessment(self, assessment_id):
-
         user_id = session.get('user_id')
+
+        # Get the cost for assessment generation from Flask's application configuration
+        # Default to 5 if not found, though it should be set in katabun.py
+        assessment_cost = current_app.config.get('ASSESSMENT_GENERATION_COST')
+
+        # --- Perform Credit Check before proceeding with reassessment submission ---
+        has_credits, message = self.credit_checker.has_sufficient_and_active_credits(user_id, assessment_cost)
+
+        if not has_credits:
+            # If credit check fails, prepare a redirect to the failed loading page with the error message
+            load_info = {
+                'flag': False,
+                'message': message,
+                'doc_id': assessment_id, # Still refer to the assessment ID for context
+                'doc_type': 'assessment'
+            }
+            encode_str = Loading().encode_data(load_info)
+            return redirect(url_for('loading_page', loadstr=encode_str))
+        # --- End Credit Check ---
 
         reassessment_dic = {
             'user_id'       :user_id,
@@ -109,4 +130,3 @@ class Assessment:
 
         encode_str = Loading().encode_data(load_info)
         return redirect(url_for('loading_page', loadstr=encode_str))
-
