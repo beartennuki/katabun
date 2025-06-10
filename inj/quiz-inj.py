@@ -22,6 +22,7 @@ if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
 
 from src.util import Util
+from src.mongoio import MongoIO # Import MongoIO
 
 load_dotenv()
 
@@ -123,6 +124,7 @@ class API:
 
 api = API()
 util = Util()
+mongoio = MongoIO() # Initialize MongoIO globally
 
 # Credit checking logic adapted for standalone script
 def check_user_credits(user_id, required_cost: int) -> tuple[bool, str]:
@@ -182,9 +184,6 @@ def worker(q):
         try:
             print(f"\n--- Processing Quiz Entry {index + 1} by thread {threading.current_thread().name} ---")
 
-            doc_id = util.generate_quiz_id()
-            submission_id = util.generate_submission_id()
-
             topic = quiz_data.get('topic')
             description = quiz_data.get('description', '')
             num_questions = quiz_data.get('num_questions')
@@ -194,6 +193,20 @@ def worker(q):
                 print(f"Skipping entry {index + 1} due to missing required data (topic, num_questions, or level): {quiz_data}")
                 q.task_done()
                 continue
+
+            # Check if the quiz topic and level already exist in MongoDB
+            existing_quiz = mongoio.eval_collections.find_one({
+                "meta.input_information.submit_info.topic": topic,
+                "meta.input_information.submit_info.level": level
+            })
+
+            if existing_quiz:
+                print(f"Quiz for topic '{topic}' at level '{level}' already exists (Doc ID: {existing_quiz['meta']['doc_id']}). Skipping submission.")
+                q.task_done()
+                continue # Skip to the next item in the queue
+
+            doc_id = util.generate_quiz_id()
+            submission_id = util.generate_submission_id()
 
             submit_info = {
                 "submit_type": "autoquiz",
@@ -225,11 +238,11 @@ def worker(q):
                         current_state = status_data.get('state')
                         message = status_data.get('msg', 'No specific message.')
 
-                        if current_state == "success":
+                        if current_state == "SUCCESS":
                             print(f"Quiz for '{topic}' (Task ID: {task_id}) completed successfully! Message: {message}")
                             task_succeeded = True
                             break
-                        elif current_state in ["pending", "processing"]:
+                        elif current_state in ["PENDING", "PROCESSING"]:
                             print(f"Quiz for '{topic}' (Task ID: {task_id}) is still in '{current_state}' state. Retrying in {CHECK_INTERVAL_SECONDS}s...")
                         else:
                             print(f"Quiz for '{topic}' (Task ID: {task_id}) failed or revoked. State: '{current_state}', Message: {message}")
