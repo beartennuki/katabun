@@ -49,7 +49,7 @@ def create_app():
     # ─── Cost for service ──────────────────────────────────────────────
     app.config["QUIZ_GENERATION_COST"] = 5
     app.config["ASSESSMENT_GENERATION_COST"] = 5
-    app.config["SIGNUP_CREDIT"] = 100
+    app.config["SIGNUP_CREDIT"] = 30
 
     # ─── Request Hooks ───────────────────────────────────────────────
     @app.before_request
