@@ -1,0 +1,51 @@
+# ==============================================================================
+# robots.txt for Katabun (4urclass.app)
+# This file instructs web crawlers which pages they are allowed to access and index.
+# ==============================================================================
+
+# Apply the following rules to all web crawlers.
+User-agent: *
+
+# --- Disallow crawling of private or functional paths ---
+# These pages are user-specific, contain no valuable SEO content,
+# or are part of the application's functional flow.
+
+# User account and authentication pages
+Disallow: /account
+Disallow: /login
+Disallow: /logout
+Disallow: /auth/
+Disallow: /delete_account
+
+# Quiz and assessment process pages
+Disallow: /quiz/
+Disallow: /assessment/
+Disallow: /loading/
+
+# Quiz generator pages (the results in the bank are more valuable to index)
+Disallow: /autoquiz
+Disallow: /guidedquiz
+
+# Error pages
+Disallow: /error/
+
+
+# --- Explicitly allow crawling of public content ---
+# While this is the default behavior if not disallowed, being explicit can be helpful.
+# These pages contain the public-facing content you want indexed by search engines.
+
+Allow: /
+Allow: /bank/
+Allow: /about
+Allow: /contact
+Allow: /feedback
+Allow: /tnc
+Allow: /privacy-policy
+Allow: /cookie-policy
+Allow: /disclaimer
+
+
+# --- Location of the sitemap ---
+# Provide the full URL to your sitemap file.
+# This helps search engines discover all your indexable pages efficiently.
+Sitemap: https://4urclass.app/sitemap.xml

@@ -7,7 +7,7 @@ from datetime import timedelta, datetime, timezone
 
 from flask import (
     Flask, render_template, request, session, jsonify,
-    abort, redirect, url_for
+    abort, redirect, url_for, make_response
 )
 
 from src.pages.autoquiz import autoquiz
@@ -20,7 +20,7 @@ from src.api import API
 from src.util import Util
 from src.mongoio import MongoIO
 from src.googleauth import GoogleAuth
-
+from src.sitemap_generator import SitemapGenerator
 
 def create_app():
     load_dotenv()
@@ -247,10 +247,33 @@ def create_app():
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
+    @app.route('/sitemap.xml')
+    def sitemap():
+        """
+        This route generates and serves the dynamic sitemap.xml file.
+        """
+        try:
+            generator = SitemapGenerator()
+            sitemap_xml = generator.generate_sitemap()
+
+            # Create a response object with the correct XML content type
+            response = make_response(sitemap_xml)
+            response.headers['Content-Type'] = 'application/xml'
+
+            return response
+        except Exception as e:
+            # Log the error and return a 500 status in case of failure
+            app.logger.error(f"Sitemap generation failed: {e}")
+            abort(500)
     @app.errorhandler(404)
     def page_not_found(e):
         msg = getattr(e, 'description', '')
         return render_template('page/error/404.html', message=msg), 404
+
+    @app.errorhandler(500)
+    def internal_server_error(e):
+        # You can add logging here to log the error
+        return render_template('page/error/503.html'), 500
 
     @app.route('/error/503')
     def service_unavailable_route():
