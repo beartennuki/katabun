@@ -10,16 +10,16 @@ from flask import (
     abort, redirect, url_for
 )
 
-from src.pages.autoquiz    import autoquiz
-from src.pages.loading     import Loading
-from src.pages.assessment  import Assessment
-from src.pages.quiz        import Quiz
-from src.pages.bank        import Bank
-from src.pages.account     import  Account
-from src.api               import API
-from src.util              import Util
-from src.mongoio           import MongoIO
-from src.googleauth        import GoogleAuth
+from src.pages.autoquiz import autoquiz
+from src.pages.loading import Loading
+from src.pages.assessment import Assessment
+from src.pages.quiz import Quiz
+from src.pages.bank import Bank
+from src.pages.account import Account
+from src.api import API
+from src.util import Util
+from src.mongoio import MongoIO
+from src.googleauth import GoogleAuth
 
 
 def create_app():
@@ -34,11 +34,11 @@ def create_app():
     if katabun_env not in ["PROD", "DEV"]:
         raise ValueError('Unknown KATABUN_ENV_TYPE setting')
     elif katabun_env == "PROD":
-        app.config['SESSION_COOKIE_SECURE']     = True  # Only over HTTPS
-        app.config['SESSION_COOKIE_HTTPONLY']   = True  # JS can’t access
-        app.config['SESSION_COOKIE_SAMESITE']   = 'Lax'  # Prevent CSRF
+        app.config['SESSION_COOKIE_SECURE'] = True  # Only over HTTPS
+        app.config['SESSION_COOKIE_HTTPONLY'] = True  # JS can’t access
+        app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Prevent CSRF
 
-    app.config['GOOGLE_CLIENT_ID']     = os.getenv('GOOGLE_CLIENT_ID')
+    app.config['GOOGLE_CLIENT_ID'] = os.getenv('GOOGLE_CLIENT_ID')
     app.config['GOOGLE_CLIENT_SECRET'] = os.getenv('GOOGLE_CLIENT_SECRET')
 
     # ─── Extensions / Singletons ──────────────────────────────────────
@@ -56,7 +56,7 @@ def create_app():
     def assign_user_id():
         # skip static files & the auth endpoints
         if request.path.startswith('/static') or request.endpoint in (
-            'login', 'auth_callback'
+                'login', 'auth_callback'
         ):
             return
 
@@ -124,7 +124,7 @@ def create_app():
             task_url=task_url, message=msg
         )
 
-    @app.route('/quiz/<doc_id>', methods=['GET','POST'])
+    @app.route('/quiz/<doc_id>', methods=['GET', 'POST'])
     def quiz_page(doc_id):
         mongoio = MongoIO()
         if not mongoio.document_exists(doc_id, doc_type='eval'):
@@ -133,9 +133,9 @@ def create_app():
         if request.method == 'GET':
             qz = Quiz()
             questions, info = qz.give_mcq_question(doc_id)
-            user_id         = Util().get_user_id()
-            assessment_id   = Util().generate_assessment_id()
-            toggle_info     = qz.toggle_status()
+            user_id = Util().get_user_id()
+            assessment_id = Util().generate_assessment_id()
+            toggle_info = qz.toggle_status()
 
             return render_template(
                 'page/quiz/mcq.html',
@@ -151,7 +151,7 @@ def create_app():
             resp = quiz_obj.capture_usr_respond(request)
             return quiz_obj.submit_usr_respond(resp)
 
-    @app.route('/assessment/<assessment_id>', methods=['GET','POST'])
+    @app.route('/assessment/<assessment_id>', methods=['GET', 'POST'])
     def assessment_page(assessment_id):
 
         if request.method == 'POST':
@@ -209,6 +209,21 @@ def create_app():
     @app.route('/tnc')
     def tnc_page():
         return render_template('page/others/tnc.html')
+
+    # --- NEW LEGAL PAGES ---
+    @app.route('/disclaimer')
+    def disclaimer_page():
+        return render_template('page/others/disclaimer.html')
+
+    @app.route('/cookie-policy')
+    def cookie_policy_page():
+        return render_template('page/others/cookie_policy.html')
+
+    @app.route('/privacy-policy')
+    def privacy_policy_page():
+        return render_template('page/others/privacy_policy.html')
+
+    # --- END NEW LEGAL PAGES ---
 
     @app.route('/account')
     def account_page():
