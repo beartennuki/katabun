@@ -20,7 +20,10 @@ class Quiz:
 
         ques_dic = doc['questions']
         meta_dic = doc['meta']
-        info_dic = {'title': meta_dic['title']}
+        info_dic = {
+            'title': meta_dic.get('title', '4UrClass Quiz'),
+            'description': meta_dic.get('general_info', 'A quiz to help you learn and test your knowledge on various subjects.')
+        }
 
         qix = 0
         quiz_data_ls = []

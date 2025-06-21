@@ -144,7 +144,8 @@ def create_app():
                 assessment_id=assessment_id,
                 mcq_questions=questions,
                 toggle_info=toggle_info,
-                quiz_title=info['title']
+                quiz_title=info['title'],
+                quiz_description=info['description']
             )
         else:
             quiz_obj = Quiz()
