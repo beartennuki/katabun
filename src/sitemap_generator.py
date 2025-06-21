@@ -59,9 +59,26 @@ class SitemapGenerator:
             xml_content += '    <priority>0.8</priority>\n'
             xml_content += '  </url>\n'
 
-        # Note: Individual quiz pages (/quiz/<doc_id>) are not included here
-        # because they are disallowed in robots.txt. The SEO value is in the
-        # bank category pages that list them.
+            # Add individual quiz pages for discovery
+            quizzes = self.bank.give_genre_ls(category)
+            if quizzes:
+                for quiz in quizzes:
+                    quiz_loc = f"/quiz/{quiz['doc_id']}"
+                    xml_content += '  <url>\n'
+                    xml_content += f'    <loc>{self.base_url}{quiz_loc}</loc>\n'
+                    # Use quiz creation date if available, otherwise today
+                    lastmod_str = quiz.get('date', today)
+                    try:
+                        # Attempt to parse date format like "June 20, 2025"
+                        dt_object = datetime.strptime(lastmod_str, '%B %d, %Y')
+                        formatted_lastmod = dt_object.strftime('%Y-%m-%d')
+                    except (ValueError, TypeError):
+                        formatted_lastmod = today # Fallback to today if format is wrong
+                    xml_content += f'    <lastmod>{formatted_lastmod}</lastmod>\n'
+                    xml_content += '    <changefreq>weekly</changefreq>\n'
+                    xml_content += '    <priority>0.7</priority>\n'
+                    xml_content += '  </url>\n'
+
 
         # Close the XML urlset
         xml_content += '</urlset>\n'
