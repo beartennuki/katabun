@@ -1,5 +1,42 @@
 {% extends "page/base/base.html" %}
-{% block title %}{{ category|title }} Quiz Bank{% endblock %}
+
+{% block title %}
+  {% if category == 'science' %}
+    Stay Ahead – 4UrClass Science Quizzes
+  {% elif category == 'medical' %}
+    Breathe Easier – 4UrClass Medical Study Bank
+  {% elif category == 'business' %}
+    Win Deals Fast – 4UrClass Business Quizzes
+  {% elif category == 'finance' %}
+    Own the Numbers – 4UrClass Finance Drills
+  {% elif category == 'technology' %}
+    Catch Up to Code – 4UrClass Tech Quiz Bank
+  {% elif category == 'creativity' %}
+    Fuel Your Spark – 4UrClass Creative Challenges
+  {% elif category == 'law' %}
+    Decode the Statutes – 4UrClass Legal Quizzes
+  {% elif category == 'culture' %}
+    Travel the World – 4UrClass Culture Quizzes
+  {% elif category == 'administration' %}
+    Lead Teams Clearly – 4UrClass Admin Prep
+  {% else %}
+    Study Smarter, Stress Less – 4UrClass Quiz Bank
+  {% endif %}
+{% endblock %}
+
+{% block description %}
+{% if category == 'science' %}Browse concise science quizzes that keep lab insights fresh between experiments and grant deadlines.
+{% elif category == 'medical' %}Go through focused medical sets, refresh lifesaving facts in minutes between rounds and night shifts.
+{% elif category == 'business' %}Browse targeted business quizzes, sharpen strategy and deal instincts on the commute.
+{% elif category == 'finance' %}Go through finance drills to decode markets and compliance quickly before the trading bell rings.
+{% elif category == 'technology' %}Browse rapid tech quizzes that align skills with fast-moving codebases during coffee breaks.
+{% elif category == 'creativity' %}Go through creative challenges to reignite inspiration and polish theory between design sprints.
+{% elif category == 'law' %}Browse legal quizzes to refine statute recall and case analysis while prepping briefs.
+{% elif category == 'culture' %}Go through cultural quizzes, expand global context and critical thought during quiet moments.
+{% elif category == 'administration' %}Browse admin quizzes to boost leadership clarity before your next team huddle.
+{% else %}Browse diverse quizzes that turn spare minutes into confident mastery across fields.{% endif %}
+{% endblock %}
+
 
 {% block content %}
 <section class="py-5" style="background-color: #EAF6FF;">
