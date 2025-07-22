@@ -182,6 +182,7 @@ def create_app():
         if category is None:
             return render_template('page/bank/bank.html')
 
+        page = request.args.get('page', 1, type=int)
         loggedin = session.get('user_login')
         cat = category.lower()
         bank = Bank()
@@ -192,7 +193,8 @@ def create_app():
             'page/bank/sub.html',
             catmeta_ls=meta,
             category=cat,
-            loggedin=loggedin
+            loggedin=loggedin,
+            page=page
         )
 
     @app.route('/about')
