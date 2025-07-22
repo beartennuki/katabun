@@ -1,4 +1,3 @@
-
 {% extends "page/base/base.html" %}
 
 {% block title %}
@@ -70,21 +69,20 @@
     </div>
 
     {% if catmeta_ls %}
-      {% set quizzes_per_page = 15 %}
-      {% set page = request.args.get('page', 1, type=int) %}
+      {% set quizzes_per_page = 5 %}
       {% set total_pages = (catmeta_ls|length / quizzes_per_page)|round(method='ceil')|int %}
-      
+
       <div class="list-group">
         {% for doc in catmeta_ls[(page-1)*quizzes_per_page : page*quizzes_per_page] %}
         <div class="list-group-item list-group-item-action flex-column align-items-start p-3 quiz-list-item">
           <div class="row align-items-center">
-            
+
             <div class="col-md-5">
               <h5 class="mb-1 fw-bold">{{ doc.title }}</h5>
               <p class="mb-1 text-muted">{{ doc.general_info }}</p>
               <small class="text-muted">{{ doc.date|capitalize }}</small>
             </div>
-            
+
             <div class="col-md-3 text-center text-md-start mt-2 mt-md-0 quiz-details">
               <strong>Questions:</strong> {{ doc.question_count }}<br>
               <strong>Difficulty:</strong> {{ doc.level|capitalize }}
@@ -92,7 +90,7 @@
 
             <div class="col-md-4 text-center text-md-end mt-3 mt-md-0 quiz-actions">
               <a href="{{ url_for('quiz_page', doc_id=doc.doc_id) }}" class="btn btn-primary mb-2 mb-md-0">Take Quiz</a>
-              
+
               <form action="{{ url_for('autoquiz_page') }}" method="post" class="d-inline-block">
                 <input type="hidden" name="topic" value="{{ doc.title }}">
                 <input type="hidden" name="description" value="{{ doc.general_info }}">
@@ -116,6 +114,9 @@
         <ul class="pagination justify-content-center">
           <li class="page-item {% if page <= 1 %}disabled{% endif %}">
             <a class="page-link" href="{{ url_for('bank_page', category=category, page=page-1) }}">Previous</a>
+          </li>
+          <li class="page-item disabled">
+            <span class="page-link">{{ page }} / {{ total_pages }}</span>
           </li>
           <li class="page-item {% if page >= total_pages %}disabled{% endif %}">
             <a class="page-link" href="{{ url_for('bank_page', category=category, page=page+1) }}">Next</a>
