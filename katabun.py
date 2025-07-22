@@ -199,13 +199,49 @@ def create_app():
     def about_page():
         return render_template('page/others/about.html')
 
-    @app.route('/contact')
+    @app.route('/contact', methods=['GET', 'POST'])
     def contact_page():
+        if request.method == 'POST':
+            # Create a dictionary with the form data
+            inquiry_data = {
+                "inquiry_id": Util().generate_inquiry_id(),
+                "name": request.form.get('name'),
+                "email": request.form.get('email'),
+                "subject": request.form.get('subject'),
+                "message": request.form.get('message'),
+                "submitted_at": datetime.now(timezone.utc)
+            }
+            # Save it to a new 'inquiries' collection in MongoDB
+            mongoio = MongoIO()
+            mongoio.save_form_submission(inquiry_data, '4urClass_inquiries')
+            # Redirect to a success page (we'll create this next)
+            return redirect(url_for('submission_success_page'))
+
         return render_template('page/contact/contactus.html')
 
-    @app.route('/feedback')
+    @app.route('/feedback', methods=['GET', 'POST'])
     def feedback_page():
+        if request.method == 'POST':
+            feedback_data = {
+                "feedback_id": Util().generate_feedback_id(),
+                "relevance": request.form.get('relevance'),
+                "easeOfUse": request.form.get('easeOfUse'),
+                "recommend": request.form.get('recommend'),
+                "suggestions": request.form.get('suggestions'),
+                "newsletter": True if request.form.get('newsletter') == 'on' else False,
+                "submitted_at": datetime.now(timezone.utc)
+            }
+            # Save it to a new 'feedback' collection in MongoDB
+            mongoio = MongoIO()
+            mongoio.save_form_submission(feedback_data, '4urClass_feedback')
+            return redirect(url_for('submission_success_page'))
+
         return render_template('page/contact/feedback.html')
+
+    # Add a new route for a generic success/thank you page
+    @app.route('/thank-you')
+    def submission_success_page():
+        return render_template('page/contact/success.html')
 
     @app.route('/tnc')
     def tnc_page():

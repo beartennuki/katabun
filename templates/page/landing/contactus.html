@@ -10,24 +10,14 @@
 
       <!-- Right Section: Form -->
       <div class="col-md-6">
-        <h3 class="fw-bold mb-4" style="color: #0d6efd; font-size: 2rem;">Keep Updates 4U</h3>
-        <p class="mb-3" style="color: black; font-size: 1rem;">
-          <strong>Enter your email to stay informed about our latest news and updates.</strong>
-        </p>
-        <form method="POST" action="{{ url_for('contact_page') }}">
-          <div class="mb-3">
-            <label for="subscribeEmail" class="form-label">Email Address</label>
-            <input type="email" class="form-control" id="subscribeEmail" name="email" placeholder="Enter your email" required>
-          </div>
-          <button type="submit" class="btn btn-primary mb-4">Subscribe</button>
-        </form>
-
+        {% include "page/landing/newsletterform.html" %}
         <h3 class="fw-bold mt-6 mb-4" style="color: #0d6efd; font-size: 2rem;">Have any question or feedback?</h3>
         <p class="mb-3" style="color: black; font-size: 1rem;">
           <strong>We'd love to hear from you! Drop us a message.</strong><br>
         </p>
-        <button type="submit" class="btn btn-primary" href="{{ url_for('contact_page') }}">Contact Us </button>
-        <button type="submit" class="btn btn-primary" href="{{ url_for('feedback_page') }}">Feedback</button>
+        <a class="btn btn-primary" href="{{ url_for('contact_page') }}">Contact Us</a>
+        <a class="btn btn-primary" href="{{ url_for('feedback_page') }}">Feedback</a>
       </div>
     </div>
+  </div>
 </section>

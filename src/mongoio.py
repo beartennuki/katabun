@@ -140,3 +140,25 @@ class MongoIO:
         documents = list(collection.find(query, projection).sort("meta.creation_time", -1))
 
         return documents
+
+
+# Add this new method to the MongoIO class in src/mongoio.py
+
+    def save_form_submission(self, data, collection_name):
+        """
+        Saves a form submission document to a specified collection.
+
+        :param data: A dictionary containing the form data.
+        :param collection_name: The name of the collection to save the data to (e.g., 'feedback' or 'inquiries').
+        :return: The inserted_id of the new document or None if insertion fails.
+        """
+        try:
+            # You might want to use a different database for user-generated content
+            # For simplicity, this example uses the same 'eval_db' from your config
+            db = self.client[self.mongo_cfg['eval_db_name']]
+            collection = db[collection_name]
+            result = collection.insert_one(data)
+            return result.inserted_id
+        except errors.PyMongoError as e:
+            print(f"Error saving to MongoDB collection {collection_name}: {e}")
+            return None
