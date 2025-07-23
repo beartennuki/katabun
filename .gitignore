@@ -6,3 +6,4 @@ src/pages/__pycache__
 /set_dev_env.sh
 *.pyc
 .env
+.DS_Store
