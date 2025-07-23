@@ -262,6 +262,36 @@ def create_app():
     def privacy_policy_page():
         return render_template('page/others/privacy_policy.html')
 
+    @app.route('/payment', methods=['GET', 'POST'])
+    def payment_page():
+        if request.method == 'POST':
+            mongoio = MongoIO()
+            willing_to_pay = request.form.get('willing_to_pay')
+            feedback_data = {
+                "feedback_id": Util().generate_feedback_id(),
+                "user_id": session.get('user_id', 'anonymous'),
+                "willing_to_pay": willing_to_pay,
+                "geolocation": {
+                    "latitude": request.form.get('latitude'),
+                    "longitude": request.form.get('longitude')
+                },
+                "timezone": request.form.get('timezone'),
+                "submitted_at": datetime.now(timezone.utc)
+            }
+
+            if willing_to_pay == 'no':
+                feedback_data['suggested_prices'] = {
+                    '30_credits': request.form.get('price_30_credits'),
+                    '100_credits': request.form.get('price_100_credits'),
+                    '500_credits': request.form.get('price_500_credits'),
+                    '1500_credits': request.form.get('price_1500_credits'),
+                }
+
+            mongoio.save_form_submission(feedback_data, 'pricing_feedback')
+            return redirect(url_for('submission_success_page'))
+
+        return render_template('page/others/payment.html')
+
     # --- END NEW LEGAL PAGES ---
 
     @app.route('/account')
