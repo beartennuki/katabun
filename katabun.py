@@ -94,7 +94,9 @@ def create_app():
     # ─── Page Routes ─────────────────────────────────────────────────
     @app.route('/')
     def landing_page():
-        return render_template('page/landing/landing.html')
+        mongoio = MongoIO()
+        top_quizzes = mongoio.get_top_n_popular_quizzes(9)
+        return render_template('page/landing/landing.html', top_quizzes=top_quizzes)
 
     @app.route('/autoquiz', methods=['GET', 'POST'])
     def autoquiz_page():
@@ -186,15 +188,18 @@ def create_app():
         loggedin = session.get('user_login')
         cat = category.lower()
         bank = Bank()
+        mongoio = MongoIO()
         if cat not in bank.give_allowed_categories():
             abort(404)
         meta = bank.give_genre_ls(cat)
+        top_quizzes = mongoio.get_top_n_popular_quizzes(3, genre=cat)
         return render_template(
             'page/bank/sub.html',
             catmeta_ls=meta,
             category=cat,
             loggedin=loggedin,
-            page=page
+            page=page,
+            top_quizzes=top_quizzes
         )
 
     @app.route('/about')

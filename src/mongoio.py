@@ -1,5 +1,7 @@
 from pymongo import MongoClient, errors
 import time
+import redis
+import json
 
 from src.api import API
 
@@ -16,7 +18,6 @@ class MongoIO:
         assess_db_name = mongo_cfg['assess_db_name']
         mcq_collection_name = mongo_cfg['mcq_collection_name']
 
-
         # Set a timeout (in milliseconds) for the initial connection attempt
         self.client = MongoClient(uri, serverSelectionTimeoutMS=5000)
         eval_db = self.client[eval_db_name]
@@ -25,6 +26,9 @@ class MongoIO:
         assess_db = self.client[assess_db_name]
         self.assess_collection = assess_db[mcq_collection_name]
         self.mongo_cfg = mongo_cfg
+
+        # Initialize Redis client
+        self.redis_client = redis.Redis(decode_responses=True)
 
     def load_eval_document(self, doc_id, section=None):
         """
@@ -141,8 +145,7 @@ class MongoIO:
 
         return documents
 
-
-# Add this new method to the MongoIO class in src/mongoio.py
+    # Add this new method to the MongoIO class in src/mongoio.py
 
     def save_form_submission(self, data, collection_name):
         """
@@ -162,3 +165,57 @@ class MongoIO:
         except errors.PyMongoError as e:
             print(f"Error saving to MongoDB collection {collection_name}: {e}")
             return None
+
+    def get_top_n_popular_quizzes(self, n, from_cache=True, genre=None):
+        """
+        Retrieves the top n most popular quizzes based on the number of loads.
+        :param n: The number of top quizzes to retrieve.
+        :param from_cache: Boolean to indicate if the cache should be used.
+        :param genre: Optional genre to filter quizzes by.
+        :return: A list of the top n quiz documents, sorted by popularity.
+        """
+        cache_key = f"top_{n}_popular_quizzes"
+        if genre:
+            cache_key += f"_{genre}"
+
+        if from_cache:
+            try:
+                cached_data = self.redis_client.get(cache_key)
+                if cached_data:
+                    print("Cache hit!")
+                    return json.loads(cached_data)
+            except redis.exceptions.ConnectionError as e:
+                print(f"Redis connection error: {e}. Falling back to DB.")
+
+        print("Cache miss or disabled. Fetching from MongoDB...")
+        pipeline = []
+        if genre:
+            pipeline.append({"$match": {"meta.genre": genre}})
+
+        pipeline.extend([
+            {
+                "$project": {
+                    "doc": "$$ROOT",
+                    "load_count": {"$size": "$meta.load_time_stamp"}
+                }
+            },
+            {
+                "$sort": {"load_count": -1}
+            },
+            {
+                "$limit": n
+            }
+        ])
+
+        popular_quizzes = list(self.eval_collections.aggregate(pipeline))
+        result_docs = [quiz['doc'] for quiz in popular_quizzes]
+
+        try:
+            serializable_result = json.dumps(result_docs, default=str)
+            self.redis_client.setex(cache_key, 3600, serializable_result)
+        except redis.exceptions.ConnectionError as e:
+            print(f"Redis connection error during setex: {e}. Could not cache results.")
+        except TypeError as e:
+            print(f"Could not serialize the MongoDB documents for caching: {e}")
+
+        return result_docs
