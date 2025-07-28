@@ -202,6 +202,18 @@ def create_app():
             top_quizzes=top_quizzes
         )
 
+    @app.route('/ibl')
+    def ibl_page():
+        return render_template('page/ibl/ibl.html')
+
+    @app.route('/log_interest/<feature>')
+    def log_interest(feature):
+        user_id = session.get('user_id')
+        if user_id:
+            mongoio = MongoIO()
+            mongoio.log_user_interest(user_id, feature)
+        return redirect(url_for('submission_success_page'))
+
     @app.route('/about')
     def about_page():
         return render_template('page/others/about.html')
