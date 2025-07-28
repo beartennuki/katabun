@@ -219,3 +219,20 @@ class MongoIO:
             print(f"Could not serialize the MongoDB documents for caching: {e}")
 
         return result_docs
+
+    def log_user_interest(self, user_id, feature):
+        """
+        Logs user interest in a new feature.
+        """
+        try:
+            db = self.client[self.mongo_cfg['eval_db_name']]
+            collection = db['user_interest']
+            collection.insert_one({
+                'user_id': user_id,
+                'feature': feature,
+                'timestamp': time.time()
+            })
+            return True
+        except errors.PyMongoError as e:
+            print(f"Error logging user interest: {e}")
+            return False
