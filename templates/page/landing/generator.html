@@ -1,67 +1,50 @@
-<section id="generator-section" style="min-height: 40vh; background-color: white; position: relative; overflow: hidden;" class="py-5">
-  <!-- Content Container (with higher stacking order) -->
+<section id="generator-section" class="py-5" style="background-color: #ffffff; position: relative; overflow: hidden;">
   <div class="container" style="position: relative; z-index: 2;">
-    <!-- Row 1: Auto-Quiz Generator -->
-    <div class="row align-items-center">
-      <!-- Left Side: Auto Quiz Animation -->
-      <div class="col-md-6 text-center">
-        <img
-          src="{{ url_for('static', filename='images/quiz/online-test.gif') }}"
-          alt="AutoQuiz Animation"
-          class="img-fluid"
-          style="width: 150px; height: 150px; object-fit: contain;">
-      </div>
+    <div class="row align-items-stretch">
 
-      <!-- Right Side: Auto Quiz Generator -->
-      <div class="col-md-6 d-flex flex-column justify-content-center text-start">
-        <h2 class="mb-4 fw-bold" style="color: #0d6efd; font-size: 2.5rem;">Auto-Quiz Generator</h2>
-        <p class="mb-4" style="color: black; font-size: 1.2rem;">
-          <strong>Follow these simple steps to create your quiz:</strong>
-        </p>
-        <ol class="mb-4" style="color: black; font-size: 1.2rem;">
-          <li>Pick a topic to study.</li>
-          <li>Choose a difficulty level.</li>
-          <li>Generate your quiz and start practicing!</li>
-        </ol>
-        <div>
-          <a href="{{ url_for('autoquiz_page') }}" class="btn btn-primary" style="font-size: 1.1rem; padding: 0.8rem 1.5rem;">
-            Try Auto-Quiz Now
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Row 2: Guided-Quiz Generator -->
-    <div class="row align-items-center mt-5">
-      <!-- Left Side: Vertical Icons -->
-      <div class="col-md-6 text-center">
-        <div class="d-flex flex-row align-items-center justify-content-center gap-4">
-          <img src="{{ url_for('static', filename='images/quiz/text-file.gif') }}" alt="Text Icon" style="width: 100px; height: 100px; object-fit: contain;">
-          <img src="{{ url_for('static', filename='images/quiz/music-file.gif') }}" alt="Audio Icon" style="width: 100px; height: 100px; object-fit: contain;">
-          <img src="{{ url_for('static', filename='images/quiz/video.gif') }}" alt="Video Icon" style="width: 100px; height: 100px; object-fit: contain;">
+      <div class="col-md-6 mb-4 mb-md-0">
+        <div class="card h-100 shadow-sm" style="border: 2px solid #0d6efd;">
+          <div class="card-body text-center d-flex flex-column justify-content-between">
+            <div>
+              <img src="{{ url_for('static', filename='images/quiz/online-test.gif') }}" alt="AutoQuiz Animation" class="img-fluid mb-3" style="width: 120px; height: 120px; object-fit: contain;">
+              <h3 class="card-title fw-bold" style="color: #0d6efd;">Auto-Quiz Generator</h3>
+              <p class="card-text">Can't find the quiz you're looking for? Create a new one in just a few clicks!</p>
+              <ol class="list-unstyled text-start mx-auto" style="max-width: 300px;">
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Pick a topic</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Choose a difficulty</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Generate and practice!</li>
+              </ol>
+            </div>
+            <a href="{{ url_for('autoquiz_page') }}" class="btn btn-primary mt-4">Create Your Quiz</a>
+          </div>
         </div>
       </div>
 
-      <!-- Right Side: Guided Quiz Generator -->
-      <div class="col-md-6 text-start">
-        <h2 class="mb-2 fw-bold" style="color: #0d6efd; font-size: 2.5rem;">Guided-Quiz Generator</h2>
-        <h4 class ="mb-4">(Coming soon)</h4>
-        <p class="mb-4" style="color: black; font-size: 1.2rem;">
-          <strong>Generate quizzes effortlessly by:</strong>
-        </p>
-        <ol class="mb-4" style="color: black; font-size: 1.2rem;">
-          <li>Upload text, audio, or video files.</li>
-          <li>Summarize the content.</li>
-          <li>Generate quizzes from the content.</li>
-        </ol>
-        <a href="{{ url_for('guidedquiz_page') }}" class="btn btn-primary" style="font-size: 1.1rem; padding: 0.8rem 1.5rem;">
-          Try Guided-Quiz Now
-        </a>
+      <div class="col-md-6">
+        <div class="card h-100 shadow-sm" style="border: 2px solid #6c757d;">
+          <div class="card-body text-center d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex justify-content-center gap-3 mb-3">
+                <img src="{{ url_for('static', filename='images/quiz/text-file.gif') }}" alt="Text Icon" style="width: 80px; height: 80px; object-fit: contain;">
+                <img src="{{ url_for('static', filename='images/quiz/music-file.gif') }}" alt="Audio Icon" style="width: 80px; height: 80px; object-fit: contain;">
+                <img src="{{ url_for('static', filename='images/quiz/video.gif') }}" alt="Video Icon" style="width: 80px; height: 80px; object-fit: contain;">
+              </div>
+              <h3 class="card-title fw-bold" style="color: #6c757d;">Guided-Quiz Generator <span class="badge bg-secondary">Coming Soon</span></h3>
+              <p class="card-text">Generate quizzes from your own content by uploading text, audio, or video files.</p>
+              <ol class="list-unstyled text-start mx-auto" style="max-width: 300px;">
+                <li><i class="bi bi-cloud-arrow-up-fill text-info me-2"></i>Upload your file</li>
+                <li><i class="bi bi-card-text text-info me-2"></i>Summarize the content</li>
+                <li><i class="bi bi-patch-question-fill text-info me-2"></i>Generate a quiz!</li>
+              </ol>
+            </div>
+            <a href="{{ url_for('guidedquiz_page') }}" class="btn btn-secondary mt-4 disabled">Coming Soon</a>
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 
-  <!-- Curved bottom edge with color #EAF6FF -->
   <svg viewBox="0 0 1440 120" preserveAspectRatio="none" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100px;">
     <path fill="#EAF6FF" d="M0,0 C600,100 840,100 1440,0 L1440,120 L0,120 Z"></path>
   </svg>
