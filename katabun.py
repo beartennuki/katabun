@@ -51,6 +51,12 @@ def create_app():
     app.config["ASSESSMENT_GENERATION_COST"] = 5
     app.config["SIGNUP_CREDIT"] = 30
 
+    # ─── Context Define ───────────────────────────────────────────────
+    @app.context_processor
+    def inject_ga4_key():
+        ga4_key = os.getenv("GOOGLE_ANALYTICS_KEY")
+        return {"ga_key": ga4_key} if ga4_key else {}
+
     # ─── Request Hooks ───────────────────────────────────────────────
     @app.before_request
     def assign_user_id():
@@ -71,7 +77,33 @@ def create_app():
             session['user_id'] = Util().generate_user_id()
             session['user_id_creation_time'] = time.time()
 
-    # ─── Authentication Routes ───────────────────────────────────────
+    # ─── 1. Core App & SEO Routes ───────────────────────────────────
+    @app.route('/')
+    def landing_page():
+        mongoio = MongoIO()
+        top_quizzes = mongoio.get_top_n_popular_quizzes(9)
+        return render_template('page/landing/landing.html', top_quizzes=top_quizzes)
+
+    @app.route('/sitemap.xml')
+    def sitemap():
+        """
+        This route generates and serves the dynamic sitemap.xml file.
+        """
+        try:
+            generator = SitemapGenerator()
+            sitemap_xml = generator.generate_sitemap()
+
+            # Create a response object with the correct XML content type
+            response = make_response(sitemap_xml)
+            response.headers['Content-Type'] = 'application/xml'
+
+            return response
+        except Exception as e:
+            # Log the error and return a 500 status in case of failure
+            app.logger.error(f"Sitemap generation failed: {e}")
+            abort(500)
+
+    # ─── 2. Authentication & User Account Routes ─────────────────────
     @app.route('/login')
     def login():
         return google_auth.login()
@@ -85,19 +117,28 @@ def create_app():
         session.clear()
         return redirect(url_for('account_page'))
 
+    @app.route('/account')
+    def account_page():
+        if not session.get('user_login'):
+            return render_template('page/account/account.html')
+
+        acc_obj = Account()
+        user_info = acc_obj.get_user_account_info()
+        credit_info = acc_obj.get_user_credit_info()
+
+        return render_template(
+            'page/account/account.html',
+            user_info=user_info,
+            credit_info=credit_info
+        )
+
     @app.route('/delete_account', methods=['POST'])
     def delete_account():
         count = google_auth.delete_user()
         session.clear()
         return redirect(url_for('landing_page'))
 
-    # ─── Page Routes ─────────────────────────────────────────────────
-    @app.route('/')
-    def landing_page():
-        mongoio = MongoIO()
-        top_quizzes = mongoio.get_top_n_popular_quizzes(9)
-        return render_template('page/landing/landing.html', top_quizzes=top_quizzes)
-
+    # ─── 3. Quiz Generation & Core Flow Routes ───────────────────────
     @app.route('/autoquiz', methods=['GET', 'POST'])
     def autoquiz_page():
         if request.method == 'POST':
@@ -126,6 +167,7 @@ def create_app():
             task_url=task_url, message=msg
         )
 
+    # ─── 4. Quiz Interaction & Results Routes ────────────────────────
     @app.route('/quiz/<doc_id>', methods=['GET', 'POST'])
     def quiz_page(doc_id):
         mongoio = MongoIO()
@@ -178,6 +220,7 @@ def create_app():
                     doc_id=assessment_id
                 )
 
+    # ─── 5. Content Discovery Routes ─────────────────────────────────
     @app.route('/bank/', defaults={'category': None})
     @app.route('/bank/<category>')
     def bank_page(category):
@@ -202,82 +245,14 @@ def create_app():
             top_quizzes=top_quizzes
         )
 
+    # ─── 6. Informational & Static Pages ─────────────────────────────
     @app.route('/ibl')
     def ibl_page():
         return render_template('page/ibl/ibl.html')
 
-    @app.route('/log_interest/<feature>')
-    def log_interest(feature):
-        user_id = session.get('user_id')
-        if user_id:
-            mongoio = MongoIO()
-            mongoio.log_user_interest(user_id, feature)
-        return redirect(url_for('submission_success_page'))
-
     @app.route('/about')
     def about_page():
         return render_template('page/others/about.html')
-
-    @app.route('/contact', methods=['GET', 'POST'])
-    def contact_page():
-        if request.method == 'POST':
-            # Create a dictionary with the form data
-            inquiry_data = {
-                "inquiry_id": Util().generate_inquiry_id(),
-                "name": request.form.get('name'),
-                "email": request.form.get('email'),
-                "subject": request.form.get('subject'),
-                "message": request.form.get('message'),
-                "submitted_at": datetime.now(timezone.utc)
-            }
-            # Save it to a new 'inquiries' collection in MongoDB
-            mongoio = MongoIO()
-            mongoio.save_form_submission(inquiry_data, '4urClass_inquiries')
-            # Redirect to a success page (we'll create this next)
-            return redirect(url_for('submission_success_page'))
-
-        return render_template('page/contact/contactus.html')
-
-    @app.route('/feedback', methods=['GET', 'POST'])
-    def feedback_page():
-        if request.method == 'POST':
-            feedback_data = {
-                "feedback_id": Util().generate_feedback_id(),
-                "relevance": request.form.get('relevance'),
-                "easeOfUse": request.form.get('easeOfUse'),
-                "recommend": request.form.get('recommend'),
-                "suggestions": request.form.get('suggestions'),
-                "newsletter": True if request.form.get('newsletter') == 'on' else False,
-                "submitted_at": datetime.now(timezone.utc)
-            }
-            # Save it to a new 'feedback' collection in MongoDB
-            mongoio = MongoIO()
-            mongoio.save_form_submission(feedback_data, '4urClass_feedback')
-            return redirect(url_for('submission_success_page'))
-
-        return render_template('page/contact/feedback.html')
-
-    # Add a new route for a generic success/thank you page
-    @app.route('/thank-you')
-    def submission_success_page():
-        return render_template('page/contact/success.html')
-
-    @app.route('/tnc')
-    def tnc_page():
-        return render_template('page/others/tnc.html')
-
-    # --- NEW LEGAL PAGES ---
-    @app.route('/disclaimer')
-    def disclaimer_page():
-        return render_template('page/others/disclaimer.html')
-
-    @app.route('/cookie-policy')
-    def cookie_policy_page():
-        return render_template('page/others/cookie_policy.html')
-
-    @app.route('/privacy-policy')
-    def privacy_policy_page():
-        return render_template('page/others/privacy_policy.html')
 
     @app.route('/payment', methods=['GET', 'POST'])
     def payment_page():
@@ -309,23 +284,71 @@ def create_app():
 
         return render_template('page/others/payment.html')
 
-    # --- END NEW LEGAL PAGES ---
+    # ─── 7. Contact, Feedback & Legal Routes ─────────────────────────
+    @app.route('/contact', methods=['GET', 'POST'])
+    def contact_page():
+        if request.method == 'POST':
+            inquiry_data = {
+                "inquiry_id": Util().generate_inquiry_id(),
+                "name": request.form.get('name'),
+                "email": request.form.get('email'),
+                "subject": request.form.get('subject'),
+                "message": request.form.get('message'),
+                "submitted_at": datetime.now(timezone.utc)
+            }
+            mongoio = MongoIO()
+            mongoio.save_form_submission(inquiry_data, '4urClass_inquiries')
+            return redirect(url_for('submission_success_page'))
 
-    @app.route('/account')
-    def account_page():
-        if not session.get('user_login'):
-            return render_template('page/account/account.html')
+        return render_template('page/contact/contactus.html')
 
-        acc_obj = Account()
-        user_info = acc_obj.get_user_account_info()
-        credit_info = acc_obj.get_user_credit_info()
+    @app.route('/feedback', methods=['GET', 'POST'])
+    def feedback_page():
+        if request.method == 'POST':
+            feedback_data = {
+                "feedback_id": Util().generate_feedback_id(),
+                "relevance": request.form.get('relevance'),
+                "easeOfUse": request.form.get('easeOfUse'),
+                "recommend": request.form.get('recommend'),
+                "suggestions": request.form.get('suggestions'),
+                "newsletter": True if request.form.get('newsletter') == 'on' else False,
+                "submitted_at": datetime.now(timezone.utc)
+            }
+            mongoio = MongoIO()
+            mongoio.save_form_submission(feedback_data, '4urClass_feedback')
+            return redirect(url_for('submission_success_page'))
 
-        return render_template(
-            'page/account/account.html',
-            user_info=user_info,
-            credit_info=credit_info
-        )
+        return render_template('page/contact/feedback.html')
 
+    @app.route('/thank-you')
+    def submission_success_page():
+        return render_template('page/contact/success.html')
+
+    @app.route('/log_interest/<feature>')
+    def log_interest(feature):
+        user_id = session.get('user_id')
+        if user_id:
+            mongoio = MongoIO()
+            mongoio.log_user_interest(user_id, feature)
+        return redirect(url_for('submission_success_page'))
+
+    @app.route('/tnc')
+    def tnc_page():
+        return render_template('page/others/tnc.html')
+
+    @app.route('/privacy-policy')
+    def privacy_policy_page():
+        return render_template('page/others/privacy_policy.html')
+
+    @app.route('/cookie-policy')
+    def cookie_policy_page():
+        return render_template('page/others/cookie_policy.html')
+
+    @app.route('/disclaimer')
+    def disclaimer_page():
+        return render_template('page/others/disclaimer.html')
+
+    # ─── 8. API & Asynchronous Task Routes ───────────────────────────
     @app.route('/check_submission_status/<task_id>')
     def check_submission_status(task_id):
         try:
@@ -333,24 +356,7 @@ def create_app():
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
-    @app.route('/sitemap.xml')
-    def sitemap():
-        """
-        This route generates and serves the dynamic sitemap.xml file.
-        """
-        try:
-            generator = SitemapGenerator()
-            sitemap_xml = generator.generate_sitemap()
-
-            # Create a response object with the correct XML content type
-            response = make_response(sitemap_xml)
-            response.headers['Content-Type'] = 'application/xml'
-
-            return response
-        except Exception as e:
-            # Log the error and return a 500 status in case of failure
-            app.logger.error(f"Sitemap generation failed: {e}")
-            abort(500)
+    # ─── 9. Error Handlers ───────────────────────────────────────────
     @app.errorhandler(404)
     def page_not_found(e):
         msg = getattr(e, 'description', '')
