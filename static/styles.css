@@ -221,36 +221,121 @@
   cursor: not-allowed;      /* Show disabled cursor */
 }
 
-/* ========== Responsive Adjustments ========== */
+/*
+==============================================
+    MOBILE RESPONSIVENESS
+==============================================
+*/
 
-/* Reduce padding on smaller devices and stack footer links vertically */
-@media (max-width: 576px) {
-  /* Header: decrease horizontal padding on mobile */
-  header .navbar {
-    padding: 0.5rem 1rem;
-  }
-
-@media (max-width: 576px) {
-  .dropdown-menu {
-    position: relative; /* Ensure dropdown is properly positioned */
-    width: 100%;        /* Full width for better usability */
-    border-radius: 0;   /* Remove rounded corners for a seamless look */
-  }
+/* General body and typography adjustments for smaller screens */
+body {
+    -webkit-text-size-adjust: 100%; /* Prevents iOS text size adjustments after orientation change */
 }
 
-  /* Shrink button padding for tight mobile screens */
-  header .navbar .btn-login {
-    padding: 0.5rem 1rem;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
+/* --- Medium devices (tablets, less than 992px) --- */
+@media (max-width: 991.98px) {
+    /* Adjust hero section typography */
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+    .hero-section p {
+        font-size: 1.1rem;
+    }
 
-  /* Footer: stack links vertically when there's less space */
-  footer ul {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem; /* smaller gap on mobile */
-    align-items: center; /* center them nicely */
-  }
+    /* Make columns in sections stack */
+    .row > [class^="col-md-"] {
+        margin-bottom: 1.5rem;
+    }
 }
 
+
+/* --- Small devices (landscape phones, less than 768px) --- */
+@media (max-width: 767.98px) {
+    /* Reduce padding on main sections for more content space */
+    section.py-5 {
+        padding-top: 2.5rem !important;
+        padding-bottom: 2.5rem !important;
+    }
+
+    /* Adjust typography for better readability */
+    h1, .display-4 { font-size: 2.2rem; }
+    h2, .h2 { font-size: 1.8rem; }
+    h3, .h3 { font-size: 1.5rem; }
+
+    /* Make forms and their containers full-width */
+    .col-md-7, .col-md-6, .col-md-5 {
+        width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    /* Center-align text in columns that were previously aligned left/right on desktop */
+    .text-md-start, .text-md-end {
+        text-align: center !important;
+    }
+
+    /* Ensure buttons in hero/forms are not excessively wide */
+    .hero-section .btn, .d-grid .btn {
+        width: 75%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Stack quiz bank items cleanly */
+    .quiz-list-item .row > div {
+        text-align: center !important;
+        margin-bottom: 1rem;
+    }
+    .quiz-actions .btn {
+      margin-bottom: 0.5rem;
+    }
+    .quiz-actions form {
+      display: block !important;
+    }
+}
+
+
+/* --- Extra small devices (portrait phones, less than 576px) --- */
+@media (max-width: 575.98px) {
+    /* Further reduce header padding */
+    header .navbar {
+        padding: 0.5rem 1rem;
+    }
+
+    /* Make dropdown full-width for easier tapping */
+    .dropdown-menu {
+        position: static !important; /* Override bootstrap positioning */
+        width: 100%;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+        float: none;
+    }
+
+    /* Stack footer links vertically */
+    footer ul {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: center;
+    }
+
+    /* Adjust hero section for very small screens */
+    .hero-section h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+    .hero-section p {
+        font-size: 1rem;
+    }
+    .hero-section .btn {
+        width: 100%;
+    }
+
+    /* Ensure carousel items on landing page show one card at a time */
+    #popularQuizCarousel .carousel-inner .carousel-item > div {
+      display: none;
+    }
+    #popularQuizCarousel .carousel-inner .carousel-item.active > div {
+      display: flex;
+    }
+}
