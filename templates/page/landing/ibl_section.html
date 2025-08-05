@@ -1,29 +1,39 @@
-<section class="py-5" style="background-color: #EAF6FF;">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-5 text-center">
-                <img src="{{ url_for('static', filename='images/hero/img2.png') }}" alt="A person learning at a desk" class="img-fluid mb-4" style="max-width: 250px;">
-                <h4 class="fw-bold" style="color: #6c757d;">Tired of Memorizing?</h4>
-                <p class="text-muted">
-                    Feeling stuck in a cycle of forgettable facts and surface-level knowledge? There's a better way to learn.
-                </p>
-            </div>
+<!-- templates/page/landing/inquiry_section_responsive.html -->
+<section class="py-5 position-relative overflow-hidden" style="background-color:#EAF6FF;">
+  <div class="container">
+    <div class="row flex-column-reverse flex-lg-row align-items-center gy-5">
+      <!-- Text -->
+      <div class="col-lg-6 text-center text-lg-start">
+        <h2 class="fw-bold mb-2 text-primary display-6">Inquire&nbsp;Based&nbsp;Learning</h2>
+        <p class="lead fw-semibold mb-3 text-secondary">A deeper understanding starts with <span class="fst-italic">curiosity</span> and <span class="fst-italic">imagination</span>.</p>
 
-            <div class="col-md-7 text-center text-md-start">
-                <h2 class="fw-bold mb-4" style="color: #0d6efd; font-size: 2.5rem;">Unlock Deeper Understanding with Inquiry-Based Learning</h2>
-                <p class="lead mb-4">
-                    <strong>Go beyond what to learn and discover howto learn</strong>
-                </p>
-                <p class=" mb-4">
-                    IBL empowers you to ask meaningful questions, investigate ideas, and build lasting knowledge.
-                </p>
-                <ul class="list-unstyled lead mb-4 text-start mx-auto" style="max-width: 400px;">
-                    <li><i class="bi bi-check-circle-fill text-success me-2"></i><strong>Build</strong> critical thinking skills.</li>
-                    <li><i class="bi bi-check-circle-fill text-success me-2"></i><strong>Connect</strong> ideas to real-world problems.</li>
-                    <li><i class="bi bi-check-circle-fill text-success me-2"></i><strong>Boost</strong> engagement and retention.</li>
-                </ul>
-                <a href="{{ url_for('ibl_page') }}" class="btn btn-primary btn-lg">Explore Inquiry-Based Learning</a>
-            </div>
-        </div>
+        <!-- Benefits -->
+        <ul class="list-unstyled">
+          <li class="d-flex align-items-start mb-2">
+            <i class="bi bi-check-circle-fill text-success me-2 fs-5"></i>
+            <span><strong>Build</strong> critical thinking.</span>
+          </li>
+          <li class="d-flex align-items-start mb-2">
+            <i class="bi bi-check-circle-fill text-success me-2 fs-5"></i>
+            <span><strong>Connect</strong> ideas to real‑world problems.</span>
+          </li>
+          <li class="d-flex align-items-start mb-4">
+            <i class="bi bi-check-circle-fill text-success me-2 fs-5"></i>
+            <span><strong>Boost</strong> engagement & retention.</span>
+          </li>
+        </ul>
+
+        <p class="text-muted small mb-4">Research shows IBL is often better suited for neurodivergent learners, offering flexible pathways to mastery.</p>
+
+        <a href="{{ url_for('ibl_page') }}" class="btn btn-primary btn-lg w-100 w-lg-auto">Read&nbsp;more&nbsp;about&nbsp;IBL</a>
+      </div>
+
+      <!-- Illustration -->
+      <div class="col-lg-6 text-center">
+        <img src="{{ url_for('static', filename='images/hero/img2.png') }}" alt="Learner studying at desk" class="img-fluid" style="max-width:280px;">
+        <h4 class="fw-bold mt-3 text-muted">Tired of Memorizing?</h4>
+        <p class="text-muted small d-none d-sm-block px-3">Break the cycle of forgettable facts and start learning with purpose.</p>
+      </div>
     </div>
+  </div>
 </section>
