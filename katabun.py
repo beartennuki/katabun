@@ -7,7 +7,7 @@ from datetime import timedelta, datetime, timezone
 
 from flask import (
     Flask, render_template, request, session, jsonify,
-    abort, redirect, url_for, make_response
+    abort, redirect, url_for, make_response, send_from_directory
 )
 
 from src.pages.autoquiz import autoquiz
@@ -103,6 +103,10 @@ def create_app():
             app.logger.error(f"Sitemap generation failed: {e}")
             abort(500)
 
+    @app.route("/robots.txt")
+    def robots():
+        return send_from_directory(app.static_folder, "robots.txt", mimetype="text/plain")
+    
     # ─── 2. Authentication & User Account Routes ─────────────────────
     @app.route('/login')
     def login():
