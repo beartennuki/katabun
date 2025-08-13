@@ -18,13 +18,13 @@ Disallow: /auth/
 Disallow: /delete_account
 
 # Quiz and assessment process pages
-Disallow: /quiz/
+# Disallow: /quiz/
 Disallow: /assessment/
 Disallow: /loading/
 
 # Quiz generator pages (the results in the bank are more valuable to index)
-Disallow: /autoquiz
-Disallow: /guidedquiz
+# Disallow: /autoquiz
+# Disallow: /guidedquiz
 
 # Error pages
 Disallow: /error/
@@ -43,6 +43,7 @@ Allow: /tnc
 Allow: /privacy-policy
 Allow: /cookie-policy
 Allow: /disclaimer
+Allow: /quiz
 
 
 # --- Location of the sitemap ---
