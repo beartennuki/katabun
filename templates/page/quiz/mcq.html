@@ -46,7 +46,7 @@
             {% endif %}
         </div>
 
-        <form id="quiz-form" method="POST" action="{{ url_for('quiz_page', doc_id=doc_id) }}"
+        <form id="quiz-form" method="POST" action="{{ url_for('quiz_page', slug=quiz_slug or doc_id) }}"
               class="col-md-7 mx-auto">
             <input type="hidden" name="user_id" value="{{ user_id }}">
             <input type="hidden" name="doc_id" value="{{ doc_id }}">

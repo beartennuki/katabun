@@ -12,14 +12,20 @@ class Quiz:
         self.mongoio = MongoIO()
         self.mongo_cfg = self.mongoio.mongo_cfg
 
-    def give_mcq_question(self, doc_id):
+    def give_mcq_question(self, doc_id=None, document=None):
 
-        doc, _ = self.mongoio.load_eval_document(doc_id)
-        if doc is None:
+        if document is None:
+            if doc_id is None:
+                raise ValueError('Either doc_id or document must be provided')
+            document, _ = self.mongoio.load_eval_document(doc_id)
+        else:
+            doc_id = document.get('meta', {}).get('doc_id')
+
+        if document is None:
             raise IOError(f'Doc_id: {doc_id} is not found in DB')
 
-        ques_dic = doc['questions']
-        meta_dic = doc['meta']
+        ques_dic = document['questions']
+        meta_dic = document['meta']
         info_dic = {
             'title': meta_dic.get('title', '4UrClass Quiz'),
             'description': meta_dic.get('general_info', 'A quiz to help you learn and test your knowledge on various subjects.')

@@ -29,7 +29,7 @@
               </div>
 
               <!-- CTA -->
-              <a href="{{ url_for('quiz_page', doc_id=quiz.meta.doc_id) }}" class="btn btn-primary w-100 mt-auto">Take Quiz</a>
+              <a href="{{ url_for('quiz_page', slug=quiz.meta.slug or quiz.meta.doc_id) }}" class="btn btn-primary w-100 mt-auto">Take Quiz</a>
             </div>
           </div>
         </div>
