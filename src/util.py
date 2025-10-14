@@ -3,6 +3,7 @@ from uuid import uuid4
 import random
 import string
 import time
+import re
 
 
 class Util:
@@ -90,3 +91,13 @@ class Util:
             session['user_id_creation_time'] = time.time()
 
         return session['user_id']
+
+    def generate_slug(self, text):
+        """Create a URL-safe slug from the provided text."""
+        if not text:
+            return ""
+
+        lowered = text.lower()
+        slug = re.sub(r"[^a-z0-9]+", "-", lowered)
+        slug = re.sub(r"-+", "-", slug).strip("-")
+        return slug

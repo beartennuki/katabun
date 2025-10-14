@@ -82,7 +82,7 @@
                 <p class="mb-1"><strong>Questions:</strong> {{ quiz.meta.question_count }}</p>
                 <p class="mb-0"><strong>Difficulty:</strong> {{ quiz.meta.input_information.submit_info.level|capitalize }}</p>
               </div>
-              <a href="{{ url_for('quiz_page', doc_id=quiz.meta.doc_id) }}" class="btn btn-primary mt-3">Take Quiz</a>
+              <a href="{{ url_for('quiz_page', slug=quiz.meta.slug or quiz.meta.doc_id) }}" class="btn btn-primary mt-3">Take Quiz</a>
             </div>
           </div>
         </div>
@@ -113,7 +113,7 @@
             </div>
 
             <div class="col-md-4 text-center text-md-end mt-3 mt-md-0 quiz-actions">
-              <a href="{{ url_for('quiz_page', doc_id=doc.doc_id) }}" class="btn btn-primary mb-2 mb-md-0">Take Quiz</a>
+              <a href="{{ url_for('quiz_page', slug=doc.slug or doc.doc_id) }}" class="btn btn-primary mb-2 mb-md-0">Take Quiz</a>
 
               <form action="{{ url_for('autoquiz_page') }}" method="post" class="d-inline-block">
                 <input type="hidden" name="topic" value="{{ doc.title }}">

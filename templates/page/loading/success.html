@@ -38,7 +38,7 @@
                         Auto-Quiz ID: <strong>{{ doc_id }}</strong><br>
                         Click the button below to proceed.
                     </p>
-                    <a href="{{ url_for('quiz_page', doc_id=doc_id) }}"
+                    <a href="{{ url_for('quiz_page', slug=quiz_slug or doc_id) }}"
                        class="btn btn-success btn-lg">Start Quiz
                     </a>
                 {% elif doc_type == 'assessment' %}

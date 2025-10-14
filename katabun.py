@@ -165,22 +165,38 @@ def create_app():
             return render_template(
                 'page/loading/failed.html', message=msg
             )
+        quiz_slug = None
+        if doc_type == 'autoquiz' and doc_id:
+            mongoio = MongoIO()
+            quiz_slug = mongoio.get_quiz_slug(doc_id)
         return render_template(
             'page/loading/success.html',
             doc_id=doc_id, doc_type=doc_type,
-            task_url=task_url, message=msg
+            task_url=task_url, message=msg,
+            quiz_slug=quiz_slug
         )
 
     # ─── 4. Quiz Interaction & Results Routes ────────────────────────
-    @app.route('/quiz/<doc_id>', methods=['GET', 'POST'])
-    def quiz_page(doc_id):
+    @app.route('/quiz/<slug>', methods=['GET', 'POST'])
+    def quiz_page(slug):
         mongoio = MongoIO()
-        if not mongoio.document_exists(doc_id, doc_type='eval'):
-            abort(404, description=f"Unknown Doc-ID:{doc_id}")
+        document, _ = mongoio.load_eval_document_by_slug(slug)
+
+        if document is None:
+            document, _ = mongoio.load_eval_document(slug)
+            if document is None:
+                abort(404, description=f"Unknown Quiz:{slug}")
+
+        doc_meta = document.get('meta', {})
+        doc_id = doc_meta.get('doc_id')
+        canonical_slug = doc_meta.get('slug') or slug
 
         if request.method == 'GET':
+            if canonical_slug != slug:
+                return redirect(url_for('quiz_page', slug=canonical_slug), code=301)
+
             qz = Quiz()
-            questions, info = qz.give_mcq_question(doc_id)
+            questions, info = qz.give_mcq_question(doc_id=doc_id, document=document)
             user_id = Util().get_user_id()
             assessment_id = Util().generate_assessment_id()
             toggle_info = qz.toggle_status()
@@ -188,6 +204,7 @@ def create_app():
             return render_template(
                 'page/quiz/mcq.html',
                 doc_id=doc_id,
+                quiz_slug=canonical_slug,
                 user_id=user_id,
                 assessment_id=assessment_id,
                 mcq_questions=questions,

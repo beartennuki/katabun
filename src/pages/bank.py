@@ -18,10 +18,14 @@ class Bank:
         raw_catmeta_ls = MongoIO().load_documents_by_genre(category)
         catmeta_ls = []
         for meta in raw_catmeta_ls:
-            doc = {'doc_id': meta['meta']['doc_id'], 'sub_genre': meta['meta']['sub_genre'],
-                   'title': meta['meta']['title'], 'question_count': meta['meta']['question_count'],
-                   'general_info': meta['meta']['general_info'],
-                   }
+            doc = {
+                'doc_id': meta['meta']['doc_id'],
+                'slug': meta['meta'].get('slug') or '',
+                'sub_genre': meta['meta']['sub_genre'],
+                'title': meta['meta']['title'],
+                'question_count': meta['meta']['question_count'],
+                'general_info': meta['meta']['general_info'],
+            }
 
             date_str = meta['meta']['creation_date_human']
             doc['date'] = date_str.split(",")[0] + "," + date_str.split(",")[1]

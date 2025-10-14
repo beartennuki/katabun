@@ -4,6 +4,7 @@ import redis
 import json
 
 from src.api import API
+from src.util import Util
 
 
 class MongoIO:
@@ -27,8 +28,50 @@ class MongoIO:
         self.assess_collection = assess_db[mcq_collection_name]
         self.mongo_cfg = mongo_cfg
 
+        # Utility helper for slug generation
+        self.util = Util()
+
         # Initialize Redis client
         self.redis_client = redis.Redis(decode_responses=True)
+
+    def _ensure_slug_for_document(self, document):
+        """Ensure a slug exists for the provided document and return it."""
+        if not document:
+            return None
+
+        meta = document.get('meta', {})
+        title = meta.get('title')
+        doc_id = meta.get('doc_id')
+
+        if not title:
+            return None
+
+        base_slug = self.util.generate_slug(title)
+        if not base_slug:
+            return None
+
+        slug = meta.get('slug')
+        target_slug = base_slug
+
+        if doc_id:
+            conflict_query = {
+                "meta.slug": base_slug,
+                "meta.doc_id": {"$ne": doc_id}
+            }
+            if self.eval_collections.count_documents(conflict_query, limit=1):
+                target_slug = self.util.generate_slug(f"{title}-{doc_id}") or base_slug
+
+        if slug != target_slug:
+            document.setdefault('meta', {})['slug'] = target_slug
+            if doc_id:
+                self.eval_collections.update_one(
+                    {"meta.doc_id": doc_id},
+                    {"$set": {"meta.slug": target_slug}}
+                )
+        else:
+            document['meta']['slug'] = slug
+
+        return document['meta'].get('slug')
 
     def load_eval_document(self, doc_id, section=None):
         """
@@ -54,6 +97,7 @@ class MongoIO:
             if not document:
                 return None, None
 
+            self._ensure_slug_for_document(document)
             version = document['control']['version']
             collections.update_one(
                 {"meta.doc_id": doc_id},
@@ -68,6 +112,22 @@ class MongoIO:
             version = document['control']['version']
             section_document = document[section]
             return section_document, version
+
+    def load_eval_document_by_slug(self, slug, section=None):
+        """Load an evaluation document by its slug."""
+        if not slug:
+            return None, None
+
+        doc_meta = self.eval_collections.find_one(
+            {"meta.slug": slug},
+            {"meta.doc_id": 1, "_id": 0}
+        )
+
+        if not doc_meta:
+            return None, None
+
+        doc_id = doc_meta['meta']['doc_id']
+        return self.load_eval_document(doc_id, section=section)
 
     def load_assessment_document(self, assessment_id, section=None):
         """
@@ -143,6 +203,9 @@ class MongoIO:
         projection = {"meta": 1, "_id": 0}
         documents = list(collection.find(query, projection).sort("meta.creation_time", -1))
 
+        for document in documents:
+            self._ensure_slug_for_document(document)
+
         return documents
 
     # Add this new method to the MongoIO class in src/mongoio.py
@@ -183,7 +246,10 @@ class MongoIO:
                 cached_data = self.redis_client.get(cache_key)
                 if cached_data:
                     print("Cache hit!")
-                    return json.loads(cached_data)
+                    result_docs = json.loads(cached_data)
+                    for document in result_docs:
+                        self._ensure_slug_for_document(document)
+                    return result_docs
             except redis.exceptions.ConnectionError as e:
                 print(f"Redis connection error: {e}. Falling back to DB.")
 
@@ -208,7 +274,11 @@ class MongoIO:
         ])
 
         popular_quizzes = list(self.eval_collections.aggregate(pipeline))
-        result_docs = [quiz['doc'] for quiz in popular_quizzes]
+        result_docs = []
+        for quiz in popular_quizzes:
+            doc = quiz['doc']
+            self._ensure_slug_for_document(doc)
+            result_docs.append(doc)
 
         try:
             serializable_result = json.dumps(result_docs, default=str)
@@ -219,6 +289,17 @@ class MongoIO:
             print(f"Could not serialize the MongoDB documents for caching: {e}")
 
         return result_docs
+
+    def get_quiz_slug(self, doc_id):
+        """Return the slug for the quiz identified by doc_id."""
+        meta_doc = self.eval_collections.find_one(
+            {"meta.doc_id": doc_id},
+            {"meta.slug": 1, "meta.title": 1, "meta.doc_id": 1, "_id": 0}
+        )
+        if not meta_doc:
+            return None
+        temp_document = {"meta": meta_doc.get('meta', {})}
+        return self._ensure_slug_for_document(temp_document)
 
     def log_user_interest(self, user_id, feature):
         """
