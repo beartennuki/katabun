@@ -2,14 +2,14 @@
   <div class="container">
     <div class="row align-items-center mb-4">
       <div class="col-lg-8">
-        <h2 class="fw-bold text-primary">Katabun: ADHD-Friendly Learning Hub</h2>
+        <h2 class="fw-bold text-primary mb-2">Katabun</h2>
         <p class="text-muted mb-0">
-          Bite-sized toolkits, focus rituals, and community spaces curated to help neurodivergent learners turn curiosity into confident progress.
+          ADHD-friendly study ideas, prompts, and communities gathered in one calm space.
         </p>
       </div>
       <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
         <a class="btn btn-primary" href="{{ url_for('katabun_page') }}">
-          Explore all resources
+          Visit Katabun
         </a>
       </div>
     </div>
@@ -18,13 +18,9 @@
         <div class="col-md-4">
           <div class="card h-100 shadow-sm border-0">
             <div class="card-body d-flex flex-column">
-              <div class="mb-3">
-                {% for tag in resource.tags %}
-                  <span class="badge text-bg-primary me-1">{{ tag }}</span>
-                {% endfor %}
-              </div>
+              <p class="text-uppercase text-muted small fw-semibold mb-2">{{ resource.tags | join(', ') }}</p>
               <h3 class="h5 fw-semibold">{{ resource.title }}</h3>
-              <p class="text-muted flex-grow-1">{{ resource.description }}</p>
+              <p class="text-muted small flex-grow-1">{{ resource.description }}</p>
               <a class="stretched-link mt-2" href="{{ resource.url }}" target="_blank" rel="noopener">
                 Open resource
               </a>
