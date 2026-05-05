@@ -10,7 +10,7 @@ from datetime import datetime, timezone # Import timezone for aware datetimes
 from pymongo import MongoClient, errors # Import pymongo for direct DB interaction
 
 # --- Configuration Parameters ---
-USER_ID = "USR-7dc79df3-0d61-473d-86fc-53c6eb7e9843"
+USER_ID = os.getenv("INJ_USER_ID", "")
 JSON_FILE_PATH = 'inj/quiz_inj.json'
 CHECK_INTERVAL_SECONDS = 10
 MAX_RETRIES = 30

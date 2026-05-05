@@ -1,4 +1,5 @@
 #bismillahhirahmanirahim
+import os
 import json
 import base64
 import hashlib
@@ -7,8 +8,8 @@ from cryptography.fernet import Fernet
 class Loading:
 
     def __init__(self):
-        self.salt = 'mkn103@'
-        self.password = 'pass123'
+        self.salt = os.environ['LOADING_SALT']
+        self.password = os.environ['LOADING_PASSWORD']
 
     def __generate_key(self):
         key = hashlib.pbkdf2_hmac(
