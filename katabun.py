@@ -16,7 +16,6 @@ from src.pages.assessment import Assessment
 from src.pages.quiz import Quiz
 from src.pages.bank import Bank
 from src.pages.account import Account
-from src.pages.katabun import Katabun
 from src.api import API
 from src.util import Util
 from src.mongoio import MongoIO
@@ -41,6 +40,8 @@ def create_app():
 
     app.config['GOOGLE_CLIENT_ID'] = os.getenv('GOOGLE_CLIENT_ID')
     app.config['GOOGLE_CLIENT_SECRET'] = os.getenv('GOOGLE_CLIENT_SECRET')
+    app.config['LOADING_SALT'] = os.getenv('LOADING_SALT')
+    app.config['LOADING_PASSWORD'] = os.getenv('LOADING_PASSWORD')
 
     # ─── Extensions / Singletons ──────────────────────────────────────
     # instantiates GoogleAuth once, discovery only when needed
@@ -79,29 +80,13 @@ def create_app():
             session['user_id_creation_time'] = time.time()
 
     # ─── 1. Core App & SEO Routes ───────────────────────────────────
-    katabun_service = Katabun()
-
     @app.route('/')
     def landing_page():
         mongoio = MongoIO()
         top_quizzes = mongoio.get_top_n_popular_quizzes(9)
-        katabun_highlights = katabun_service.get_featured_resources(limit=3)
         return render_template(
             'page/landing/landing.html',
             top_quizzes=top_quizzes,
-            katabun_highlights=katabun_highlights,
-        )
-
-    @app.route('/katabun')
-    def katabun_page():
-        resources = katabun_service.get_all_resources()
-        featured_resources = katabun_service.get_featured_resources()
-        tags = katabun_service.get_tags()
-        return render_template(
-            'page/others/katabun.html',
-            resources=resources,
-            featured_resources=featured_resources,
-            tags=tags,
         )
 
     @app.route('/sitemap.xml')
@@ -287,10 +272,6 @@ def create_app():
         )
 
     # ─── 6. Informational & Static Pages ─────────────────────────────
-    @app.route('/ibl')
-    def ibl_page():
-        return render_template('page/ibl/ibl.html')
-
     @app.route('/about')
     def about_page():
         return render_template('page/others/about.html')

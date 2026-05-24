@@ -1,8 +1,23 @@
-{% extends "base.html" %}
+{% extends "page/base/base.html" %}
 
-{% block title %}Sign IN{% endblock %}
+{% block title %}Sign In - 4UrClass{% endblock %}
 
 {% block content %}
-<h1>Bank Page</h1>
-<p>Welcome to the sign in page!</p>
+<section class="page-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+        <div class="surface-panel auth-panel text-center auth-hero">
+          <img src="{{ url_for('static', filename='images/logo/LogoSquare.png') }}" alt="4UrClass" class="auth-logo mb-4">
+          <span class="section-kicker mb-3">Sign In</span>
+          <h1 class="section-heading h2 mb-3">Access your quiz workspace.</h1>
+          <p class="section-subheading mx-auto mb-4">
+            Continue with your account to generate quizzes, review your credits, and keep your study progress in one place.
+          </p>
+          <a href="{{ url_for('login') }}" class="btn btn-brand btn-lg">Continue with Google</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}

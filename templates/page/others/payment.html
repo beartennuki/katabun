@@ -1,176 +1,120 @@
 {% extends "page/base/base.html" %}
-{% block title %}Pricing Feedback - 4urClass{% endblock %}
+{% block title %}Pricing Feedback - 4UrClass{% endblock %}
 {% block content %}
-<style>
-    .pricing-header {
-        max-width: 700px;
-    }
-    .card {
-        border: none;
-        border-radius: 1rem;
-        transition: all 0.2s;
-        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
-    }
-    .feedback-form {
-        background-color: #ffffff;
-        padding: 2rem;
-        border-radius: 1rem;
-        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
-    }
-    #price-suggestion-section {
-        display: none; /* Hidden by default */
-    }
-    .slider-container {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-    .slider-container input[type="range"] {
-        flex-grow: 1;
-    }
-    .slider-container .price-display {
-        font-weight: bold;
-        color: var(--color-blue);
-        min-width: 60px;
-        text-align: center;
-    }
-</style>
-
-<section class="py-5" style="background-color: #EAF6FF;">
-    <div class="container">
-        <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-            <h1 class="display-4 fw-normal" style="color: #0d6efd;">Purchasing is Coming Soon!</h1>
-            <p class="fs-5 text-muted">We're putting the final touches on our payment system. In the meantime, we'd love to get your feedback on our proposed pricing. Your input is incredibly valuable to us!</p>
-        </div>
-
-        <!-- Pricing Cards for Context -->
-        <div class="row row-cols-1 row-cols-md-4 mb-5 text-center justify-content-center">
-             <div class="col">
-                <div class="card mb-4 rounded-3 shadow-sm">
-                    <div class="card-body">
-                        <h4 class="my-0 fw-normal">30 Credits</h4>
-                        <hr>
-                        <h1 class="card-title pricing-card-title">$9.99</h1>
-                        <p class="text-muted">($0.33 / credit)</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card mb-4 rounded-3 shadow-sm">
-                    <div class="card-body">
-                        <h4 class="my-0 fw-normal">100 Credits</h4>
-                        <hr>
-                        <h1 class="card-title pricing-card-title">$29.99</h1>
-                        <p class="text-muted">($0.30 / credit)</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card mb-4 rounded-3 shadow-sm">
-                    <div class="card-body">
-                        <h4 class="my-0 fw-normal">500 Credits</h4>
-                        <hr>
-                        <h1 class="card-title pricing-card-title">$139</h1>
-                        <p class="text-muted">($0.28 / credit)</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card mb-4 rounded-3 shadow-sm">
-                    <div class="card-body">
-                        <h4 class="my-0 fw-normal">1500 Credits</h4>
-                        <hr>
-                        <h1 class="card-title pricing-card-title">$369</h1>
-                        <p class="text-muted">($0.25 / credit)</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Feedback Form -->
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="feedback-form">
-                    <h3 class="text-center mb-4" style="color: #0d6efd;">Share Your Thoughts on Our Pricing</h3>
-                    <form method="POST" action="{{ url_for('payment_page') }}">
-                        <!-- Hidden fields for geolocation and timezone -->
-                        <input type="hidden" name="latitude" id="latitude">
-                        <input type="hidden" name="longitude" id="longitude">
-                        <input type="hidden" name="timezone" id="timezone">
-
-                        <!-- Question 1: Willingness to pay -->
-                        <div class="mb-4">
-                            <p class="fw-bold">1. Are you willing to pay these prices for the credit packs?</p>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="willing_to_pay" id="willing_yes" value="yes" required>
-                                <label class="form-check-label" for="willing_yes">Yes, the prices seem fair.</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="willing_to_pay" id="willing_no" value="no">
-                                <label class="form-check-label" for="willing_no">No, they seem too high.</label>
-                            </div>
-                        </div>
-
-                        <!-- Question 2: Price Suggestion (Conditional) -->
-                        <div id="price-suggestion-section" class="mb-4">
-                            <p class="fw-bold">2. What would be a more reasonable price for you?</p>
-                            <p class="text-muted small">Drag the sliders to suggest a price for each pack.</p>
-
-                            <!-- Slider for 30 credits -->
-                            <div class="mb-3">
-                                <label for="price_30_credits" class="form-label">30 Credits Pack (Current: $9.99)</label>
-                                <div class="slider-container">
-                                    <span>$1</span>
-                                    <input type="range" class="form-range" id="price_30_credits" name="price_30_credits" min="1" max="20" step="0.5" value="9.99">
-                                    <span>$20</span>
-                                    <span id="price_30_display" class="price-display">$9.99</span>
-                                </div>
-                            </div>
-                             <!-- Slider for 100 credits -->
-                            <div class="mb-3">
-                                <label for="price_100_credits" class="form-label">100 Credits Pack (Current: $29.99)</label>
-                                <div class="slider-container">
-                                    <span>$10</span>
-                                    <input type="range" class="form-range" id="price_100_credits" name="price_100_credits" min="10" max="50" step="0.5" value="29.99">
-                                    <span>$50</span>
-                                    <span id="price_100_display" class="price-display">$29.99</span>
-                                </div>
-                            </div>
-                             <!-- Slider for 500 credits -->
-                            <div class="mb-3">
-                                <label for="price_500_credits" class="form-label">500 Credits Pack (Current: $139)</label>
-                                <div class="slider-container">
-                                    <span>$50</span>
-                                    <input type="range" class="form-range" id="price_500_credits" name="price_500_credits" min="50" max="200" step="1" value="139">
-                                    <span>$200</span>
-                                    <span id="price_500_display" class="price-display">$139</span>
-                                </div>
-                            </div>
-                             <!-- Slider for 1500 credits -->
-                            <div class="mb-3">
-                                <label for="price_1500_credits" class="form-label">1500 Credits Pack (Current: $369)</label>
-                                <div class="slider-container">
-                                    <span>$200</span>
-                                    <input type="range" class="form-range" id="price_1500_credits" name="price_1500_credits" min="200" max="500" step="1" value="369">
-                                    <span>$500</span>
-                                    <span id="price_1500_display" class="price-display">$369</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-lg">Submit Feedback</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+<section class="page-section">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="section-kicker mb-3">Pricing Feedback</span>
+      <h1 class="section-heading mb-2">Purchasing is coming soon.</h1>
+      <p class="section-subheading mx-auto mb-0">
+        The pricing system is still being prepared. Until checkout is live, this page collects signal on which credit packs feel fair.
+      </p>
     </div>
+
+    <div class="pricing-grid mb-5">
+      <div class="surface-card pricing-card">
+        <p class="text-uppercase small fw-bold text-muted mb-2">Starter</p>
+        <h2 class="h5 mb-2">30 Credits</h2>
+        <strong>$9.99</strong>
+        <p class="text-muted mb-0">$0.33 / credit</p>
+      </div>
+      <div class="surface-card pricing-card">
+        <p class="text-uppercase small fw-bold text-muted mb-2">Regular</p>
+        <h2 class="h5 mb-2">100 Credits</h2>
+        <strong>$29.99</strong>
+        <p class="text-muted mb-0">$0.30 / credit</p>
+      </div>
+      <div class="surface-card pricing-card is-featured">
+        <p class="text-uppercase small fw-bold text-muted mb-2">Most Value</p>
+        <h2 class="h5 mb-2">500 Credits</h2>
+        <strong>$139</strong>
+        <p class="text-muted mb-0">$0.28 / credit</p>
+      </div>
+      <div class="surface-card pricing-card">
+        <p class="text-uppercase small fw-bold text-muted mb-2">High Volume</p>
+        <h2 class="h5 mb-2">1500 Credits</h2>
+        <strong>$369</strong>
+        <p class="text-muted mb-0">$0.25 / credit</p>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-xl-9">
+        <div class="surface-panel pricing-form-card">
+          <h2 class="h3 text-center mb-2">Share your view on these prices</h2>
+          <p class="text-muted text-center mb-4">If the current pricing feels off, suggest numbers that would make the product easier to adopt.</p>
+
+          <form method="POST" action="{{ url_for('payment_page') }}">
+            <input type="hidden" name="latitude" id="latitude">
+            <input type="hidden" name="longitude" id="longitude">
+            <input type="hidden" name="timezone" id="timezone">
+
+            <div class="feedback-range-group mb-4">
+              <p class="fw-bold mb-3">1. Are you willing to pay these prices for the credit packs?</p>
+              <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="willing_to_pay" id="willing_yes" value="yes" required>
+                <label class="form-check-label" for="willing_yes">Yes, the prices seem fair.</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="willing_to_pay" id="willing_no" value="no">
+                <label class="form-check-label" for="willing_no">No, they seem too high.</label>
+              </div>
+            </div>
+
+            <div id="price-suggestion-section" class="feedback-range-group mb-4" style="display:none;">
+              <p class="fw-bold mb-1">2. What would be a more reasonable price for you?</p>
+              <p class="text-muted small mb-4">Drag the sliders to suggest a price for each pack.</p>
+
+              <div class="mb-4">
+                <label for="price_30_credits" class="form-label">30 Credits Pack</label>
+                <div class="d-flex align-items-center gap-3">
+                  <span>$1</span>
+                  <input type="range" class="form-range" id="price_30_credits" name="price_30_credits" min="1" max="20" step="0.5" value="9.99">
+                  <span>$20</span>
+                  <span id="price_30_display" class="badge-soft">$9.99</span>
+                </div>
+              </div>
+              <div class="mb-4">
+                <label for="price_100_credits" class="form-label">100 Credits Pack</label>
+                <div class="d-flex align-items-center gap-3">
+                  <span>$10</span>
+                  <input type="range" class="form-range" id="price_100_credits" name="price_100_credits" min="10" max="50" step="0.5" value="29.99">
+                  <span>$50</span>
+                  <span id="price_100_display" class="badge-soft">$29.99</span>
+                </div>
+              </div>
+              <div class="mb-4">
+                <label for="price_500_credits" class="form-label">500 Credits Pack</label>
+                <div class="d-flex align-items-center gap-3">
+                  <span>$50</span>
+                  <input type="range" class="form-range" id="price_500_credits" name="price_500_credits" min="50" max="200" step="1" value="139">
+                  <span>$200</span>
+                  <span id="price_500_display" class="badge-soft">$139</span>
+                </div>
+              </div>
+              <div>
+                <label for="price_1500_credits" class="form-label">1500 Credits Pack</label>
+                <div class="d-flex align-items-center gap-3">
+                  <span>$200</span>
+                  <input type="range" class="form-range" id="price_1500_credits" name="price_1500_credits" min="200" max="500" step="1" value="369">
+                  <span>$500</span>
+                  <span id="price_1500_display" class="badge-soft">$369</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-brand btn-lg">Submit Feedback</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Geolocation and Timezone capture
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             document.getElementById('latitude').value = position.coords.latitude;
@@ -179,23 +123,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     document.getElementById('timezone').value = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-
     const willingYes = document.getElementById('willing_yes');
     const willingNo = document.getElementById('willing_no');
     const suggestionSection = document.getElementById('price-suggestion-section');
 
     function toggleSuggestionSection() {
-        if (willingNo.checked) {
-            suggestionSection.style.display = 'block';
-        } else {
-            suggestionSection.style.display = 'none';
-        }
+        suggestionSection.style.display = willingNo.checked ? 'block' : 'none';
     }
 
     willingYes.addEventListener('change', toggleSuggestionSection);
     willingNo.addEventListener('change', toggleSuggestionSection);
 
-    // Slider value display logic
     const sliders = [
         { id: 'price_30_credits', display: 'price_30_display' },
         { id: 'price_100_credits', display: 'price_100_display' },

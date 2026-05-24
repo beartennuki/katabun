@@ -1,102 +1,31 @@
-<!-- Redesigned Quiz Bank Section – v3 (fix missing items on desktop) -->
-<section class="quiz-bank-section py-5 position-relative">
-  <!-- Component‑scoped styles -->
-  <style>
-    .quiz-bank-section {
-      background: #EAF6FF;
-      /* Allow content to grow vertically; only hide overflow on mobile if needed */
-      overflow: visible;
-    }
-    @media (max-width: 575.98px) {
-      /* keep any decorative overflow hidden only on very small screens */
-      .quiz-bank-section { overflow-x: hidden; }
-    }
-
-    /* Core card */
-    .category-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 1.25rem;
-      min-height: 120px;
-      border-radius: 1rem;
-      background: #ffffff;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      text-decoration: none !important;
-    }
-    .category-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    }
-    .category-card i {
-      font-size: 1.8rem;
-      color: #FF5722;
-    }
-    .category-card h6 {
-      font-size: 0.9rem;
-      color: #003366;
-      margin: 0;
-    }
-
-    /* Mobile horizontal swipe */
-    .category-scroll {
-      display: flex;
-      gap: 0.75rem;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 0.5rem;
-    }
-    .category-scroll::-webkit-scrollbar { display: none; }
-    .category-scroll .category-card {
-      flex: 0 0 128px;
-      scroll-snap-align: center;
-    }
-
-    /* Desktop grid layout */
-    @media (min-width: 992px) {
-      .category-scroll { display: none !important; }
-      .category-grid  {
-        display: grid !important;
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        gap: 1.5rem;
-      }
-    }
-    @media (max-width: 991.98px) { .category-grid { display: none !important; } }
-  </style>
-
-  <div class="container position-relative" style="z-index: 2;">
-    <div class="row gy-4 align-items-start">
-      <!-- Text column -->
-      <div class="col-lg-5 text-center text-lg-start">
-        <h2 class="h3 fw-bold text-primary mb-2">Explore the Quiz‑Bank</h2>
-        <p class="mb-4 lead text-secondary">Discover quizzes across dozens of topics, crafted by learners like you.</p>
-        <a href="{{ url_for('bank_page') }}" class="btn btn-primary btn-lg px-4 shadow-sm">Explore More</a>
+<section class="page-section">
+  <div class="container">
+    <div class="row create-quiz-layout g-5 align-items-center">
+      <div class="col-lg-5">
+        <span class="section-kicker mb-3">Create a Quiz</span>
+        <h2 class="section-heading h2 mb-3">Need something specific? Generate your own quiz.</h2>
+        <p class="section-subheading mb-4">
+          Choose your topic, set the difficulty, and let the generator build a quiz that fits what you actually need to revise.
+        </p>
+        <a href="{{ url_for('autoquiz_page') }}" class="btn btn-brand btn-lg">Create a Quiz</a>
       </div>
 
-      <!-- Categories column -->
       <div class="col-lg-7">
-        <!-- Mobile: swipeable list -->
-        <div class="category-scroll">
-          {% for cat, icon in [('business','bi-briefcase-fill'),('administration','bi-person-workspace'),('finance','bi-cash-coin'),('science','bi-globe-asia-australia'),('medical','bi-heart-pulse-fill'),('technology','bi-cpu-fill'),('creativity','bi-palette-fill'),('law','bi-book-fill'),('culture','bi-music-note-beamed')] %}
-          <a href="{{ url_for('bank_page', category=cat) }}" class="category-card">
-            <i class="bi {{ icon }}"></i>
-            <h6>{{ cat|capitalize }}</h6>
-          </a>
-          {% endfor %}
-        </div>
-
-        <!-- Desktop: responsive grid -->
-        <div class="category-grid">
-          {% for cat, icon in [('business','bi-briefcase-fill'),('administration','bi-person-workspace'),('finance','bi-cash-coin'),('science','bi-globe-asia-australia'),('medical','bi-heart-pulse-fill'),('technology','bi-cpu-fill'),('creativity','bi-palette-fill'),('law','bi-book-fill'),('culture','bi-music-note-beamed')] %}
-          <a href="{{ url_for('bank_page', category=cat) }}" class="category-card">
-            <i class="bi {{ icon }}"></i>
-            <h6>{{ cat|capitalize }}</h6>
-          </a>
-          {% endfor %}
+        <div class="create-quiz-panel surface-panel">
+          <div class="create-quiz-points">
+            <div class="create-quiz-point">
+              <strong>1. Enter a topic</strong>
+              <span class="text-muted">Use a course subject, work topic, or exam objective.</span>
+            </div>
+            <div class="create-quiz-point">
+              <strong>2. Choose difficulty</strong>
+              <span class="text-muted">Set the level and question count before generation.</span>
+            </div>
+            <div class="create-quiz-point">
+              <strong>3. Start practicing</strong>
+              <span class="text-muted">Move straight from topic to quiz without extra setup.</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

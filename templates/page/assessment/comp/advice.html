@@ -1,230 +1,175 @@
-<hr class="section-divider">
+<hr style="width:50%; border:none; border-top:2px solid var(--warm-border); margin:2rem auto;">
 
-<section class="flex-center text-center" style="min-height: 80vh; background-color: #EAF6FF; position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center;">
+<section class="flex-center text-center" style="min-height:80vh; background:var(--warm-bg); display:flex; justify-content:center; align-items:center; position:relative; overflow:hidden;">
 
-    <svg class="curve" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-        <path fill="#fff" fill-opacity="1" d="M0,320L80,293.3C160,267,320,213,480,197.3C640,181,800,203,960,213.3C1120,224,1280,224,1360,213.3L1440,203L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
-    </svg>
+  <div class="advice-content-container">
 
-    <div class="content-container">
-
-        <div class="advice-box shadow-sm">
-            <h3 class="fw-bold mb-2" style="color: #0d6efd; font-size: 1.5rem;">Personalize Feedback</h3>
-            {% if advice_dict.requested %}
-                <p class="lead" style="font-size: 1.1rem; line-height: 1.4;">
-                    {{ advice_dict.advice }}
-                </p>
-                <p class="text-muted small mt-3">AI-generated content may contain inaccuracies. Please verify important information.</p>
-            {% else %}
-                <p class="lead mb-2" style="font-size: 1.1rem; line-height: 1.4;">
-                    Want to learn smarter, not harder?
-                    Get personalized feedback on your strengths and areas for growth.
-                    Discover what to focus on and expand your knowledge!
-                </p>
-                {% if loggedin %}
-                    <form href="{{ url_for('assessment_page', assessment_id=doc_id) }}" method="post">
-                      <button type="submit" class="btn btn-primary btn-sm">Get Personalized Advice</button>
-                    </form>
-                {% else %}
-                    <a href="{{ url_for('account_page') }}" class="btn btn-primary btn-sm">Sign Up to Get Personalized Advice</a>
-                {% endif %}
-            {% endif %}
-        </div>
-
-        <div class="row g-4">
-
-            {# Strengths Card #}
-            <div class="col-12 col-md-6 {% if not advice_dict.requested %}inactive-card{% endif %}">
-                <div class="card border-success shadow-sm h-100"> {# Added h-100 for potentially more uniform height #}
-                    <div class="card-header bg-success text-white text-center">
-                        <h5 class="mb-0">Strengths</h5>
-                    </div>
-                    <div class="card-body d-flex flex-column"> {# Added flex utils for potential content alignment #}
-                        {% if advice_dict.strong_points %}
-                            <ul class="list-group list-group-flush">
-                                {% for item in advice_dict.strong_points %}
-                                <li class="list-group-item">{{ item }}</li> {# Removed hardcoded bullet #}
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            {# Message when no strengths are listed #}
-                            <p class="text-muted text-center my-auto fst-italic px-3">
-                                No specific strengths identified yet. Try again!
-                            </p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
-            {# Weaknesses Card #}
-            <div class="col-12 col-md-6 {% if not advice_dict.requested %}inactive-card{% endif %}">
-                <div class="card border-danger shadow-sm h-100">
-                    <div class="card-header bg-danger text-white text-center">
-                        <h5 class="mb-0">Weaknesses</h5>
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        {% if advice_dict.weak_points %}
-                            <ul class="list-group list-group-flush">
-                                {% for item in advice_dict.weak_points %}
-                                <li class="list-group-item">{{ item }}</li> {# Removed hardcoded bullet #}
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            {# Message when no weaknesses are listed #}
-                            <p class="text-muted text-center my-auto fst-italic px-3">
-                                No specific weaknesses found. Great job focusing on improvement!
-                            </p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
-            {# Revision Topics Card #}
-            <div class="col-12 col-md-6 {% if not advice_dict.requested %}inactive-card{% endif %}">
-                <div class="card border-warning shadow-sm h-100">
-                    <div class="card-header bg-warning text-dark text-center">
-                        <h5 class="mb-0">Revision Topics</h5>
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        {# Pre-filter topics for revision - requires Jinja2 environment extensions #}
-                        {% set revision_topics = advice_dict.new_topics | selectattr('recommendation', 'equalto', 'revision') | list %}
-
-                        {% if revision_topics %}
-                            <ul class="list-group list-group-flush">
-                                {% for topic in revision_topics %}
-                                <li class="list-group-item">
-                                    <strong>{{ topic.topic }}</strong><br>
-                                    <span class="small text-muted">{{ topic.description }}</span><br>
-                                    <strong class="small">Level: </strong><span class="small text-muted">{{ topic.level }}</span>
-
-                                    <form action="{{ url_for('autoquiz_page') }}" method="post" class="mt-3">
-                                        <input type="hidden" name="topic" value="{{ topic.topic }}">
-                                        <input type="hidden" name="description" value="{{ topic.description }}">
-                                        <input type="hidden" name="level" value="{{ topic.level }}">
-                                        {# Ensure overall_dict is available in the context #}
-                                        <input type="hidden" name="numQuestions" value="{{ overall_dict.question_count | default(10) }}"> {# Added default value #}
-                                        <input type="hidden" name="agreeTnC" value="on">
-                                        <button type="submit" class="btn btn-sm btn-warning text-dark" {% if not advice_dict.requested %}disabled{% endif %}>
-                                            Revise Now (5 credits)
-                                        </button> {# Changed button style/text slightly #}
-                                    </form>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            {# Message when no revision topics are recommended #}
-                            <p class="text-muted text-center my-auto fst-italic px-3">
-                                No topics currently recommended for revision.
-                            </p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
-            {# New Topics Card #}
-            <div class="col-12 col-md-6 {% if not advice_dict.requested %}inactive-card{% endif %}">
-                <div class="card border-info shadow-sm h-100">
-                    <div class="card-header bg-info text-white text-center">
-                        <h5 class="mb-0">New Topics</h5>
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        {# Pre-filter topics that are new #}
-                        {% set new_learning_topics = advice_dict.new_topics | selectattr('recommendation', 'equalto', 'new') | list %}
-
-                        {% if new_learning_topics %}
-                            <ul class="list-group list-group-flush">
-                                {% for topic in new_learning_topics %}
-                                <li class="list-group-item">
-                                    <strong>{{ topic.topic }}</strong><br>
-                                    <span class="small text-muted">{{ topic.description }}</span><br>
-                                    <strong class="small">Level: </strong><span class="small text-muted">{{ topic.level }}</span>
-
-                                    <form action="{{ url_for('autoquiz_page') }}" method="post" class="mt-3">
-                                        <input type="hidden" name="topic" value="{{ topic.topic }}">
-                                        <input type="hidden" name="description" value="{{ topic.description }}">
-                                        <input type="hidden" name="level" value="{{ topic.level }}">
-                                        {# Ensure overall_dict is available in the context #}
-                                        <input type="hidden" name="numQuestions" value="{{ overall_dict.question_count | default(10) }}"> {# Added default value #}
-                                        <input type="hidden" name="agreeTnC" value="on">
-                                        <button type="submit" class="btn btn-sm btn-info text-white" {% if not advice_dict.requested %}disabled{% endif %}>
-                                            Explore Now (5 credits)
-                                        </button> {# Changed button style/text slightly #}
-                                    </form>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            {# Message when no new topics are recommended #}
-                            <p class="text-muted text-center my-auto fst-italic px-3">
-                                No new topics suggested at this time. Focus on mastering current material!
-                            </p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
-        </div>
+    <!-- Personalised feedback box -->
+    <div class="advice-box">
+      <h3 class="fw-bold mb-3" style="color:var(--warm-primary); font-size:1.5rem;">Personalised Feedback</h3>
+      {% if advice_dict.requested %}
+        <p style="font-size:1rem; line-height:1.6; color:var(--warm-text);">{{ advice_dict.advice }}</p>
+        <p class="text-muted small mt-3">AI-generated content may contain inaccuracies. Please verify important information.</p>
+      {% else %}
+        <p style="font-size:1rem; line-height:1.6; color:var(--warm-muted);">
+          Want to learn smarter, not harder?
+          Get personalised feedback on your strengths and areas for growth.
+        </p>
+        {% if loggedin %}
+          <form action="{{ url_for('assessment_page', assessment_id=doc_id) }}" method="post">
+            <button type="submit" class="btn btn-warm-primary btn-sm">Get Personalised Advice</button>
+          </form>
+        {% else %}
+          <a href="{{ url_for('account_page') }}" class="btn btn-warm-primary btn-sm">Sign Up to Get Personalised Advice</a>
+        {% endif %}
+      {% endif %}
     </div>
+
+    <!-- Four cards -->
+    <div class="row g-4">
+
+      <div class="col-12 col-md-6 {% if not advice_dict.requested %}inactive-card{% endif %}">
+        <div class="card border-0 shadow-sm h-100" style="border-radius:var(--radius-card);">
+          <div class="card-header text-white text-center" style="background:var(--warm-success); border-radius:var(--radius-card) var(--radius-card) 0 0;">
+            <h5 class="mb-0">Strengths</h5>
+          </div>
+          <div class="card-body d-flex flex-column">
+            {% if advice_dict.strong_points %}
+              <ul class="list-group list-group-flush">
+                {% for item in advice_dict.strong_points %}
+                <li class="list-group-item" style="border-color:var(--warm-border);">{{ item }}</li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="text-muted text-center my-auto fst-italic">No specific strengths identified yet. Try again!</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 {% if not advice_dict.requested %}inactive-card{% endif %}">
+        <div class="card border-0 shadow-sm h-100" style="border-radius:var(--radius-card);">
+          <div class="card-header text-white text-center" style="background:#EF476F; border-radius:var(--radius-card) var(--radius-card) 0 0;">
+            <h5 class="mb-0">Weaknesses</h5>
+          </div>
+          <div class="card-body d-flex flex-column">
+            {% if advice_dict.weak_points %}
+              <ul class="list-group list-group-flush">
+                {% for item in advice_dict.weak_points %}
+                <li class="list-group-item" style="border-color:var(--warm-border);">{{ item }}</li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="text-muted text-center my-auto fst-italic">No specific weaknesses found. Great job!</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      {% set revision_topics = advice_dict.new_topics | selectattr('recommendation', 'equalto', 'revision') | list %}
+      <div class="col-12 col-md-6 {% if not advice_dict.requested %}inactive-card{% endif %}">
+        <div class="card border-0 shadow-sm h-100" style="border-radius:var(--radius-card);">
+          <div class="card-header text-dark text-center" style="background:var(--warm-amber); border-radius:var(--radius-card) var(--radius-card) 0 0;">
+            <h5 class="mb-0">Revision Topics</h5>
+          </div>
+          <div class="card-body d-flex flex-column">
+            {% if revision_topics %}
+              <ul class="list-group list-group-flush">
+                {% for topic in revision_topics %}
+                <li class="list-group-item" style="border-color:var(--warm-border);">
+                  <strong>{{ topic.topic }}</strong><br>
+                  <span class="small text-muted">{{ topic.description }}</span><br>
+                  <strong class="small">Level: </strong><span class="small text-muted">{{ topic.level }}</span>
+                  <form action="{{ url_for('autoquiz_page') }}" method="post" class="mt-2">
+                    <input type="hidden" name="topic" value="{{ topic.topic }}">
+                    <input type="hidden" name="description" value="{{ topic.description }}">
+                    <input type="hidden" name="level" value="{{ topic.level }}">
+                    <input type="hidden" name="numQuestions" value="{{ overall_dict.question_count | default(10) }}">
+                    <input type="hidden" name="agreeTnC" value="on">
+                    <button type="submit" class="btn btn-sm btn-warm-primary" {% if not advice_dict.requested %}disabled{% endif %}>
+                      Revise Now (5 credits)
+                    </button>
+                  </form>
+                </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="text-muted text-center my-auto fst-italic">No revision topics recommended.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      {% set new_learning_topics = advice_dict.new_topics | selectattr('recommendation', 'equalto', 'new') | list %}
+      <div class="col-12 col-md-6 {% if not advice_dict.requested %}inactive-card{% endif %}">
+        <div class="card border-0 shadow-sm h-100" style="border-radius:var(--radius-card);">
+          <div class="card-header text-white text-center" style="background:#118AB2; border-radius:var(--radius-card) var(--radius-card) 0 0;">
+            <h5 class="mb-0">New Topics</h5>
+          </div>
+          <div class="card-body d-flex flex-column">
+            {% if new_learning_topics %}
+              <ul class="list-group list-group-flush">
+                {% for topic in new_learning_topics %}
+                <li class="list-group-item" style="border-color:var(--warm-border);">
+                  <strong>{{ topic.topic }}</strong><br>
+                  <span class="small text-muted">{{ topic.description }}</span><br>
+                  <strong class="small">Level: </strong><span class="small text-muted">{{ topic.level }}</span>
+                  <form action="{{ url_for('autoquiz_page') }}" method="post" class="mt-2">
+                    <input type="hidden" name="topic" value="{{ topic.topic }}">
+                    <input type="hidden" name="description" value="{{ topic.description }}">
+                    <input type="hidden" name="level" value="{{ topic.level }}">
+                    <input type="hidden" name="numQuestions" value="{{ overall_dict.question_count | default(10) }}">
+                    <input type="hidden" name="agreeTnC" value="on">
+                    <button type="submit" class="btn btn-sm btn-warm-primary" {% if not advice_dict.requested %}disabled{% endif %}>
+                      Explore Now (5 credits)
+                    </button>
+                  </form>
+                </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="text-muted text-center my-auto fst-italic">No new topics suggested yet.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </section>
 
 <style>
-    .section-divider {
-        width: 50%;
-        border: none;
-        border-top: 2px solid #ddd;
-        margin: 40px auto 20px; /* Adjust spacing as needed */
-    }
+  .advice-content-container {
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+    max-width: 1000px;
+    padding: 2rem;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
 
-    .content-container {
-        display: flex;
-        flex-direction: column;
-        width: 60%;
-        max-width: 1000px;
-        padding: 20px;
-        align-items: center;
-        text-align: center;
-        position: relative;
-    }
+  .advice-box {
+    background: #ffffff;
+    border-radius: var(--radius-card);
+    border-left: 4px solid var(--warm-primary);
+    padding: 1.5rem 2rem;
+    max-width: 800px;
+    width: 100%;
+    box-shadow: var(--warm-shadow);
+    margin-bottom: 2rem;
+    text-align: left;
+  }
 
-    /* Personalized Advice Box */
-    .advice-box {
-        background: white;
-        border-radius: 8px;
-        padding: 20px;
-        max-width: 800px;
-        width: 100%;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        margin-bottom: 30px;
-    }
+  .inactive-card {
+    opacity: 0.55;
+    filter: grayscale(70%);
+    pointer-events: none;
+  }
 
-    /* SVG Curve styling */
-    .curve {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: auto;
-    }
-
-    /* Inactive Card Styling */
-    .inactive-card {
-        opacity: 0.6; /* Reduce opacity */
-        filter: grayscale(80%); /* Apply grayscale filter */
-        pointer-events: none; /* Prevent interaction */
-    }
-
-    .inactive-card .card-header {
-        opacity: 0.8; /* Slightly increase header opacity for better visibility */
-    }
-
-    .inactive-card .btn {
-        opacity: 0.7; /* Reduce button opacity */
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 992px) {
-        .content-container {
-            width: 80%;
-        }
-    }
+  @media (max-width: 992px) {
+    .advice-content-container { width: 90%; }
+  }
 </style>

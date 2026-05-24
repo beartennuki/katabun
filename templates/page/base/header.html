@@ -1,84 +1,15 @@
-<header>
-  <style>
-    /* ========== Header Styles with New Color Palette ========== */
-
-    /* Navbar base styles */
-    .navbar {
-      min-height: 70px;                     /* Fix header height */
-      padding: 1rem 2rem;                   /* Add padding for spacing */
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-      display: flex;
-      align-items: center;                  /* Ensure content stays vertically aligned */
-    }
-
-    /* Logo styling */
-    .navbar-brand img {
-      max-height: 60px;                     /* Increase logo height without affecting navbar height */
-      height: auto;                         /* Maintain aspect ratio */
-      margin-right: 10px;                   /* Spacing between logo and text */
-    }
-
-    /* Text color and style for links and brand */
-    .navbar .nav-link,
-    .navbar .navbar-brand {
-      color: var(--color-navy) !important;  /* Dark navy for text */
-      font-weight: 600;                     /* Semi-bold for a cleaner look */
-      font-size: 1.125rem;                  /* Slightly smaller text for modern minimalism */
-      text-transform: none;                 /* Remove uppercase for a friendlier vibe */
-    }
-
-    .navbar .nav-link:hover,
-    .navbar .navbar-brand:hover {
-      text-decoration: none;                /* Sleeker hover effect (no underline) */
-      color: var(--color-blue) !important;  /* Deep blue hover color */
-      transition: color 0.3s ease;          /* Smooth color transition */
-    }
-
-    /* Dropdown menu styling */
-    .dropdown-menu {
-      border: none;                                   /* Remove border for a cleaner look */
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);       /* Subtle shadow for depth */
-      border-radius: 4px;                             /* Rounded corners */
-    }
-
-    .dropdown-item {
-      color: var(--color-navy) !important; /* Dark navy for dropdown text */
-      font-weight: 500;                   /* Medium weight for dropdown items */
-      transition: background-color 0.3s ease; /* Smooth hover effect */
-    }
-
-    .dropdown-item:hover {
-      background-color: var(--color-blue); /* Fresh blue highlight on hover */
-      color: #ffffff !important;           /* White text on hover */
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 576px) {
-      .navbar {
-        padding: 0.5rem 1rem; /* Decrease horizontal padding on mobile */
-      }
-
-      .dropdown-menu {
-        position: relative;    /* Ensure dropdown is properly positioned */
-        width: 100%;           /* Full width for better usability */
-        border-radius: 0;      /* Remove rounded corners for a seamless look */
-      }
-
-      .navbar-brand img {
-        max-height: 50px;      /* Scale logo down slightly for smaller screens */
-      }
-    }
-  </style>
-
-  <nav class="navbar navbar-expand-lg navbar-light">
+<header class="site-header">
+  <nav class="navbar navbar-expand-lg">
     <div class="container">
-      <!-- Brand Name -->
-      <a class="navbar-brand d-flex align-items-center" href="{{ url_for('landing_page') }}">
-        <img src="{{ url_for('static', filename='images/logo/LogoRectangle.png') }}" alt="4UrClass">
+      <a class="navbar-brand d-flex align-items-center gap-3" href="{{ url_for('landing_page') }}">
+        <span class="navbar-brand-copy d-flex">
+          <span class="navbar-brand-title">4UrClass</span>
+          <span class="navbar-brand-subtitle">Quiz practice for ambitious learners</span>
+        </span>
       </a>
-        <h2 class="mb-2 fw-bold" style="color: #0d6efd; font-size: 1.5rem;">Beta</h2>
+
       <button
-        class="navbar-toggler"
+        class="navbar-toggler border-0 shadow-none"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#navbarNav"
@@ -88,143 +19,32 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <!-- Quiz Generator Dropdown -->
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="quizGeneratorDropdown"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-               Generator
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="quizGeneratorDropdown">
-              <li>
-                <a class="dropdown-item" href="{{ url_for('autoquiz_page') }}">
-                  <i class="bi bi-lightning-fill me-2" style="color: var(--color-blue);"></i>Auto
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="{{ url_for('guidedquiz_page') }}">
-                  <i class="bi bi-file-earmark-text-fill me-2" style="color: var(--color-green);"></i>Text-Guided
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="{{ url_for('guidedquiz_page') }}">
-                  <i class="bi bi-file-earmark-music-fill me-2" style="color: var(--color-yellow);"></i>Audio-Guided
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="{{ url_for('guidedquiz_page') }}">
-                  <i class="bi bi-file-earmark-play-fill me-2" style="color: var(--color-red);"></i>Video-Guided
-                </a>
-              </li>
-            </ul>
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('bank_page') }}">Try a Quiz</a>
           </li>
 
-          <!-- Quiz Bank Dropdown -->
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="quizBankDropdown"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-                Bank
-            </a>
-             <ul class="dropdown-menu" aria-labelledby="quizBankDropdown">
-              <!-- Business and Administration -->
-              <li class="dropdown-header" style="color: var(--color-navy); font-weight: bold;">Business & Administration</li>
-              <li>
-                <a class="dropdown-item" href="{{ url_for('bank_page', category='business') }}">
-                  <i class="bi bi-briefcase-fill me-2" style="color: var(--color-blue);"></i>Business
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="{{ url_for('bank_page', category='administration') }}">
-                  <i class="bi bi-person-workspace me-2" style="color: var(--color-blue);"></i>Administration
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="{{ url_for('bank_page', category='finance') }}">
-                  <i class="bi bi-cash-coin me-2" style="color: var(--color-blue);"></i>Finance
-                </a>
-              </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('landing_page') }}#newsletter">Newsletter</a>
+          </li>
 
-              <hr class="dropdown-divider">
+          <li class="nav-item">
+            {% if session.get('user_login') %}
+              <a class="nav-link" href="{{ url_for('account_page') }}">Dashboard</a>
+            {% else %}
+              <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+            {% endif %}
+          </li>
 
-              <!-- Science, Medical, and Technology -->
-              <li class="dropdown-header" style="color: var(--color-navy); font-weight: bold;">Science, Medical & Technology</li>
-              <li>
-                <a class="dropdown-item" href="{{ url_for('bank_page', category='science') }}">
-                  <i class="bi bi-globe-asia-australia me-2" style="color: var(--color-green);"></i>Science
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="{{ url_for('bank_page', category='medical') }}">
-                  <i class="bi bi-heart-pulse-fill me-2" style="color: var(--color-green);"></i>Medical
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="{{ url_for('bank_page', category='technology') }}">
-                  <i class="bi bi-cpu-fill me-2" style="color: var(--color-green);"></i>Technology
-                </a>
-              </li>
-
-              <hr class="dropdown-divider">
-
-              <!-- Creativity and Society -->
-              <li class="dropdown-header" style="color: var(--color-navy); font-weight: bold;">Creativity & Society</li>
-              <li>
-                <a class="dropdown-item" href="{{ url_for('bank_page', category='creativity') }}">
-                  <i class="bi bi-palette-fill me-2" style="color: var(--color-yellow);"></i>Creativity
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="{{ url_for('bank_page', category='law') }}">
-                  <i class="bi bi-book-fill me-2" style="color: var(--color-yellow);"></i>Law
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="{{ url_for('bank_page', category='culture') }}">
-                  <i class="bi bi-music-note-beamed me-2" style="color: var(--color-yellow);"></i>Culture
-                </a>
-              </li>
-            </ul>
-
-              <!-- Pricing Page Button -->
-        <li class="nav-item">
-            <a
-              class="nav-link"
-              href="{{ url_for('payment_page') }}"
-            >
-                Pricing
-            </a>
-        </li>
-
-        <!-- Account Page Button with User Icon -->
-        <li class="nav-item">
-            <a
-              class="nav-link"
-              href="{{ url_for('account_page') }}"
-            >
-                Account
-            </a>
-        </li>
-        <li class="nav-item">
-            <a
-              class="nav-link"
-              href="{{ url_for('katabun_page') }}"
-            >
-                Katabun
-            </a>
-        </li>
+          <li class="nav-item ms-lg-2">
+            {% if session.get('user_login') %}
+              <a class="btn btn-brand" href="{{ url_for('account_page') }}">User Dashboard</a>
+            {% else %}
+              <a class="btn btn-brand" href="{{ url_for('autoquiz_page') }}">Create a Quiz</a>
+            {% endif %}
+          </li>
         </ul>
       </div>
     </div>

@@ -1,40 +1,29 @@
 {% extends "page/base/base.html" %}
 {% block title %}Error{% endblock %}
 {% block content %}
-<section class="py-5" style="background-color: #F8D7DA;">
-    <div class="container">
-        <div class="row align-items-center">
-            <!-- Image Section (Left Column) -->
-            <div class="col-md-6 text-center">
-                <img src="{{ url_for('static', filename='images/error/404 error with a landscape-pana.png') }}"
-                     alt="Error Image"
-                     class="img-fluid"
-                     style="max-width: 100%; height: auto;">
-            </div>
-
-            <!-- Message Section (Right Column) -->
-            <div class="col-md-6">
-                <!-- Title -->
-                <h1 class="fw-bold mb-4" style="color: #842029; font-size: 3rem;">Oops! Something Went Wrong</h1>
-
-                {% if message %}
-                    <p style="font-size: 1.5rem;">Error: {{ message }}</p>
-                {% endif %}
-
-                <!-- Apology Message -->
-                <p class="mt-4 mb-4" style="color: #842029; font-size: 1.25rem;">
-                    We’re sorry for the inconvenience.<br>
-                    It seems something went wrong on our end. <br>
-                    Please try refreshing the page, or come back later.
-                </p>
-
-                <!-- Optional Buttons -->
-                <div>
-                    <a href="/" class="btn btn-primary btn-lg me-3">Go to Homepage</a>
-                    <a href="{{ url_for('contact_page') }}" class="btn btn-outline-danger btn-lg">Contact Support</a>
-                </div>
-            </div>
+<section class="page-section">
+  <div class="container">
+    <div class="surface-panel error-card">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-6 error-art text-center">
+          <img src="{{ url_for('static', filename='images/error/404 error with a landscape-pana.png') }}" alt="Error Illustration" class="img-fluid mx-auto d-block" style="max-width: 420px;">
         </div>
+        <div class="col-lg-6">
+          <span class="section-kicker mb-3">Error State</span>
+          <h1 class="error-title mb-3">Something went wrong.</h1>
+          {% if message %}
+            <p class="text-muted mb-3">Error: {{ message }}</p>
+          {% endif %}
+          <p class="section-subheading mb-4">
+            We could not complete that request. Try refreshing the page, heading back to the homepage, or contacting support if the issue persists.
+          </p>
+          <div class="d-flex flex-wrap gap-2">
+            <a href="/" class="btn btn-brand">Go to Homepage</a>
+            <a href="{{ url_for('contact_page') }}" class="btn btn-ghost">Contact Support</a>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
 {% endblock %}

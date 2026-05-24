@@ -1,94 +1,57 @@
-<!-- Fully-responsive hero section with subtle action cues -->
-<style>
-  /* ===== HERO SECTION ===== */
-  .hero-section {
-    background: linear-gradient(135deg, #eaf6ff 0%, #dcefff 100%);
-    overflow: hidden;
-  }
-
-  .hero-headline {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 700;
-    line-height: 1.15;
-  }
-
-  /* Gradient text for extra pop */
-  .text-gradient {
-    background: linear-gradient(90deg, #ff512f 0%, #dd2476 50%, #ff512f 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  /* ----- Feature "link‑buttons" (toned‑down) ----- */
-  .hero-feature-list {
-    padding: 0;
-  }
-  .hero-feature-list li {
-    list-style: none;
-    margin-bottom: 0.65rem;
-  }
-  .feature-btn {
-    display: inline-flex;          /* no longer full‑width */
-    align-items: center;
-    gap: 0.55rem;
-    padding: 0.55rem 0.9rem;
-    background: #f8fbff;           /* subtle tint */
-    border: 1px solid rgba(13,110,253,0.25);
-    border-radius: 0.55rem;
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: #0d6efd;
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-  .feature-btn i {
-    font-size: 1.15rem;
-  }
-  .feature-btn:hover {
-    background: rgba(13,110,253,0.07);
-    border-color: #0d6efd;
-  }
-
-  /* Small-screen tweaks */
-  @media (max-width: 575.98px) {
-    .hero-section {
-      padding-top: 4rem !important;
-      padding-bottom: 2rem !important;
-    }
-    .feature-btn {
-      font-size: 0.9rem;
-    }
-    .hero-illustration {
-      max-width: 220px;
-    }
-  }
-</style>
-
-<section class="hero-section d-flex align-items-center py-5">
+<section class="page-section hero-section">
   <div class="container">
-    <div class="row align-items-center g-5">
-
-      <!-- Illustration (desktop right, mobile top) -->
-      <div class="col-lg-6 order-1 order-lg-2 text-center">
-        <img src="{{ url_for('static', filename='images/hero/img3.png') }}" class="hero-illustration img-fluid" alt="Graduate illustration">
-      </div>
-
-      <!-- Copy & CTA -->
-      <div class="col-lg-6 order-2 order-lg-1 text-center text-lg-start">
-        <h1 class="hero-headline mb-4">
-          <span class="text-gradient">Smarter Studying</span><br>Starts&nbsp;Here
+    <div class="row hero-grid g-5">
+      <div class="col-lg-6 hero-copy">
+        <span class="section-kicker mb-3">AI Study Platform</span>
+        <h1 class="hero-title">
+          Pick a path,
+          <span class="hero-highlight">start studying</span>,
+          and keep moving.
         </h1>
+        <p class="hero-description">
+          4UrClass should drive one simple flow: try a quiz, create a quiz, or subscribe to get new quizzes in your inbox.
+        </p>
 
-        <!-- Subtle actionable links -->
-        <ul class="hero-feature-list mb-4">
-          <li><a href="{{ url_for('bank_page') }}" class="feature-btn"><i class="bi bi-search"></i><span>Explore 5,000+ Free Quizzes</span></a></li>
-          <li><a href="{{ url_for('autoquiz_page') }}" class="feature-btn"><i class="bi bi-magic"></i><span>Create Any Quiz with AI</span></a></li>
-          <li><a href="{{ url_for('autoquiz_page') }}" class="feature-btn"><i class="bi bi-person-check-fill"></i><span>Get Personalised Study Tips</span></a></li>
-        </ul>
+        <div class="landing-flow">
+          <div class="landing-flow-step">
+            <span class="landing-flow-number">01</span>
+            <div>
+              <strong>Try a quiz</strong>
+              <div class="text-muted small">Open a ready-made quiz and start immediately.</div>
+            </div>
+          </div>
+          <div class="landing-flow-step">
+            <span class="landing-flow-number">02</span>
+            <div>
+              <strong>Create a quiz</strong>
+              <div class="text-muted small">Generate a quiz from your own topic in a few clicks.</div>
+            </div>
+          </div>
+          <div class="landing-flow-step">
+            <span class="landing-flow-number">03</span>
+            <div>
+              <strong>Join the newsletter</strong>
+              <div class="text-muted small">Get new quiz drops and study updates.</div>
+            </div>
+          </div>
+        </div>
 
-        <a href="{{ url_for('account_page') }}" class="btn btn-success btn-lg px-4">Sign Up Now — Get 30 Free Credits</a>
+        <div class="hero-action-row">
+          <a href="{{ url_for('bank_page') }}" class="btn btn-brand btn-lg">Try a Quiz</a>
+          <a href="{{ url_for('autoquiz_page') }}" class="btn btn-ghost btn-lg">Create a Quiz</a>
+          <a href="#newsletter" class="btn-link-strong">Go to newsletter <i class="bi bi-arrow-right"></i></a>
+        </div>
       </div>
 
+      <div class="col-lg-6 hero-visual">
+        <div class="surface-panel hero-image-card">
+          <img
+            src="{{ url_for('static', filename='images/hero/img3.png') }}"
+            class="img-fluid mx-auto d-block"
+            alt="Student studying"
+          >
+        </div>
+      </div>
     </div>
   </div>
 </section>

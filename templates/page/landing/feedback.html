@@ -1,59 +1,18 @@
-<!-- templates/page/landing/feedback.html -->
-<section class="py-5 bg-light">
+<section class="page-section page-section--compact">
   <div class="container">
-    <div class="row justify-content-center align-items-center g-5">
-
-      <!-- Copy + CTA -->
-      <div class="col-12 col-xl-5">
-        <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm h-100">
-
-          <h2 class="fw-bold lh-sm text-primary mb-3 fs-3 fs-xl-1 text-start">
-            Feeling stuck? Not sure how to improve?
-          </h2>
-
-          <!-- NEW short benefit paragraph -->
-          <p class="text-secondary fs-6 mb-4">
-            Use our AI to analyses your quiz results to
-            highlight <strong>exactly</strong> where you’re strong, where you’re rusty,
-            and what to learn next.
+    <div class="surface-panel newsletter-prompt">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <span class="section-kicker mb-3">Newsletter</span>
+          <h2 class="section-heading h2 mb-3">Want new quizzes in your inbox?</h2>
+          <p class="section-subheading mb-0">
+            Subscribe for quiz drops, study ideas, and product updates. This is the final step if you are not ready to start a quiz today.
           </p>
-
-          <p class="text-secondary fs-6 mb-4"> Stop doing random practice and start a focused study plan. </p>
-
-          <ul class="list-unstyled fs-6 text-secondary">
-            <li class="d-flex mb-3">
-              <i class="bi bi-check-circle-fill text-success me-2 mt-1 small"></i>
-              Personalised strength &amp; weakness dashboard.
-            </li>
-            <li class="d-flex mb-3">
-              <i class="bi bi-check-circle-fill text-success me-2 mt-1 small"></i>
-              Weekly revision steps you can finish in 10 mins.
-            </li>
-            <li class="d-flex">
-              <i class="bi bi-check-circle-fill text-success me-2 mt-1 small"></i>
-              Smart topic suggestions to level-up faster.
-            </li>
-          </ul>
-
-          <a href="{{ url_for('login') }}"
-             class="btn btn-success btn-lg w-100 mt-4 shadow-sm">
-            Sign Up – It’s Free
-          </a>
-
-          <small class="d-block mt-2 text-muted">
-            Takes less than 30 seconds · No credit card needed
-          </small>
+        </div>
+        <div class="col-lg-6 text-lg-end">
+          <a href="#newsletter" class="btn btn-brand btn-lg">Go to Newsletter</a>
         </div>
       </div>
-
-      <!-- Illustration -->
-      <div class="col-12 col-xl-5 text-center">
-        <img src="{{ url_for('static', filename='images/hero/img1.png') }}"
-             alt="Student improving with personalised learning"
-             class="img-fluid d-block mx-auto rounded-4 shadow-lg"
-             style="max-width:360px;">
-      </div>
-
     </div>
   </div>
 </section>

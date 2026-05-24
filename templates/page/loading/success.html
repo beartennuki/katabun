@@ -1,61 +1,71 @@
 {% extends "page/base/base.html" %}
 {% block title %}4UrClass Loading{% endblock %}
 {% block content %}
-<section class="py-5" style="background-color: white;">
-    <div class="container">
-        <div class="row align-items-center">
-            <!-- Advertising Section -->
-            <div class="col-md-5 text-center">
-                <p>Word from our sponsor</p>
-                <img src="{{ url_for('static', filename='images/loading/advertising.gif') }}"
-                     alt="Advertising Space"
-                     class="img-fluid" style="max-width: 100%; height: auto;">
+<section class="page-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-xl-8 col-lg-9">
+        <div class="surface-panel loading-shell">
+          <div id="loading-section" class="text-center">
+            <span class="section-kicker mb-3">Processing</span>
+            <div class="loading-visual mb-4">
+              <img
+                src="{{ url_for('static', filename='images/loading/loading.gif') }}"
+                alt="Loading"
+                class="img-fluid mx-auto d-block loading-visual-image"
+              >
+            </div>
+            <h1 class="section-heading h2 mb-3">Please wait while we are preparing...</h1>
+            <p class="section-subheading mx-auto mb-4">
+              <strong>{{ message }}</strong>
+            </p>
+
+            <div class="loading-meta surface-card mx-auto">
+              {% if doc_type == 'autoquiz' %}
+                <span class="loading-meta-label">Quiz ID</span>
+                <strong>{{ doc_id }}</strong>
+              {% elif doc_type == 'assessment' %}
+                <span class="loading-meta-label">Assessment ID</span>
+                <strong>{{ doc_id }}</strong>
+              {% endif %}
+            </div>
+          </div>
+
+          <div id="ready-section" class="text-center" style="display: none;">
+            <span class="section-kicker mb-3">Ready</span>
+            <div class="loading-visual mb-4">
+              <div class="loading-ready-badge mx-auto">
+                <i class="bi bi-check2-circle"></i>
+              </div>
             </div>
 
-            <!-- Loading Section -->
-            <div class="col-md-7" id="loading-section">
-                <div class="text-center mb-4">
-                    <img src="{{ url_for('static', filename='images/loading/loading.gif') }}"
-                         alt="Loading..."
-                         class="img-fluid" style="max-width: 10%; height: auto;">
-                </div>
-                <h3 class="fw-bold mb-4 text-center" style="color: #0d6efd; font-size: 2rem;">Please wait</h3>
-                <p class="mb-4 text-center" style="color: black; font-size: 1rem;">
-                    <strong>{{ message }}</strong><br>
-                    {% if doc_type == 'autoquiz'%}
-                        Auto-Quiz ID: {{ doc_id }}
-                    {% elif doc_type == 'assessment' %}
-                        Assessment ID: {{ doc_id }}
-                    {% endif %}
-                </p>
-            </div>
-
-            <!-- Ready Section (Initially Hidden) -->
-            <div class="col-md-7 text-center" id="ready-section" style="display: none;">
-                {% if doc_type == 'autoquiz'%}
-                    <h3 class="fw-bold mb-4" style="color: #28a745; font-size: 2rem;">Your Auto-Quiz is Ready!</h3>
-                    <p class="mb-4" style="color: black; font-size: 1rem;">
-                        Auto-Quiz ID: <strong>{{ doc_id }}</strong><br>
-                        Click the button below to proceed.
-                    </p>
-                    <a href="{{ url_for('quiz_page', slug=quiz_slug or doc_id) }}"
-                       class="btn btn-success btn-lg">Start Quiz
-                    </a>
-                {% elif doc_type == 'assessment' %}
-                    <h3 class="fw-bold mb-4" style="color: #28a745; font-size: 2rem;">Your Assessment is Ready!</h3>
-                        <p class="mb-4" style="color: black; font-size: 1rem;">
-                            Assessment-ID: <strong>{{ doc_id }}</strong><br>
-                            Click the button below to proceed.
-                        </p>
-                        <a href="{{ url_for('assessment_page', assessment_id=doc_id) }}"
-                           class="btn btn-success btn-lg">Review result
-                        </a>
-                {% endif %}
-            </div>
+            {% if doc_type == 'autoquiz' %}
+              <h2 class="section-heading h2 mb-3">Your quiz is ready.</h2>
+              <p class="section-subheading mx-auto mb-4">
+                Your generated quiz is prepared and ready to open.
+              </p>
+              <div class="loading-meta surface-card mx-auto mb-4">
+                <span class="loading-meta-label">Quiz ID</span>
+                <strong>{{ doc_id }}</strong>
+              </div>
+              <a href="{{ url_for('quiz_page', slug=quiz_slug or doc_id) }}" class="btn btn-brand btn-lg">Start Quiz</a>
+            {% elif doc_type == 'assessment' %}
+              <h2 class="section-heading h2 mb-3">Your assessment is ready.</h2>
+              <p class="section-subheading mx-auto mb-4">
+                Your assessment has finished processing and can be reviewed now.
+              </p>
+              <div class="loading-meta surface-card mx-auto mb-4">
+                <span class="loading-meta-label">Assessment ID</span>
+                <strong>{{ doc_id }}</strong>
+              </div>
+              <a href="{{ url_for('assessment_page', assessment_id=doc_id) }}" class="btn btn-brand btn-lg">Review Result</a>
+            {% endif %}
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </section>
 
-<!-- JavaScript to Replace Loading Section -->
 {% include "page/loading/script.html" %}
 {% endblock %}

@@ -4,329 +4,242 @@
 {% block description %}{{ quiz_description }}{% endblock %}
 
 {% block content %}
-<section class="py-5" style="background-color: white;">
-    <div class="container">
-        <div class="col-md-7 mx-auto text-center">
-            <h2 class="fw-bold mb-4" style="color: #0d6efd; font-size: 2rem;">{{ quiz_title }}</h2>
+<section class="py-5" style="background:#ffffff;">
+  <div class="container">
+
+    <div class="col-md-7 mx-auto text-center mb-2">
+      <h2 class="fw-bold" style="color:var(--warm-primary); font-size:1.9rem;">{{ quiz_title }}</h2>
+    </div>
+
+    <div class="col-md-7 mx-auto text-center mb-4">
+      {% if not toggle_info.login %}
+        <div class="alert d-flex align-items-center" role="alert"
+             style="background:var(--warm-bg); border:1.5px solid var(--warm-border); color:var(--warm-text); border-radius:var(--radius-card);">
+          <i class="bi bi-info-circle-fill me-2" style="color:var(--warm-amber);"></i>
+          <div>
+            To unlock personalised feedback please
+            <a href="{{ url_for('account_page') }}" class="fw-bold" style="color:var(--warm-primary);">sign in</a> first.
+          </div>
         </div>
-
-        <div class="col-md-7 mx-auto text-center mb-4">
-            {% if not toggle_info.login %}
-                <div class="alert alert-warning d-flex align-items-center" role="alert"
-                     style="background-color: #fff8e1; border-color: #ffecb3; color: #8a6d3b;">
-                    <i class="bi bi-info-circle-fill me-2"></i>
-                    <div>
-                        To unlock personalized feedback please
-                        <a href="{{ url_for('account_page') }}" class="fw-bold text-decoration-underline">sign in</a>
-                        first. It only takes a moment!
-                    </div>
-                </div>
-
-            {% elif not toggle_info.enough_credit %}
-                <div class="alert alert-warning d-flex align-items-center" role="alert"
-                     style="background-color: #fff8e1; border-color: #ffecb3; color: #8a6d3b;">
-                    <i class="bi bi-patch-exclamation-fill me-2"></i>
-                    <div>
-                        You need at least <strong>{{ toggle_info.credit_info.min_credit }}</strong> credits
-                        to get personalized advice. Please
-                        <a href="{{ url_for('account_page') }}" class="fw-bold text-decoration-underline">top up your credits</a>.
-                    </div>
-                </div>
-
-            {% elif not toggle_info.active_credit %}
-                <div class="alert alert-warning d-flex align-items-center" role="alert"
-                     style="background-color: #fff8e1; border-color: #ffecb3; color: #8a6d3b;">
-                    <i class="bi bi-clock-history me-2"></i>
-                    <div>
-                        It looks like your credits have expired. To continue receiving personalized feedback,
-                        please
-                        <a href="{{ url_for('account_page') }}" class="fw-bold text-decoration-underline">purchase new credits</a>.
-                    </div>
-                </div>
-            {% endif %}
+      {% elif not toggle_info.enough_credit %}
+        <div class="alert d-flex align-items-center" role="alert"
+             style="background:var(--warm-bg); border:1.5px solid var(--warm-border); color:var(--warm-text); border-radius:var(--radius-card);">
+          <i class="bi bi-patch-exclamation-fill me-2" style="color:var(--warm-amber);"></i>
+          <div>
+            You need at least <strong>{{ toggle_info.credit_info.min_credit }}</strong> credits for personalised advice.
+            <a href="{{ url_for('account_page') }}" class="fw-bold" style="color:var(--warm-primary);">Top up</a>.
+          </div>
         </div>
+      {% elif not toggle_info.active_credit %}
+        <div class="alert d-flex align-items-center" role="alert"
+             style="background:var(--warm-bg); border:1.5px solid var(--warm-border); color:var(--warm-text); border-radius:var(--radius-card);">
+          <i class="bi bi-clock-history me-2" style="color:var(--warm-amber);"></i>
+          <div>
+            Your credits have expired.
+            <a href="{{ url_for('account_page') }}" class="fw-bold" style="color:var(--warm-primary);">Purchase new credits</a>.
+          </div>
+        </div>
+      {% endif %}
+    </div>
 
-        <form id="quiz-form" method="POST" action="{{ url_for('quiz_page', slug=quiz_slug or doc_id) }}"
-              class="col-md-7 mx-auto">
-            <input type="hidden" name="user_id" value="{{ user_id }}">
-            <input type="hidden" name="doc_id" value="{{ doc_id }}">
-            <input type="hidden" name="assessment_id" value="{{ assessment_id }}">
+    <form id="quiz-form" method="POST" action="{{ url_for('quiz_page', slug=quiz_slug or doc_id) }}"
+          class="col-md-7 mx-auto">
+      <input type="hidden" name="user_id" value="{{ user_id }}">
+      <input type="hidden" name="doc_id" value="{{ doc_id }}">
+      <input type="hidden" name="assessment_id" value="{{ assessment_id }}">
 
-            {% for index, question_data in mcq_questions %}
-            <div class="card mb-4 shadow-sm" style="border-radius: 8px;">
-                <div class="card-header"
-                     style="background-color: #EAF6FF; border: none; border-bottom: 1px solid #ced4da;">
-                    <span class="fw-bold">Question {{ index + 1 }}</span><br>
-                    <span>{{ question_data['question'] }}</span>
-                </div>
-                <div class="card-body" style="background-color: white;">
-                    <div class="mt-3">
-                        {% for choice in question_data['choices'] %}
-                        <div class="form-check mb-2">
-                            <input
-                                type="radio"
-                                id="choice-{{ index }}-{{ loop.index }}"
-                                name="question-{{ index }}"
-                                value="{{ loop.index0 }}"
-                                class="form-check-input"
-                                required
-                            >
-                            <label for="choice-{{ index }}-{{ loop.index }}" class="form-check-label">
-                                {{ choice }}
-                            </label>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="card-footer text-end" style="background-color: white; border: none;">
-                    <input type="hidden" id="thumbs-up-{{ index }}" name="thumbs_up_{{ index }}" value="0">
-                    <input type="hidden" id="dont-know-{{ index }}" name="dont_know_{{ index }}" value="0">
-                    <input type="hidden" id="flagged-{{ index }}" name="flagged_{{ index }}" value="0">
-                    <input type="hidden" id="qid" name="qid" value="{{ question_data['qid'] }}">
-
-                    <button
-                        type="button"
-                        class="btn btn-link p-0 me-2 question-interaction-button"
-                        data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="Thumbs up this question if it is helpful"
-                        data-input-id="thumbs-up-{{ index }}"
-                        data-icon-id="thumbs-icon-{{ index }}"
-                    >
-                        <i
-                            id="thumbs-icon-{{ index }}"
-                            class="bi bi-hand-thumbs-up-fill icon-gray thumbs-up"
-                            style="font-size: 1.2rem;"
-                        ></i>
-                    </button>
-
-                    <button
-                        type="button"
-                        class="btn btn-link p-0 me-2 question-interaction-button"
-                        data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="Mark this question if you do not know the answer"
-                        data-input-id="dont-know-{{ index }}"
-                        data-icon-id="dont-know-icon-{{ index }}"
-                    >
-                        <i
-                            id="dont-know-icon-{{ index }}"
-                            class="bi bi-exclamation-circle-fill icon-gray dont-know"
-                            style="font-size: 1.2rem;"
-                        ></i>
-                    </button>
-
-                    <button
-                        type="button"
-                        class="btn btn-link p-0 question-interaction-button"
-                        data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="Flag this question if it is inappropriate, irrelevant or repetitive"
-                        data-input-id="flagged-{{ index }}"
-                        data-icon-id="flagged-icon-{{ index }}"
-                    >
-                        <i
-                            id="flagged-icon-{{ index }}"
-                            class="bi bi-flag-fill icon-gray flagged"
-                            style="font-size: 1.2rem;"
-                        ></i>
-                    </button>
-                </div>
+      {% for index, question_data in mcq_questions %}
+      <div class="card mb-4" style="border-radius:var(--radius-card); border:1.5px solid var(--warm-border); box-shadow:var(--warm-shadow);">
+        <div class="card-header d-flex align-items-start gap-2" style="background:var(--warm-bg); border:none; border-bottom:1px solid var(--warm-border); border-radius:var(--radius-card) var(--radius-card) 0 0;">
+          <span class="badge rounded-pill flex-shrink-0" style="background:var(--warm-primary); font-size:0.78rem; padding:0.35em 0.75em;">Q{{ index + 1 }}</span>
+          <span class="fw-bold" style="font-size:0.97rem;">{{ question_data['question'] }}</span>
+        </div>
+        <div class="card-body" style="background:#ffffff;">
+          <div class="mt-1">
+            {% for choice in question_data['choices'] %}
+            <div class="form-check mb-2">
+              <input
+                type="radio"
+                id="choice-{{ index }}-{{ loop.index }}"
+                name="question-{{ index }}"
+                value="{{ loop.index0 }}"
+                class="form-check-input"
+                style="accent-color:var(--warm-primary);"
+                required
+              >
+              <label for="choice-{{ index }}-{{ loop.index }}" class="form-check-label">
+                {{ choice }}
+              </label>
             </div>
             {% endfor %}
+          </div>
+        </div>
+        <div class="card-footer text-end" style="background:#ffffff; border:none;">
+          <input type="hidden" id="thumbs-up-{{ index }}" name="thumbs_up_{{ index }}" value="0">
+          <input type="hidden" id="dont-know-{{ index }}" name="dont_know_{{ index }}" value="0">
+          <input type="hidden" id="flagged-{{ index }}" name="flagged_{{ index }}" value="0">
+          <input type="hidden" id="qid" name="qid" value="{{ question_data['qid'] }}">
 
-            <div class="card mb-4 shadow-sm" style="border-radius: 8px;">
-                <div class="card-header py-2 px-3"
-                     style="background-color: #EAF6FF; border: none; border-bottom: 1px solid #ced4da;">
-                    <span class="fw-bold">Rate this quiz (optional)</span>
-                </div>
-                <div class="card-body py-2 px-3" style="background-color: white;">
-                    <div class="mb-2 row align-items-center">
-                        <label class="col-sm-8 col-form-label"
-                               data-bs-toggle="tooltip" data-bs-placement="top"
-                               title="Does the quiz help you with your study?"
-                               style="margin-bottom: 0;">
-                            Helpful for Study?
-                        </label>
-                        <div class="col-sm-4 d-flex justify-content-between">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="overall_rating" id="overall-yes" value="yes">
-                                <label class="form-check-label" for="overall-yes">Yes</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="overall_rating" id="overall-no" value="no">
-                                <label class="form-check-label" for="overall-no">No</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-2 row align-items-center">
-                        <label class="col-sm-8 col-form-label"
-                               data-bs-toggle="tooltip" data-bs-placement="top"
-                               title="Was this quiz relevant to the topic?"
-                               style="margin-bottom: 0;">
-                            Relevant to Topic?
-                        </label>
-                        <div class="col-sm-4 d-flex justify-content-between">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="relevance_rating" id="relevance-yes" value="yes">
-                                <label class="form-check-label" for="relevance-yes">Yes</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="relevance_rating" id="relevance-no" value="no">
-                                <label class="form-check-label" for="relevance-no">No</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row align-items-center">
-                        <label class="col-sm-8 col-form-label"
-                               data-bs-toggle="tooltip" data-bs-placement="top"
-                               title="Was the difficulty level appropriate?"
-                               style="margin-bottom: 0;">
-                            Difficulty Appropriate?
-                        </label>
-                        <div class="col-sm-4 d-flex justify-content-between">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="difficulty_rating" id="difficulty-yes" value="yes">
-                                <label class="form-check-label" for="difficulty-yes">Yes</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="difficulty_rating" id="difficulty-no" value="no">
-                                <label class="form-check-label" for="difficulty-no">No</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <button type="button" class="btn btn-link p-0 me-2 question-interaction-button"
+                  data-bs-toggle="tooltip" data-bs-placement="top"
+                  title="Thumbs up if this question is helpful"
+                  data-input-id="thumbs-up-{{ index }}" data-icon-id="thumbs-icon-{{ index }}">
+            <i id="thumbs-icon-{{ index }}" class="bi bi-hand-thumbs-up-fill icon-gray thumbs-up" style="font-size:1.15rem;"></i>
+          </button>
+
+          <button type="button" class="btn btn-link p-0 me-2 question-interaction-button"
+                  data-bs-toggle="tooltip" data-bs-placement="top"
+                  title="Mark if you don't know the answer"
+                  data-input-id="dont-know-{{ index }}" data-icon-id="dont-know-icon-{{ index }}">
+            <i id="dont-know-icon-{{ index }}" class="bi bi-exclamation-circle-fill icon-gray dont-know" style="font-size:1.15rem;"></i>
+          </button>
+
+          <button type="button" class="btn btn-link p-0 question-interaction-button"
+                  data-bs-toggle="tooltip" data-bs-placement="top"
+                  title="Flag if inappropriate, irrelevant or repetitive"
+                  data-input-id="flagged-{{ index }}" data-icon-id="flagged-icon-{{ index }}">
+            <i id="flagged-icon-{{ index }}" class="bi bi-flag-fill icon-gray flagged" style="font-size:1.15rem;"></i>
+          </button>
+        </div>
+      </div>
+      {% endfor %}
+
+      <!-- Optional rating -->
+      <div class="card mb-4" style="border-radius:var(--radius-card); border:1.5px solid var(--warm-border);">
+        <div class="card-header" style="background:var(--warm-bg); border:none; border-bottom:1px solid var(--warm-border); border-radius:var(--radius-card) var(--radius-card) 0 0;">
+          <span class="fw-bold">Rate this quiz <span class="fw-normal text-muted">(optional)</span></span>
+        </div>
+        <div class="card-body" style="background:#ffffff;">
+          {% for field, label, tip in [
+            ('overall_rating', 'Helpful for Study?', 'Does the quiz help you with your study?'),
+            ('relevance_rating', 'Relevant to Topic?', 'Was this quiz relevant to the topic?'),
+            ('difficulty_rating', 'Difficulty Appropriate?', 'Was the difficulty level appropriate?')
+          ] %}
+          <div class="mb-2 row align-items-center">
+            <label class="col-sm-8 col-form-label" data-bs-toggle="tooltip" title="{{ tip }}" style="margin-bottom:0;">{{ label }}</label>
+            <div class="col-sm-4 d-flex justify-content-between">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{ field }}" id="{{ field }}-yes" value="yes" style="accent-color:var(--warm-success);">
+                <label class="form-check-label" for="{{ field }}-yes">Yes</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{ field }}" id="{{ field }}-no" value="no" style="accent-color:var(--color-red);">
+                <label class="form-check-label" for="{{ field }}-no">No</label>
+              </div>
             </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
 
-            <div class="mb-4">
-                <label class="form-label fw-bold">Choose your Summary</label>
-                <div class="d-grid gap-2">
-                    <div class="card shadow-sm summary-option-card" data-summary-type="quick">
-                        <div class="card-body">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio"
-                                       name="summaryType" id="quickSummary" value="quick"
-                                       {% if not (toggle_info.login and toggle_info.enough_credit and toggle_info.active_credit) %}checked{% endif %}>
-                                <label class="form-check-label fw-bold" for="quickSummary">
-                                    Quick Summary (Free)
-                                </label>
-                                <p class="card-text text-muted small mt-1">A basic overview of your quiz results.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card shadow-sm summary-option-card" data-summary-type="personalized">
-                        <div class="card-body">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio"
-                                       name="summaryType" id="personalizedSummary" value="personalized"
-                                       {% if not toggle_info.login or not toggle_info.enough_credit or not toggle_info.active_credit %}
-                                           disabled
-                                       {% else %}
-                                           checked
-                                       {% endif %}>
-                                <label class="form-check-label fw-bold" for="personalizedSummary">
-                                    Personalized Summary (Uses {{ toggle_info.credit_info.min_credit }} Credit)
-                                </label>
-                                <p class="card-text text-muted small mt-1">Detailed feedback and insights tailored to your answers.</p>
-                                {% if not toggle_info.login %}
-                                    <small class="text-warning"><a href="{{ url_for('account_page') }}">Sign in</a> to unlock.</small>
-                                {% elif not toggle_info.enough_credit %}
-                                    <small class="text-warning">Requires {{ toggle_info.credit_info.min_credit }} credits. <a href="{{ url_for('account_page') }}">Top up</a>.</small>
-                                {% elif not toggle_info.active_credit %}
-                                    <small class="text-warning">Your credits have expired. <a href="{{ url_for('account_page') }}">Purchase new credits</a>.</small>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <!-- Summary choice -->
+      <div class="mb-4">
+        <label class="form-label fw-bold">Choose your Summary</label>
+        <div class="d-grid gap-2">
+          <div class="card summary-option-card" data-summary-type="quick" style="border-radius:var(--radius-card);">
+            <div class="card-body">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="summaryType" id="quickSummary" value="quick"
+                       {% if not (toggle_info.login and toggle_info.enough_credit and toggle_info.active_credit) %}checked{% endif %}>
+                <label class="form-check-label fw-bold" for="quickSummary">Quick Summary (Free)</label>
+                <p class="card-text text-muted small mt-1">A basic overview of your quiz results.</p>
+              </div>
             </div>
+          </div>
 
-            <div class="text-center">
-                <p class="text-muted small">AI-generated content may contain inaccuracies. Please verify important information.</p>
-                <button type="submit" class="btn btn-primary btn-lg mt-2">
-                    Submit Quiz
-                </button>
+          <div class="card summary-option-card" data-summary-type="personalized" style="border-radius:var(--radius-card);">
+            <div class="card-body">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="summaryType" id="personalizedSummary" value="personalized"
+                       {% if not toggle_info.login or not toggle_info.enough_credit or not toggle_info.active_credit %}disabled{% else %}checked{% endif %}>
+                <label class="form-check-label fw-bold" for="personalizedSummary">
+                  Personalised Summary <span class="fw-normal text-muted">({{ toggle_info.credit_info.min_credit }} Credit)</span>
+                </label>
+                <p class="card-text text-muted small mt-1">Detailed feedback and insights tailored to your answers.</p>
+                {% if not toggle_info.login %}
+                  <small style="color:var(--warm-amber);"><a href="{{ url_for('account_page') }}" style="color:var(--warm-primary);">Sign in</a> to unlock.</small>
+                {% elif not toggle_info.enough_credit %}
+                  <small style="color:var(--warm-amber);">Requires {{ toggle_info.credit_info.min_credit }} credits. <a href="{{ url_for('account_page') }}" style="color:var(--warm-primary);">Top up</a>.</small>
+                {% elif not toggle_info.active_credit %}
+                  <small style="color:var(--warm-amber);">Credits expired. <a href="{{ url_for('account_page') }}" style="color:var(--warm-primary);">Purchase new credits</a>.</small>
+                {% endif %}
+              </div>
             </div>
-        </form>
-    </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <p class="text-muted small">AI-generated content may contain inaccuracies. Please verify important information.</p>
+        <button type="submit" class="btn btn-warm-primary btn-lg mt-2 px-5">Submit Quiz</button>
+      </div>
+    </form>
+  </div>
 </section>
 
 <style>
-    .card { border-radius: 8px; }
-    .card-header { font-size: 1.1rem; font-weight: bold; }
-    .card-body, .card-footer { background-color: white; }
-    .icon-gray { color: gray; }
-    .icon-gray.active.thumbs-up { color: green; }
-    .icon-gray.active.dont-know { color: gold; }
-    .icon-gray.active.flagged { color: red; }
-    .btn-link { text-decoration: none; }
-    .btn-link:hover { opacity: 0.8; }
+  .icon-gray { color: #b0b0b0; }
+  .icon-gray.active.thumbs-up { color: var(--warm-success); }
+  .icon-gray.active.dont-know { color: var(--warm-amber); }
+  .icon-gray.active.flagged   { color: var(--color-red); }
+  .btn-link { text-decoration: none; }
+  .btn-link:hover { opacity: 0.75; }
 
-    .summary-option-card { cursor: pointer; border: 1px solid #ced4da; border-radius: 8px; transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out; }
-    .summary-option-card:hover { border-color: #0d6efd; }
-    .summary-option-card.active { border-color: #0d6efd; box-shadow: 0 0 0 .25rem rgba(13,110,253,.25); }
+  .summary-option-card {
+    cursor: pointer;
+    border: 1.5px solid var(--warm-border);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .summary-option-card:hover { border-color: var(--warm-primary); }
+  .summary-option-card.active {
+    border-color: var(--warm-primary);
+    box-shadow: 0 0 0 0.2rem rgba(244,132,95,0.22);
+  }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // Bootstrap tooltips
-    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el =>
-        new bootstrap.Tooltip(el)
-    );
+  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
 
-    // Question interaction toggles
-    function toggleInteraction(inputId, iconId) {
-        const inp = document.getElementById(inputId);
-        const ic = document.getElementById(iconId);
-        if (inp.value === '0') {
-            inp.value = '1'; ic.classList.add('active');
-        } else {
-            inp.value = '0'; ic.classList.remove('active');
-        }
-    }
-    document.querySelectorAll('.question-interaction-button').forEach(btn => {
-        btn.addEventListener('click', () => {
-            toggleInteraction(btn.dataset.inputId, btn.dataset.iconId);
-        });
-    });
+  function toggleInteraction(inputId, iconId) {
+    const inp = document.getElementById(inputId);
+    const ic  = document.getElementById(iconId);
+    if (inp.value === '0') { inp.value = '1'; ic.classList.add('active'); }
+    else                   { inp.value = '0'; ic.classList.remove('active'); }
+  }
+  document.querySelectorAll('.question-interaction-button').forEach(btn => {
+    btn.addEventListener('click', () => toggleInteraction(btn.dataset.inputId, btn.dataset.iconId));
+  });
 
-    // Summary selection logic
-    const quickRadio = document.getElementById('quickSummary');
-    const persRadio = document.getElementById('personalizedSummary');
-    const quickCard = document.querySelector('[data-summary-type="quick"]');
-    const persCard = document.querySelector('[data-summary-type="personalized"]');
+  const quickRadio = document.getElementById('quickSummary');
+  const persRadio  = document.getElementById('personalizedSummary');
+  const quickCard  = document.querySelector('[data-summary-type="quick"]');
+  const persCard   = document.querySelector('[data-summary-type="personalized"]');
 
-    function updateSummaryCards() {
-        quickCard.classList.remove('active');
-        persCard.classList.remove('active');
+  function updateSummaryCards() {
+    quickCard.classList.remove('active');
+    persCard.classList.remove('active');
+    if (persRadio && persRadio.checked && !persRadio.disabled) persCard.classList.add('active');
+    else quickCard.classList.add('active');
+  }
 
-        if (persRadio && persRadio.checked && !persRadio.disabled) {
-            persCard.classList.add('active');
-        } else {
-            quickCard.classList.add('active');
-        }
-    }
-
-    quickCard.addEventListener('click', () => { quickRadio.checked = true; updateSummaryCards(); });
-    persCard.addEventListener('click', () => { if (!persRadio.disabled) persRadio.checked = true; updateSummaryCards(); });
-
-    // Initialize
-    updateSummaryCards();
+  quickCard.addEventListener('click', () => { quickRadio.checked = true; updateSummaryCards(); });
+  persCard.addEventListener('click',  () => { if (!persRadio.disabled) persRadio.checked = true; updateSummaryCards(); });
+  updateSummaryCards();
 });
 </script>
 
 <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Quiz",
-      "name": "{{ quiz_title }}",
-      "description": "{{ quiz_description }}",
-      "hasPart": [
-        {% for index, question_data in mcq_questions %}
-          {
-            "@type": "Question",
-            "name": "{{ question_data['question'] | escape }}"
-          }{% if not loop.last %},{% endif %}
-        {% endfor %}
-      ]
-    }
+{
+  "@context": "https://schema.org",
+  "@type": "Quiz",
+  "name": "{{ quiz_title }}",
+  "description": "{{ quiz_description }}",
+  "hasPart": [
+    {% for index, question_data in mcq_questions %}
+    { "@type": "Question", "name": "{{ question_data['question'] | escape }}" }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
 </script>
 {% endblock %}

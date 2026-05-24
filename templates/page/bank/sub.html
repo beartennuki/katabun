@@ -1,88 +1,59 @@
 {% extends "page/base/base.html" %}
 
 {% block title %}
-  {% if category == 'science' %}
-    Stay Ahead – 4UrClass Science Quizzes
-  {% elif category == 'medical' %}
-    Breathe Easier – 4UrClass Medical Study Bank
-  {% elif category == 'business' %}
-    Win Deals Fast – 4UrClass Business Quizzes
-  {% elif category == 'finance' %}
-    Own the Numbers – 4UrClass Finance Drills
-  {% elif category == 'technology' %}
-    Catch Up to Code – 4UrClass Tech Quiz Bank
-  {% elif category == 'creativity' %}
-    Fuel Your Spark – 4UrClass Creative Challenges
-  {% elif category == 'law' %}
-    Decode the Statutes – 4UrClass Legal Quizzes
-  {% elif category == 'culture' %}
-    Travel the World – 4UrClass Culture Quizzes
-  {% elif category == 'administration' %}
-    Lead Teams Clearly – 4UrClass Admin Prep
-  {% else %}
-    Study Smarter, Stress Less – 4UrClass Quiz Bank
-  {% endif %}
+  {% if category == 'science' %}Stay Ahead – 4UrClass Science Quizzes
+  {% elif category == 'medical' %}Breathe Easier – 4UrClass Medical Study Bank
+  {% elif category == 'business' %}Win Deals Fast – 4UrClass Business Quizzes
+  {% elif category == 'finance' %}Own the Numbers – 4UrClass Finance Drills
+  {% elif category == 'technology' %}Catch Up to Code – 4UrClass Tech Quiz Bank
+  {% elif category == 'creativity' %}Fuel Your Spark – 4UrClass Creative Challenges
+  {% elif category == 'law' %}Decode the Statutes – 4UrClass Legal Quizzes
+  {% elif category == 'culture' %}Travel the World – 4UrClass Culture Quizzes
+  {% elif category == 'administration' %}Lead Teams Clearly – 4UrClass Admin Prep
+  {% else %}Study Smarter, Stress Less – 4UrClass Quiz Bank{% endif %}
 {% endblock %}
 
 {% block description %}
-{% if category == 'science' %}Browse concise science quizzes that keep lab insights fresh between experiments and grant deadlines.
-{% elif category == 'medical' %}Go through focused medical sets, refresh lifesaving facts in minutes between rounds and night shifts.
-{% elif category == 'business' %}Browse targeted business quizzes, sharpen strategy and deal instincts on the commute.
-{% elif category == 'finance' %}Go through finance drills to decode markets and compliance quickly before the trading bell rings.
-{% elif category == 'technology' %}Browse rapid tech quizzes that align skills with fast-moving codebases during coffee breaks.
-{% elif category == 'creativity' %}Go through creative challenges to reignite inspiration and polish theory between design sprints.
-{% elif category == 'law' %}Browse legal quizzes to refine statute recall and case analysis while prepping briefs.
-{% elif category == 'culture' %}Go through cultural quizzes, expand global context and critical thought during quiet moments.
-{% elif category == 'administration' %}Browse admin quizzes to boost leadership clarity before your next team huddle.
-{% else %}Browse diverse quizzes that turn spare minutes into confident mastery across fields.{% endif %}
+  {% if category == 'science' %}Browse concise science quizzes that keep lab insights fresh.
+  {% elif category == 'medical' %}Focused medical sets to refresh lifesaving facts in minutes.
+  {% elif category == 'business' %}Targeted business quizzes to sharpen strategy on the commute.
+  {% elif category == 'finance' %}Finance drills to decode markets quickly.
+  {% elif category == 'technology' %}Rapid tech quizzes aligned with fast-moving codebases.
+  {% elif category == 'creativity' %}Creative challenges to reignite inspiration between design sprints.
+  {% elif category == 'law' %}Legal quizzes to refine statute recall while prepping briefs.
+  {% elif category == 'culture' %}Cultural quizzes to expand global context.
+  {% elif category == 'administration' %}Admin quizzes to boost leadership clarity.
+  {% else %}Diverse quizzes that turn spare minutes into confident mastery.{% endif %}
 {% endblock %}
 
 {% block content %}
-<style>
-  .quiz-list-item {
-    transition: all 0.2s ease-in-out;
-    border-radius: 8px;
-    margin-bottom: 0.75rem;
-    border-width: 1px;
-  }
-  .quiz-list-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-left: 4px solid var(--color-blue);
-  }
-  .quiz-details {
-    font-size: 0.9rem;
-    color: #6c757d;
-  }
-  .quiz-actions .btn {
-    width: 150px; /* Uniform button width */
-  }
-</style>
-
-<section class="py-5" style="background-color: #EAF6FF;">
+<section class="py-5" style="background:var(--warm-bg);">
   <div class="container">
+
     <div class="text-center mb-5">
-      <h2 class="fw-bold" style="color: #0d6efd; font-size: 2.5rem;">{{ category|title }} Quiz Bank</h2>
+      <h2 class="fw-bold" style="color:var(--warm-primary); font-size:2.2rem;">{{ category | title }} Quiz Bank</h2>
       {% if not loggedin %}
-        <p class="text-warning mt-2">Please <a href="{{ url_for('account_page') }}">log in</a> to generate a similar quiz.</p>
+        <p class="mt-2" style="color:var(--warm-muted); font-size:0.95rem;">
+          <a href="{{ url_for('account_page') }}" style="color:var(--warm-primary); font-weight:700;">Sign in</a> to generate a similar quiz.
+        </p>
       {% endif %}
     </div>
 
     {% if top_quizzes %}
     <div class="mb-5">
-      <h3 class="fw-bold text-center mb-4" style="color: #0d6efd;">Top 3 Trending Quizzes</h3>
-      <div class="row g-4">
+      <h3 class="fw-bold text-center mb-4" style="color:var(--warm-primary);">Top 3 Trending</h3>
+      <div class="row g-3">
         {% for quiz in top_quizzes %}
         <div class="col-md-4">
-          <div class="card h-100 shadow-sm rounded" style="border: 2px solid #dee2e6;">
+          <div class="card h-100 border-0" style="border-radius:var(--radius-card); box-shadow:var(--warm-shadow); border:1.5px solid var(--warm-border) !important;">
             <div class="card-body d-flex flex-column">
-              <h5 class="card-title fw-bold">{{ quiz.meta.title }}</h5>
-              <p class="card-text text-muted">{{ quiz.meta.general_info | truncate(150) }}</p>
-              <div class="mt-auto">
-                <p class="mb-1"><strong>Questions:</strong> {{ quiz.meta.question_count }}</p>
-                <p class="mb-0"><strong>Difficulty:</strong> {{ quiz.meta.input_information.submit_info.level|capitalize }}</p>
+              <h5 class="fw-bold mb-1" style="color:var(--warm-text);">{{ quiz.meta.title }}</h5>
+              <p class="text-muted small flex-grow-1">{{ quiz.meta.general_info | truncate(130) }}</p>
+              <div class="mt-2">
+                <span class="badge me-1" style="background:var(--warm-bg-alt); color:var(--warm-primary);">{{ quiz.meta.question_count }} Qs</span>
+                <span class="badge" style="background:var(--warm-bg-alt); color:var(--warm-amber);">{{ quiz.meta.input_information.submit_info.level | capitalize }}</span>
               </div>
-              <a href="{{ url_for('quiz_page', slug=quiz.meta.slug or quiz.meta.doc_id) }}" class="btn btn-primary mt-3">Take Quiz</a>
+              <a href="{{ url_for('quiz_page', slug=quiz.meta.slug or quiz.meta.doc_id) }}" class="btn btn-warm-primary mt-3">Take Quiz</a>
             </div>
           </div>
         </div>
@@ -91,29 +62,31 @@
     </div>
     {% endif %}
 
-    <h3 class="fw-bold text-center mb-4" style="color: #0d6efd;">Explore More Quizzes</h3>
+    <h3 class="fw-bold text-center mb-4" style="color:var(--warm-primary);">Explore More Quizzes</h3>
+
     {% if catmeta_ls %}
       {% set quizzes_per_page = 5 %}
       {% set total_pages = (catmeta_ls|length / quizzes_per_page)|round(method='ceil')|int %}
 
       <div class="list-group">
         {% for doc in catmeta_ls[(page-1)*quizzes_per_page : page*quizzes_per_page] %}
-        <div class="list-group-item list-group-item-action flex-column align-items-start p-3 quiz-list-item">
+        <div class="list-group-item list-group-item-action quiz-list-item border-0 mb-2"
+             style="border-radius:var(--radius-card); background:#ffffff; box-shadow:0 2px 8px rgba(244,132,95,0.06); border:1.5px solid var(--warm-border) !important;">
           <div class="row align-items-center">
 
             <div class="col-md-5">
-              <h5 class="mb-1 fw-bold">{{ doc.title }}</h5>
-              <p class="mb-1 text-muted">{{ doc.general_info }}</p>
-              <small class="text-muted">{{ doc.date|capitalize }}</small>
+              <h5 class="mb-1 fw-bold" style="color:var(--warm-text);">{{ doc.title }}</h5>
+              <p class="mb-1 text-muted small">{{ doc.general_info }}</p>
+              <small class="text-muted">{{ doc.date | capitalize }}</small>
             </div>
 
-            <div class="col-md-3 text-center text-md-start mt-2 mt-md-0 quiz-details">
+            <div class="col-md-3 text-center text-md-start mt-2 mt-md-0" style="font-size:0.88rem; color:var(--warm-muted);">
               <strong>Questions:</strong> {{ doc.question_count }}<br>
-              <strong>Difficulty:</strong> {{ doc.level|capitalize }}
+              <strong>Difficulty:</strong> {{ doc.level | capitalize }}
             </div>
 
             <div class="col-md-4 text-center text-md-end mt-3 mt-md-0 quiz-actions">
-              <a href="{{ url_for('quiz_page', slug=doc.slug or doc.doc_id) }}" class="btn btn-primary mb-2 mb-md-0">Take Quiz</a>
+              <a href="{{ url_for('quiz_page', slug=doc.slug or doc.doc_id) }}" class="btn btn-warm-primary mb-2 mb-md-0">Take Quiz</a>
 
               <form action="{{ url_for('autoquiz_page') }}" method="post" class="d-inline-block">
                 <input type="hidden" name="topic" value="{{ doc.title }}">
@@ -121,8 +94,7 @@
                 <input type="hidden" name="level" value="{{ doc.level }}">
                 <input type="hidden" name="numQuestions" value="{{ doc.question_count }}">
                 <input type="hidden" name="agreeTnC" value="on">
-
-                <button type="submit" class="btn btn-outline-secondary" {% if not loggedin %}disabled{% endif %}>
+                <button type="submit" class="btn btn-warm-outline" {% if not loggedin %}disabled{% endif %}>
                   Generate Similar
                 </button>
               </form>
@@ -151,10 +123,21 @@
 
     {% else %}
       <div class="text-center py-5">
-        <p class="fw-bold" style="font-size: 1.5rem; color: #dc3545;">No quizzes have been created for this category yet.</p>
-        <a href="{{ url_for('autoquiz_page') }}" class="btn btn-primary mt-3">Be the first to create one!</a>
+        <p class="fw-bold" style="font-size:1.3rem; color:var(--warm-muted);">No quizzes yet in this category.</p>
+        <a href="{{ url_for('autoquiz_page') }}" class="btn btn-warm-primary mt-3">Be the first to create one!</a>
       </div>
     {% endif %}
+
   </div>
 </section>
+
+<style>
+  .quiz-list-item { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .quiz-list-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--warm-shadow) !important;
+    border-left: 4px solid var(--warm-primary) !important;
+  }
+  .quiz-actions .btn { min-width: 140px; }
+</style>
 {% endblock %}
