@@ -245,7 +245,6 @@ class MongoIO:
             try:
                 cached_data = self.redis_client.get(cache_key)
                 if cached_data:
-                    print("Cache hit!")
                     result_docs = json.loads(cached_data)
                     for document in result_docs:
                         self._ensure_slug_for_document(document)
