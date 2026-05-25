@@ -9,7 +9,7 @@
           and keep moving.
         </h1>
         <p class="hero-description">
-          4UrClass should drive one simple flow: try a quiz, create a quiz, or subscribe to get new quizzes in your inbox.
+          4UrClass should drive one simple flow: try a quiz or create a quiz.
         </p>
 
         <div class="landing-flow">
@@ -27,19 +27,15 @@
               <div class="text-muted small">Generate a quiz from your own topic in a few clicks.</div>
             </div>
           </div>
-          <div class="landing-flow-step">
-            <span class="landing-flow-number">03</span>
-            <div>
-              <strong>Join the newsletter</strong>
-              <div class="text-muted small">Get new quiz drops and study updates.</div>
-            </div>
-          </div>
         </div>
 
         <div class="hero-action-row">
           <a href="{{ url_for('bank_page') }}" class="btn btn-brand btn-lg">Try a Quiz</a>
-          <a href="{{ url_for('autoquiz_page') }}" class="btn btn-ghost btn-lg">Create a Quiz</a>
-          <a href="#newsletter" class="btn-link-strong">Go to newsletter <i class="bi bi-arrow-right"></i></a>
+          {% if session.get('user_login') %}
+            <a href="{{ url_for('autoquiz_page') }}" class="btn btn-ghost btn-lg">Create a Quiz</a>
+          {% else %}
+            <a href="{{ url_for('account_page') }}" class="btn btn-ghost btn-lg">Create a Quiz</a>
+          {% endif %}
         </div>
       </div>
 

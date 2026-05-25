@@ -69,7 +69,6 @@ class Loading:
         message = load_data['message']
         doc_id = load_data['doc_id']
         doc_type = load_data['doc_type']
-        task_url = load_data['task_url']
+        task_url = load_data.get('task_url')
 
         return flag, message, doc_id, doc_type, task_url
-

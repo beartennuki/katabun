@@ -1,7 +1,7 @@
 <section class="page-section page-section--compact" id="newsletter">
   <div class="container">
     <div class="surface-panel p-4 p-lg-5">
-      <div class="row align-items-center g-4">
+      <div class="row justify-content-center">
         <div class="col-lg-6">
           <span class="section-kicker mb-3">Newsletter</span>
           <h2 class="section-heading h2 mb-3">Subscribe for new quizzes and updates.</h2>
@@ -11,18 +11,6 @@
 
           <div class="newsletter-card">
             {% include "page/landing/newsletterform.html" %}
-          </div>
-        </div>
-
-        <div class="col-lg-6">
-          <div class="newsletter-side-note surface-card">
-            <h3 class="h5 mb-2">Three clear options.</h3>
-            <p class="text-muted mb-3">The landing page now ends with the same three actions from the top of the page.</p>
-            <div class="newsletter-side-links">
-              <a href="{{ url_for('bank_page') }}" class="btn btn-ghost">Try a Quiz</a>
-              <a href="{{ url_for('autoquiz_page') }}" class="btn btn-ghost">Create a Quiz</a>
-              <a href="#newsletter" class="btn btn-brand">Newsletter</a>
-            </div>
           </div>
         </div>
       </div>

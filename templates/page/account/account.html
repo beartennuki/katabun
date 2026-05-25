@@ -29,24 +29,6 @@
       </div>
 
     {% else %}
-      <div class="account-stats mb-4">
-        <div class="surface-card stat-card">
-          <div class="stat-label">Account Holder</div>
-          <div class="stat-value">{{ user_info.user_name }}</div>
-          <div class="text-muted small">{{ user_info.user_email }}</div>
-        </div>
-        <div class="surface-card stat-card">
-          <div class="stat-label">Current Credits</div>
-          <div class="stat-value">{{ credit_info.current_credits }}</div>
-          <div class="text-muted small">Available for quiz generation and premium feedback.</div>
-        </div>
-        <div class="surface-card stat-card">
-          <div class="stat-label">Credit Expiry</div>
-          <div class="stat-value" style="font-size:1.35rem;">{{ credit_info.credit_expiry.strftime('%Y-%m-%d') if credit_info.credit_expiry else 'N/A' }}</div>
-          <div class="text-muted small">Review before expiry to avoid interrupted usage.</div>
-        </div>
-      </div>
-
       <div class="row g-4">
         <div class="col-lg-5">
           <div class="surface-panel account-panel mb-4">
@@ -83,6 +65,24 @@
         </div>
 
         <div class="col-lg-7">
+          <div class="account-stats mb-4">
+            <div class="surface-card stat-card">
+              <div class="stat-label">Account Holder</div>
+              <div class="stat-value">{{ user_info.user_name }}</div>
+              <div class="text-muted small">{{ user_info.user_email }}</div>
+            </div>
+            <div class="surface-card stat-card">
+              <div class="stat-label">Current Credits</div>
+              <div class="stat-value">{{ credit_info.current_credits }}</div>
+              <div class="text-muted small">Available for quiz generation and premium feedback.</div>
+            </div>
+            <div class="surface-card stat-card">
+              <div class="stat-label">Credit Expiry</div>
+              <div class="stat-value" style="font-size:1.35rem;">{{ credit_info.credit_expiry.strftime('%Y-%m-%d') if credit_info.credit_expiry else 'N/A' }}</div>
+              <div class="text-muted small">Review before expiry to avoid interrupted usage.</div>
+            </div>
+          </div>
+
           <div class="surface-panel account-panel">
             <div class="d-flex justify-content-between align-items-center gap-3 mb-3">
               <div>

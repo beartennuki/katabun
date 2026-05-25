@@ -150,6 +150,8 @@ def create_app():
     # ─── 3. Quiz Generation & Core Flow Routes ───────────────────────
     @app.route('/autoquiz', methods=['GET', 'POST'])
     def autoquiz_page():
+        if not session.get('user_login'):
+            return redirect(url_for('account_page'))
         if request.method == 'POST':
             return autoquiz().submit_form(request)
         loggedin = session.get('user_login')
